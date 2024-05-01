@@ -4,13 +4,14 @@ import Jobs from "./pages/Jobs";
 // import Home from "./pages/Home";
 import CareerAdmin from "./pages/CareerAdmin/CareerAdmin";
 import Login from "./pages/Login/Login";
-
+import SignUp from "./pages/SignUp/SignUp";
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/"  name="Login" element={<Login />} />
+      <Route path="/"  name="Login" element={<Login />} /> 
+      <Route path="/signup"  name="SignUp" element={<SignUp />} />
         <Route path="/jobs" name="jobs" element={<Jobs />} />
         <Route path="/adminJobs" name="adminJobs" element={<CareerAdmin/>}/>
       </Routes>

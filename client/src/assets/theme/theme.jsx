@@ -21,7 +21,7 @@ import {
       text: {
         primary: "#000000",
         disabled: "#6b6b6b",
-        error: "#FF0001",
+        error: "#e40000",
       },
       primary: {
         main: "#418ca3",
@@ -36,7 +36,7 @@ import {
         main: "#00C853",
       },
       error: {
-        main: "#FF0001", // Ensure error property is defined here
+        main: "#e40000", // Ensure error property is defined here
       },
       white:{
         main:"#FFFFFF"

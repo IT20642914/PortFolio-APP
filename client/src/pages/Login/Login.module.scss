@@ -57,8 +57,7 @@
     
               font-size: 20px;
             }
-    
-    
+          
             .loading {
               color: white;
               margin-right: 10px;
@@ -88,13 +87,14 @@
               .isAuthorizing {
                 background: #fff8cb;
               }
+             
     
            
             }
     
             .loginFooter {
               font-size: 14px;
-              color: white;
+              color: white !important;
             }
     
             .primaryBtn {
