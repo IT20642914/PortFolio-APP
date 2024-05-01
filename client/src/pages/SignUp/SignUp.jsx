@@ -5,11 +5,20 @@ import styles from './SignUp.module.scss'
 import { logo } from "../../assets/Images";
 import SignUpFormComponent from '../../components/SignUpFormComponent/SignUpFormComponent'
 import { validateFormData } from '../../helper/index'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 const SignUp = () => {
 
     const INITIAL_LOGIN_FORM={
         email:  { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "", },
+        fullName:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
         passWord:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        address:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        country:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        jobCategory:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        dob:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        mobile:  { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "",charLength: [10], },
       }
     const [LoginForm, setLoginForm] = useState(INITIAL_LOGIN_FORM);
     const navigate = useNavigate();
@@ -66,7 +75,7 @@ const SignUp = () => {
         <aside className={styles.loginActions}>
           <aside className={styles.header}>
           <img className={styles.logo} src={logo} alt="logo" />
-            <h1 style={{color:"white"}}>WELCOME TO PORTFOLIO MANAGEMENT  System</h1>
+            <h1 style={{color:"white"}}>WELCOME TO PORTFOLIO MANAGEMENT  SYSTEM</h1>
           </aside>
 
 <SignUpFormComponent

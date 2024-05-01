@@ -75,7 +75,7 @@ const HandleSignUp=()=>{
           <aside className={styles.loginActions}>
             <aside className={styles.header}>
             <img className={styles.logo} src={logo} alt="logo" />
-              <h1 style={{color:"white"}}>WELCOME TO PORTFOLIO MANAGEMENT  System</h1>
+              <h1 style={{color:"white"}}>WELCOME TO PORTFOLIO MANAGEMENT  SYSTEM</h1>
             </aside>
 
 <LoginFomComponent

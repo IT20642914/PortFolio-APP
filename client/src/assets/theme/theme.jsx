@@ -24,13 +24,13 @@ import {
         error: "#e40000",
       },
       primary: {
-        main: "#418ca3",
+        main: "#224b57",
       },
       secondary: {
-        main: "#3A7D90",
+        main: "#224b57",
       },
       tertiary: {
-        main: "#027193",
+        main: "#224b57",
       },
       success: {
         main: "#00C853",
@@ -72,7 +72,7 @@ export const StyledTextField = styled(TextField)(({ theme, error }) => ({
       borderWidth: "1px",
     },
     "&:hover fieldset": {
-      borderColor: theme.palette.secondary,
+      borderColor: "#2a5a68",
     },
     "&.Mui-focused fieldset": {
       color: theme.palette.text.secondary,
@@ -95,7 +95,14 @@ export const StyledTextField = styled(TextField)(({ theme, error }) => ({
   },
   // Change text color to red when error is true
   "& .MuiFormHelperText-root": {
-    color:error && theme.palette.white.main,
+    color: error ? theme.palette.error.main : theme.palette.white.main,
     backgroundColor: alpha(theme.palette.error.main, 0.2),
+  },
+  "& .MuiInputAdornment-root.MuiInputAdornment-positionEnd": {
+    color: theme.palette.text.primary,
+    // Add more styles as needed
+  },
+  "& .MuiFormLabel-root-MuiInputLabel-root": {
+    color: theme.palette.white.main,
   },
 }));
