@@ -36,9 +36,9 @@ const handleInputFocus=(property,section)=>{
         <section className={`${styles.login}`}>
         <aside className={styles.logincard}>
           <aside className={styles.loginActions}>
-            <aside>
+            <aside className={styles.header}>
             <img className={styles.logo} src={logo} alt="logo" />
-              <h1>Welcome to TEA FACTORY MANAGEMENT  System</h1>
+              <h1 style={{color:"white"}}>WELCOME TO PORTFOLIO MANAGEMENT  System</h1>
             </aside>
 
 <LoginFomComponent
@@ -47,23 +47,25 @@ const handleInputFocus=(property,section)=>{
    onInputHandleChange={onInputHandleChange}
    handleInputFocus={handleInputFocus}
 />
-<Button
+        <Button
               className={`${styles.primaryBtn} `}
-              startIcon={
-              <CircularProgress size={18} />
-              }
               variant="contained"
-              disabled={
-            false
-              }
+              disabled={false}
               onClick={() => handleLogin()}
             >
-              Login with TEA FACTORY MANAGEMENT SYSTEM
+             Login  Into Your Account
+            </Button>
+            <Button
+              className={`${styles.secondary} `}
+              variant="contained"
+              disabled={false}
+              onClick={() => handleLogin()}
+            >
+            Don't have an account? Sign Up Now
             </Button>
             <div className={styles.loginFooter}>
               <p>
-              Designed to streamline your operations,
-               our Tea Factory Management System ensures efficient management of your production processes. .
+              Optimize your investments with our Portfolio Management System. Track, analyze, and manage your diverse assets effortlessly for informed decision-making.
               </p>
             </div>
           </aside>

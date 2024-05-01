@@ -3,18 +3,17 @@
 .container {
   position: fixed;
     background: url("../../assets/Images/bg/login-bg-style-1.jpg");
-  overflow: scroll;
+    overflow: hidden;
   background-size: cover;
   height: 100%;
   width: 100%;
-//   display: grid;
   .login {
-    margin: 24px 0;
+    margin: 18px 0;
     display: grid;
     align-items: center;
     justify-content: center;
     .logincard {
-        margin-top: 6rem;
+          margin-top: 6rem;
           border: 1px solid #555555;
           border-radius: 14px;
           padding: 0 24px;
@@ -26,7 +25,7 @@
           @media all and (max-width: $s) {
             width: 80%;
           }
-    
+
           .loginActions {
             //  padding: 10px 0 10px;
     
@@ -37,7 +36,7 @@
             }
     
             .logo {
-              max-width: 150px;
+              // max-width: 150px;
               padding: 15px 0px;
               text-align: center;
     
@@ -48,9 +47,8 @@
     
             h1 {
               border-bottom: 1px solid #555555;
-    
               color: #818286;
-              padding-bottom: 20px;
+              padding-bottom: 15px;
               padding: 10px 0;
               font-size: 20px;
               font-weight: 500;
@@ -61,7 +59,6 @@
             }
     
             p {
-              // padding-top: 15px;
               border-top: 1px solid #555555;
               line-height: 20px;
               font-size: 14px;
@@ -96,18 +93,10 @@
               }
     
               .isAuthorizing {
-                //background: rgba(0,150,255,0.3);
                 background: #fff8cb;
               }
     
-              // .error {
-              //   padding: 4px 8px;
-              //   background: #fff8cb;
-              //   padding: 10px;
-              //   border-radius: 6px;
-              //   margin: 14px 0;
-              //   width: 400px;
-              // }
+           
             }
     
             .loginFooter {
@@ -117,12 +106,12 @@
     
             .primaryBtn {
               width: 100%;
-              margin-top: 14px;
+              margin-top: 12px;
               font-weight: 600;
               padding-top: 14px;
               padding-bottom: 14px;
-              margin-top: 60px;
-              margin-bottom: 35px;
+              margin-top: 40px;
+              margin-bottom: 30px;
               background: $red;
               color: white;
               margin-bottom: 0.4em !important;
@@ -133,6 +122,17 @@
                color: black
               }
             }
+            .secondary{
+              margin-top: 10px;
+              margin-bottom: 30px;
+              padding-top: 14px;
+              padding-bottom: 14px;
+              width: 100%;
+              background: #418ca3;
+              color: white;
+              font-size: 10px;
+              text-transform: capitalize !important;
+            }
           }
         }
 
@@ -140,8 +140,5 @@
 
 }
 
-.alertMargin {
-    margin-bottom: 10px;
-    background-color: red;
-  }
+
   
