@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Grid, Button } from '@mui/material'
 import { logo } from "../../assets/Images";
 import LoginFomComponent from "../../components/LoginFomComponent/LoginFomComponent";
+import { validateFormData } from "../../helper/index";
+
 const Login = () => {
 
     const INITIAL_LOGIN_FORM={
@@ -18,16 +20,49 @@ const Login = () => {
 
 
 const handleLogin = async () => {
-
+  const [validateData, isValid] = await validateFormData(LoginForm);
+  setLoginForm(validateData);
+  if(isValid){
+    console.log("Login Success")
+  }
 }
 
 const onInputHandleChange = (property, value) => {
     setHelperText(true);
+    if (property === "userName") {
+      setLoginForm({
+          ...LoginForm,
+          userName: {
+            ...LoginForm.userName,
+            value: value,
+          },
+        });
+      }
+      if (property === "passWord") {
+        setLoginForm({
+            ...LoginForm,
+            passWord: {
+              ...LoginForm.passWord,
+              value: value,
+            },
+          });
+        }
 
 }
 
 const handleInputFocus=(property,section)=>{
-
+  if (section === "GI")
+  setLoginForm({
+    ...LoginForm,
+    [property]: {
+      ...LoginForm[property],
+      error: null,
+    },
+  });
+  
+}
+const HandleSignUp=()=>{
+    navigate("/signup")
 }
   return (
     <section
@@ -59,7 +94,7 @@ const handleInputFocus=(property,section)=>{
               className={`${styles.secondary} `}
               variant="contained"
               disabled={false}
-              onClick={() => handleLogin()}
+              onClick={() => HandleSignUp()}
             >
             Don't have an account? Sign Up Now
             </Button>

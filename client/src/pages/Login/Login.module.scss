@@ -18,9 +18,9 @@
           border-radius: 14px;
           padding: 0 24px;
           width: 480px;
-          height: 620px;
+          height: 660px;
           // margin: 0 auto;
-          background-color: $bgColorSidebar;
+          background: $bgColorSidebar;
     
           @media all and (max-width: $s) {
             width: 80%;
@@ -58,13 +58,6 @@
               font-size: 20px;
             }
     
-            p {
-              border-top: 1px solid #555555;
-              line-height: 20px;
-              font-size: 14px;
-            
-              color: #818286;
-            }
     
             .loading {
               color: white;
@@ -101,7 +94,7 @@
     
             .loginFooter {
               font-size: 14px;
-              color: #838282;
+              color: white;
             }
     
             .primaryBtn {

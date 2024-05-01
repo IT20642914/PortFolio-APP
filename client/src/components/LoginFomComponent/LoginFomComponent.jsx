@@ -1,13 +1,15 @@
 import React from 'react'
-import { Grid, TextField } from '@mui/material'
-import { StyledTextField } from '../../assets/theme/theme'
+import { Grid } from '@mui/material'
+import { StyledTextField, theme } from '../../assets/theme/theme' // Import theme here
+
 const LoginFomComponent = (props) => {
   const userName = props.LoginForm.userName;
   const passWord = props.LoginForm.passWord;
   return (
-  <Grid container spacing={4}>
+    <Grid container spacing={4}>
       <Grid item xs={12} md={12}>
         <StyledTextField
+          theme={theme} // Pass the theme object here
           fullWidth
           label="User Name"
           placeholder="Enter User Name"
@@ -23,6 +25,7 @@ const LoginFomComponent = (props) => {
       </Grid>
       <Grid item xs={12} md={12}>
         <StyledTextField
+          theme={theme} // Pass the theme object here
           fullWidth
           label="Password"
           placeholder="Enter Password"
