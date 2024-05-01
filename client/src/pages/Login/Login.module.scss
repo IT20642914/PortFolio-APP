@@ -57,7 +57,14 @@
     
               font-size: 20px;
             }
-          
+            p {
+              border-top: 1px solid #555555;
+              line-height: 20px;
+              font-size: 14px;
+            
+              color: #ffffff;
+            }
+    
             .loading {
               color: white;
               margin-right: 10px;
@@ -94,7 +101,7 @@
     
             .loginFooter {
               font-size: 14px;
-              color: white !important;
+              color: white;
             }
     
             .primaryBtn {
@@ -128,7 +135,10 @@
             }
           }
         }
-
+ /* Hide scrollbar */
+ &::-webkit-scrollbar {
+  width: 0;
+}
   }
 
 }

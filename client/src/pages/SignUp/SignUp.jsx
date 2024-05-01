@@ -8,13 +8,26 @@ import { validateFormData } from '../../helper/index'
 const SignUp = () => {
 
     const INITIAL_LOGIN_FORM={
-        userName:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        email:  { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "", },
         passWord:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
       }
     const [LoginForm, setLoginForm] = useState(INITIAL_LOGIN_FORM);
     const navigate = useNavigate();
     const [helperText, setHelperText] = useState(true);
-    const handleLogin = async () => {
+
+      
+      const handleInputFocus=(property,section)=>{
+        if (section === "GI")
+        setLoginForm({
+          ...LoginForm,
+          [property]: {
+            ...LoginForm[property],
+            error: null,
+          },
+        });
+        
+      }
+      const HandleSignUp=async ()=>{
         const [validateData, isValid] = await validateFormData(LoginForm);
         setLoginForm(validateData);
         if(isValid){
@@ -24,11 +37,11 @@ const SignUp = () => {
       
       const onInputHandleChange = (property, value) => {
           setHelperText(true);
-          if (property === "userName") {
+          if (property === "email") {
             setLoginForm({
                 ...LoginForm,
-                userName: {
-                  ...LoginForm.userName,
+                email: {
+                  ...LoginForm.email,
                   value: value,
                 },
               });
@@ -42,23 +55,8 @@ const SignUp = () => {
                   },
                 });
               }
-      
       }
-      
-      const handleInputFocus=(property,section)=>{
-        if (section === "GI")
-        setLoginForm({
-          ...LoginForm,
-          [property]: {
-            ...LoginForm[property],
-            error: null,
-          },
-        });
-        
-      }
-      const HandleSignUp=()=>{
-          navigate("/signup")
-      }
+
   return (
     <section
     className={`${styles.container} `}
@@ -81,17 +79,17 @@ const SignUp = () => {
             className={`${styles.primaryBtn} `}
             variant="contained"
             disabled={false}
-            onClick={() => handleLogin()}
+            onClick={() => HandleSignUp()}
           >
-           Login  Into Your Account
+           Register Your Account
           </Button>
           <Button
             className={`${styles.secondary} `}
             variant="contained"
             disabled={false}
-            onClick={() => HandleSignUp()}
+            onClick={() => navigate("/")}
           >
-          Don't have an account? Sign Up Now
+              have an account? Sign IN Now
           </Button>
           <div className={styles.loginFooter}>
             <p>

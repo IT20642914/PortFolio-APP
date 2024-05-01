@@ -3,7 +3,7 @@ import { Grid } from '@mui/material'
 import { StyledTextField, theme } from '../../assets/theme/theme' // Import theme here
 
 const LoginFomComponent = (props) => {
-  const userName = props.LoginForm.userName;
+  const email = props.LoginForm.email;
   const passWord = props.LoginForm.passWord;
   return (
     <Grid container spacing={4}>
@@ -11,16 +11,16 @@ const LoginFomComponent = (props) => {
         <StyledTextField
           theme={theme} // Pass the theme object here
           fullWidth
-          label="User Name"
-          placeholder="Enter User Name"
+          label="User name"
+          placeholder="Enter User Email"
           size="small"
-          value={userName.value}
-          error={!!userName.error}
-          disabled={userName.disable}
-          required={userName.isRequired}
-          helperText={props.helperText && userName.error}
-          onFocus={() => props.handleInputFocus('userName', 'GI')}
-          onChange={(event) => props.onInputHandleChange('userName', event.target.value)}
+          value={email.value}
+          error={!!email.error}
+          disabled={email.disable}
+          required={email.isRequired}
+          helperText={props.helperText && email.error}
+          onFocus={() => props.handleInputFocus('email', 'GI')}
+          onChange={(event) => props.onInputHandleChange('email', event.target.value)}
         />
       </Grid>
       <Grid item xs={12} md={12}>

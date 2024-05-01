@@ -11,7 +11,7 @@ import { validateFormData } from "../../helper/index";
 const Login = () => {
 
     const INITIAL_LOGIN_FORM={
-        userName:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        email:  { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "", },
         passWord:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
       }
     const [LoginForm, setLoginForm] = useState(INITIAL_LOGIN_FORM);
@@ -23,6 +23,7 @@ const Login = () => {
 const handleLogin = async () => {
   const [validateData, isValid] = await validateFormData(LoginForm);
   setLoginForm(validateData);
+  console.log("validateData",validateData)
   if(isValid){
     console.log("Login Success")
   }
@@ -30,11 +31,11 @@ const handleLogin = async () => {
 
 const onInputHandleChange = (property, value) => {
     setHelperText(true);
-    if (property === "userName") {
+    if (property === "email") {
       setLoginForm({
           ...LoginForm,
-          userName: {
-            ...LoginForm.userName,
+          email: {
+            ...LoginForm.email,
             value: value,
           },
         });
@@ -95,7 +96,7 @@ const HandleSignUp=()=>{
               className={`${styles.secondary} `}
               variant="contained"
               disabled={false}
-              onClick={() => HandleSignUp()}
+              onClick={() => navigate("/signup")}
             >
             Don't have an account? Sign Up Now
             </Button>

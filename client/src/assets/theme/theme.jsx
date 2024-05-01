@@ -95,7 +95,7 @@ export const StyledTextField = styled(TextField)(({ theme, error }) => ({
   },
   // Change text color to red when error is true
   "& .MuiFormHelperText-root": {
-    color:theme.palette.white.main,
-    backgroundColor: alpha(theme.palette.error.main, 0.4),
+    color:error && theme.palette.white.main,
+    backgroundColor: alpha(theme.palette.error.main, 0.2),
   },
 }));
