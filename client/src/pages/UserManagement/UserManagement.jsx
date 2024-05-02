@@ -3,6 +3,7 @@ import UserTable from '../../components/UserManagementTable/UserManagementTable'
 import { UserService } from '../../Services/User.Service';
 import UserProfileModal from '../../components/UserProfileModal/UserProfileModal';
 import { SCREEN_MODES } from '../../utilities/app.constants';
+import { toast } from 'react-toastify';
 
 const UserManagement = () => {
 
@@ -82,12 +83,19 @@ const UserManagement = () => {
                             ...UserForm.password,
                             value: res.data.password,
 
+                        },
+                        role: {
+                            ...UserForm.role,
+                            value: res.data.role,
                         }
                     });
                     setOpenModal(true);
                 }
             })
-            .catch((error) => {});
+            .catch((error) => {
+                console.log('error', error);
+                toast.error(error);
+            });
         }
     };
 
@@ -122,6 +130,15 @@ const UserManagement = () => {
                 value: value,
               },
             });
+          }
+          if(property === "role"){
+            setUserForm({
+                ...UserForm,
+                role: {
+                  ...UserForm.role,
+                  value: value,
+                },
+              });
           }
           if (property === "fullName") {
             setUserForm({
@@ -189,7 +206,7 @@ const UserManagement = () => {
        }
     }
 
-    const HandleBtnResponse=()=>{
+    const HandleBtnResponse=(mode)=>{
         console.log('HandleBtnResponse');
     }
     return (
