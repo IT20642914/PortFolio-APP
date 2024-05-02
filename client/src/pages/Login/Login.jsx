@@ -36,7 +36,7 @@ const handleLogin = async () => {
         localStorage.setItem("token",res.data.data.access_token)
         localStorage.setItem("user",JSON.stringify(res.data.data.user))
         toast.success("User Login Successfully")
-        navigate("/dashboard")
+        navigate("/UserManagement")
       }
     }).catch((err)=>{
       console.log("err",err)
