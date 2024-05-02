@@ -2,8 +2,9 @@ import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa"; // Importing icons
 import UpdateJob from "../UpdateJob/UpdateJob";
 import DeleteJob from "../DeleteJob/DeleteJob";
+import { SCREEN_MODES } from "../../utilities/app.constants";
+const AdminJobs = ({ jobs, paginate, pageNumbers,handleRequest}) => {
 
-const AdminJobs = ({ jobs, paginate, pageNumbers }) => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Added container with padding */}
@@ -34,14 +35,19 @@ const AdminJobs = ({ jobs, paginate, pageNumbers }) => {
               <td className="py-2">{job.skills}</td>
               <td className="py-2">{job.email}</td>
               <td className="py-2 flex justify-center">
-                {/* <button className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded">
+              <button
+                  className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded"
+                  onClick={() => {handleRequest(SCREEN_MODES.EDIT, job.jobId)}}
+                >
                   <FaEdit className="inline-block mr-1" /> Update
-                </button> */}
-                <UpdateJob jobId={job.jobId} />
-                {/* <button className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-2 px-4 rounded">
+                </button>
+                <button
+                  className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-2 px-4 rounded"
+                  onClick={() => {handleRequest(SCREEN_MODES.DELETE, job.jobId)}}
+                >
                   <FaTrash className="inline-block mr-1" /> Delete
-                </button> */}
-                <DeleteJob jobId={job.jobId} />
+                </button>
+          
               </td>
             </tr>
           ))}

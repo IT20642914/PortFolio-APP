@@ -3,17 +3,18 @@ import swal from "sweetalert";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
 
-const UpdateJob = ({ jobId, onClose }) => {
+const UpdateJob = ({ jobId,isOpen, onClose }) => {
   const [position, setPosition] = useState("");
   const [category, setCategory] = useState("");
   const [company, setCompany] = useState("");
   const [keyResponsibility, setKeyResponsibility] = useState("");
   const [skills, setSkills] = useState("");
   const [email, setEmail] = useState("");
-  const [showModal, setShowModal] = useState(false); // Add showModal state
+  const [showModal, setShowModal] = useState(isOpen); // Add showModal state
 
   const handleCloseModal = () => {
     setShowModal(false);
+    onClose()
   };
 
   const handleShowModal = () => {
@@ -76,12 +77,12 @@ const UpdateJob = ({ jobId, onClose }) => {
   return (
     <div>
 
-      <button
+      {/* <button
         className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded"
         onClick={handleShowModal}
       >
         <FaEdit className="inline-block mr-1" /> Update
-      </button>
+      </button> */}
 
       {/* Modal */}
       {showModal && (
