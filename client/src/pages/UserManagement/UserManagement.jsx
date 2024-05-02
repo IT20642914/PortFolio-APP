@@ -8,6 +8,7 @@ import { validateFormData } from '../../helper/index';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { pdf } from '@react-pdf/renderer';
 import {backgrounds} from '../../assets/Images/index'
+import UserRegistrationsChart from '../../components/UserRegistrationsChart/UserRegistrationsChart';
 const UserManagement = () => {
 
     const INITIAL_USER_FORM={
@@ -27,6 +28,40 @@ const UserManagement = () => {
     const [openModal, setOpenModal] = useState(false);
     const [helperText, setHelperText] = useState(true);
     const [mode, setMode] = useState(null);
+    const [chartData, setChartData] = useState([
+        {
+            "date": "2024-04-25",
+            "count": 0
+        },
+        {
+            "date": "2024-04-26",
+            "count": 0
+        },
+        {
+            "date": "2024-04-27",
+            "count": 0
+        },
+        {
+            "date": "2024-04-28",
+            "count": 0
+        },
+        {
+            "date": "2024-04-29",
+            "count": 0
+        },
+        {
+            "date": "2024-04-30",
+            "count": 0
+        },
+        {
+            "date": "2024-05-01",
+            "count": 0
+        },
+        {
+            "date": "2024-05-02",
+            "count": 4
+        }
+    ]);
 
     useEffect(() => {
         getInitialData();
@@ -40,6 +75,9 @@ const UserManagement = () => {
                 }
             })
             .catch((error) => {});
+        UserService.getChartData().then((res) => {
+            setChartData(res.data);
+        }).catch((error) => {});
     };
 
     const handleRequest = (mode, id) => {
@@ -431,6 +469,8 @@ const UserManagement = () => {
     
     return (
         <div className="ml-64 mt-8 px-4">
+             <h1 className="text-2xl font-bold mb-4">User Management</h1>
+            <UserRegistrationsChart data={chartData}/>
             <UserTable users={users} handleRequest={handleRequest} generateReport={generateReport} />
             <UserProfileModal open={openModal} handleClose={handleCloseModal} UserForm={UserForm} helperText={helperText} onInputHandleChange={onInputHandleChange} handleInputFocus={handleInputFocus} HandleBtnResponse={HandleBtnResponse} mode={mode}/>
         </div>

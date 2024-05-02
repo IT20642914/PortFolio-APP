@@ -22,7 +22,7 @@ const UserTable = ({ users, handleRequest,generateReport }) => {
 
   return (
     <div className={Styles.tableContainer}>
-      <h1 className="text-2xl font-bold mb-4">User Management</h1>
+    
       <div className="container mx-auto px-4 py-4 overflow-x-auto">
         <input
           type="text"
