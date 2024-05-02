@@ -5,6 +5,9 @@ import UserProfileModal from '../../components/UserProfileModal/UserProfileModal
 import { SCREEN_MODES } from '../../utilities/app.constants';
 import { toast } from 'react-toastify';
 import { validateFormData } from '../../helper/index';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
+import {backgrounds} from '../../assets/Images/index'
 const UserManagement = () => {
 
     const INITIAL_USER_FORM={
@@ -112,6 +115,27 @@ const UserManagement = () => {
     };
 
     const generateReport = () => {
+        UserService.generateReport().then(async (res) => {
+            console.log('res', res);
+            if (res.status === 200) {
+                const data = res.data;
+                const blob = await pdf(<MyDocument data={data} />).toBlob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'UserReport.pdf');
+                document.body.appendChild(link);
+                link.click();
+                
+                // Cleanup: remove the link and revoke the URL
+                if(link.parentNode) link.parentNode.removeChild(link);
+                URL.revokeObjectURL(url);
+                toast.success("Report Generated Successfully")
+              }
+        }).catch((error) => {
+            console.log('error', error);
+            toast.error(error);
+        });
         console.log('Generate Report');
     };
 
@@ -284,6 +308,127 @@ const UserManagement = () => {
             }
         }
     }
+
+    const styles = StyleSheet.create({
+        page: {
+          flexDirection: 'column',
+          backgroundColor: 'transparent', // Set background color to transparent
+        //   color: 'white', // Default text color
+        },
+        content: {
+          position: 'relative', // Set position to relative to allow positioning of other elements
+        },
+        header: {
+          fontSize: 24,
+          textAlign: 'center',
+          color: 'white',
+          marginBottom: 10,
+        },
+        subtitle: {
+          fontSize: 18,
+          textAlign: 'left',
+          color: 'white',
+          padding: 5,
+          marginBottom: 10,
+        },
+        tableContainer: {
+          marginTop: 10,
+        },
+        table: {
+        marginHorizontal: 10,
+          display: 'table',
+          width: 'auto',
+          backgroundColor: 'white',
+          marginBottom: 50,
+        },
+        tableRow: {
+          flexDirection: 'row',
+          backgroundColor: '#5aa6bd',
+          borderBottomWidth: 1,
+        },
+        tableHeader: {
+          width: '25%',
+          padding: 5,
+          backgroundColor: '#418ca3',
+          textAlign: 'left',
+          fontWeight: '700',
+
+        },
+        tableCell: {
+         fontSize: 12,
+          width: '25%',
+          padding: 5,
+          textAlign: 'left',
+        },
+          pageBackground: {
+            position: 'absolute',
+            minWidth: '100%',
+            minHeight: '100%',
+            display: 'block',
+            height: '100%',
+            width: '100%',
+            zIndex: -100, // Set z-index to make sure the background is behind other elements
+
+          },
+          container:{
+            position: 'relative',
+            minHeight: '100%',
+          },
+          details:{
+            alignItems:'flex-start',
+            display: 'flex',
+          },
+        tableSubtitle:{
+            fontSize: 18,
+            textAlign: 'center',
+            color: 'white',
+        }
+      });
+      
+      // Create Document Component
+      const MyDocument = ({ data }) => (
+        <Document>
+          <Page size="A4" style={styles.page}>
+          <View style={styles.container}>
+            <Image src={backgrounds} style={styles.pageBackground} />
+            <View style={styles.content}>
+              <Text style={styles.header}>User Report</Text>
+              
+                  <View style={styles.details}>
+                    <Text style={styles.subtitle}>Total Users Resisted: {data.totalUsers}</Text>
+                    <Text style={styles.subtitle}>Total Admins In System: {data.totalAdmins}</Text>
+                    <Text style={styles.subtitle}>Recently Registered User Count: {data.recentUserCount}</Text>
+                  </View>
+
+
+                {/* Table */}
+              <View style={styles.tableContainer}>
+              <Text style={styles.tableSubtitle}>User Registered Details (last 30 days)</Text>
+                <View style={styles.table}>
+                  {/* Table Header */}
+                  <View style={styles.tableRow}>
+                    <Text style={styles.tableHeader}>Name</Text>
+                    <Text style={styles.tableHeader}>Email</Text>
+                    <Text style={styles.tableHeader}>Country</Text>
+                    <Text style={styles.tableHeader}>Job Category</Text>
+                  </View>
+                  {/* Table Body */}
+                  {data.recentUsers.map((user, index) => (
+                    <View key={index} style={styles.tableRow}>
+                      <Text style={styles.tableCell}>{user.fullName}</Text>
+                      <Text style={styles.tableCell}>{user.email}</Text>
+                      <Text style={styles.tableCell}>{user.country}</Text>
+                      <Text style={styles.tableCell}>{user.jobCategory}</Text>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </View>
+            </View>
+          </Page>
+        </Document>
+      );
+    
     return (
         <div className="ml-64 mt-8 px-4">
             <UserTable users={users} handleRequest={handleRequest} generateReport={generateReport} />

@@ -133,4 +133,33 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, registerUser, getAllUsers, getUserById, updateUser, deleteUser };
+const  reportGeneration = async (req, res) => {
+  try {
+    // Total count of admins
+    const adminCount = await User.countDocuments({ role: 'ADMIN' });
+
+    // Total count of users
+    const userCount = await User.countDocuments({ role: 'USER' });
+
+    // Total count of users registered in the last 30 days
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const recentUserCount = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
+    const recentUsers = await User.find({ createdAt: { $gte: thirtyDaysAgo } }).select('-password');
+    // Prepare the report data
+    const report = {
+      totalAdmins: adminCount,
+      totalUsers: userCount,
+      recentUserCount: recentUserCount,
+      recentUsers:recentUsers
+    };
+
+    // Send the report as response
+    res.status(200).json(report);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+}
+module.exports = { loginUser, registerUser, getAllUsers, getUserById, updateUser, deleteUser ,reportGeneration};
