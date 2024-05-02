@@ -4,7 +4,7 @@ import { StyledTextField, theme } from '../../assets/theme/theme' // Import them
 
 const LoginFomComponent = (props) => {
   const email = props.LoginForm.email;
-  const passWord = props.LoginForm.passWord;
+  const password = props.LoginForm.password;
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} md={12}>
@@ -27,16 +27,16 @@ const LoginFomComponent = (props) => {
         <StyledTextField
           theme={theme} // Pass the theme object here
           fullWidth
-          label="Password"
-          placeholder="Enter Password"
+          label="password"
+          placeholder="Enter password"
           size="small"
-          value={passWord.value}
-          error={!!passWord.error}
-          disabled={passWord.disable}
-          required={passWord.isRequired}
-          helperText={props.helperText && passWord.error}
-          onFocus={() => props.handleInputFocus('passWord', 'GI')}
-          onChange={(event) => props.onInputHandleChange('passWord', event.target.value)}
+          value={password.value}
+          error={!!password.error}
+          disabled={password.disable}
+          required={password.isRequired}
+          helperText={props.helperText && password.error}
+          onFocus={() => props.handleInputFocus('password', 'GI')}
+          onChange={(event) => props.onInputHandleChange('password', event.target.value)}
         />
       </Grid>
     </Grid>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { exceptionHandler } from '../core';
 
-axios.defaults.baseURL = "http://localhost:9090";
+axios.defaults.baseURL = "http://localhost:5000";
 
 export const axiosPublicInstance = axios.create();
 export const axiosPrivateInstance = axios.create();

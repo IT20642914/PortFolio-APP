@@ -8,25 +8,16 @@ import moment from 'moment';
 import styles from './SignUpFormComponent.module.scss'
 const SignUpFormComponent = (props) => {
 
-  const INITIAL_LOGIN_FORM={
-    email:  { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "", },
-    fullName:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
-    passWord:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
-    address:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
-    country:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
-    jobCategory:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
-    dob:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
-    mobile:  { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "",charLength: [10], },
-  }
+  
 
-    const email = props.LoginForm.email;
-    const passWord = props.LoginForm.passWord;
-    const fullName = props.LoginForm.fullName;
-    const dob = props.LoginForm.dob;
-    const address = props.LoginForm.address;
-    const country = props.LoginForm.country;
-    const jobCategory = props.LoginForm.jobCategory;
-    const mobile = props.LoginForm.mobile;
+    const email = props.RegForm.email;
+    const password = props.RegForm.password;
+    const fullName = props.RegForm.fullName;
+    const dob = props.RegForm.dob;
+    const address = props.RegForm.address;
+    const country = props.RegForm.country;
+    const jobCategory = props.RegForm.jobCategory;
+    const mobile = props.RegForm.mobile;
   return (
     <Grid container spacing={4}>
          
@@ -132,16 +123,16 @@ const SignUpFormComponent = (props) => {
       <StyledTextField
         theme={theme} // Pass the theme object here
         fullWidth
-        label="Password"
-        placeholder="Enter Password"
+        label="password"
+        placeholder="Enter password"
         size="small"
-        value={passWord.value}
-        error={!!passWord.error}
-        disabled={passWord.disable}
-        required={passWord.isRequired}
-        helperText={props.helperText && passWord.error}
-        onFocus={() => props.handleInputFocus('passWord', 'GI')}
-        onChange={(event) => props.onInputHandleChange('passWord', event.target.value)}
+        value={password.value}
+        error={!!password.error}
+        disabled={password.disable}
+        required={password.isRequired}
+        helperText={props.helperText && password.error}
+        onFocus={() => props.handleInputFocus('password', 'GI')}
+        onChange={(event) => props.onInputHandleChange('password', event.target.value)}
       />
     </Grid>
     
@@ -149,8 +140,8 @@ const SignUpFormComponent = (props) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <DatePicker
       label="Date OF Birth"
-      value={new moment(mobile.value)}
-      onChange={(newValue) => props.onInputHandleChange('mobile', newValue)}
+      value={new moment(dob.value)}
+      onChange={(newValue) => props.onInputHandleChange('dob', newValue)}
       textField={(params) => (
         <StyledTextField
           {...params}
@@ -161,7 +152,7 @@ const SignUpFormComponent = (props) => {
           disabled={dob.disable}
           required={dob.isRequired}
           helperText={props.helperText && dob.error}
-          onFocus={() => props.handleInputFocus('mobile', 'GI')}
+          onFocus={() => props.handleInputFocus('dob', 'GI')}
         />
         
       )}

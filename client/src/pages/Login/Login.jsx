@@ -7,12 +7,14 @@ import { logo } from "../../assets/Images";
 
 import LoginFomComponent from "../../components/LoginFomComponent/LoginFomComponent";
 import { validateFormData } from "../../helper/index";
+import { UserService } from "../../Services/User.Service";
+import { toast } from "react-toastify";
 
 const Login = () => {
 
     const INITIAL_LOGIN_FORM={
         email:  { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "", },
-        passWord:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+        password:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
       }
     const [LoginForm, setLoginForm] = useState(INITIAL_LOGIN_FORM);
     const navigate = useNavigate();
@@ -23,8 +25,21 @@ const Login = () => {
 const handleLogin = async () => {
   const [validateData, isValid] = await validateFormData(LoginForm);
   setLoginForm(validateData);
-  console.log("validateData",validateData)
   if(isValid){
+      const payload = {
+            email: LoginForm.email.value,
+            password: LoginForm.password.value,
+      }
+    UserService.Login(payload).then((res)=>{
+      console.log('res',res)
+      if(res.status === 200){
+        toast.success("User Login Successfully")
+        navigate("/dashboard")
+      }
+    }).catch((err)=>{
+      console.log("err",err)
+      toast.error(err)
+    })
     console.log("Login Success")
   }
 }
@@ -40,11 +55,11 @@ const onInputHandleChange = (property, value) => {
           },
         });
       }
-      if (property === "passWord") {
+      if (property === "password") {
         setLoginForm({
             ...LoginForm,
-            passWord: {
-              ...LoginForm.passWord,
+            password: {
+              ...LoginForm.password,
               value: value,
             },
           });

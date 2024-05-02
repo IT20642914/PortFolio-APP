@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  name: {
+  fullName: {
     type: String,
     required: true,
   },
@@ -18,6 +13,32 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  jobCategory: {
+    type: String,
+    required: true,
+  },
+  dob: {
+    type: Date,
+    required: true,
+  },
+  mobile: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /\d{10}/.test(v);
+      },
+      message: props => `${props.value} is not a valid phone number!`
+    },
   },
   role: {
     type: String,
