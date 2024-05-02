@@ -1,0 +1,86 @@
+.containor {
+    max-width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+form div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    margin: auto;
+    display: block;
+    text-align: center;
+    background-color: #3eed44;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+    color: #f9f9f9;
+}
+
+button[type=button]{
+    margin: auto;
+    display: block;
+    text-align: center;
+    background-color: #be4242;
+    color: rgb(0, 0, 0);
+    border:#ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+}
+
+button[type="button"]:hover {
+    background-color: #9f0000;
+    color: #f9f9f9;
+}
+
+
+.cancel{
+    margin: auto;
+    display: block;
+    width: 30%;
+    margin-top: 10px;
+    background-color: rgb(121, 5, 29);
+    text-align: center;
+    color: rgb(255, 255, 255);
+    border-color: antiquewhite;
+}
+
+.cancel:hover{
+    background-color: rgb(236, 137, 157);
+    color: black;
+}
