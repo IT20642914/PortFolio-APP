@@ -22,7 +22,7 @@ const UserTable = ({ users, handleRequest,generateReport }) => {
 
   return (
     <div className={Styles.tableContainer}>
-      <h1 className="text-2xl font-bold mb-4">User Management</h1>
+    
       <div className="container mx-auto px-4 py-4 overflow-x-auto">
         <input
           type="text"
@@ -51,6 +51,7 @@ const UserTable = ({ users, handleRequest,generateReport }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-200">
+             <th className="py-2">NO</th>
               <th className="py-2">Full Name</th>
               <th className="py-2">Email</th>
               <th className="py-2">Address</th>
@@ -63,11 +64,11 @@ const UserTable = ({ users, handleRequest,generateReport }) => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map((user) => (
+            {filteredUsers.map((user,index) => (
               <tr
                 key={user._id}
                 className="bg-gradient-to-r from-blue-200 to-white shadow-md mb-2"
-              >
+              > <td className="py-2">{index+1}</td>
                 <td className="py-2">{user.fullName}</td>
                 <td className="py-2">{user.email}</td>
                 <td className="py-2">{user.address}</td>

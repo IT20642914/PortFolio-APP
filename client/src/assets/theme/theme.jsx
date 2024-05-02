@@ -16,6 +16,7 @@ import {
     TableRow,
     TextField,
   } from "@mui/material";
+  const primaryFontSize = 14;
   export const theme = createTheme({
     palette: {
       text: {
@@ -44,7 +45,18 @@ import {
       warning: {
         main: "#FFB800",
       },
+      typography: {
+        fontFamily: ["Ubuntu", "sans-serif"].join(","),
+        fontSize: primaryFontSize,
+        fontWeightLight: 100,
+        fontWeightRegular: 400,
+        fontWeightBold: 500,
+        body1: {
+          fontSize: primaryFontSize,
+        },
+      },
     },
+    
   });
   
 
@@ -96,10 +108,11 @@ export const StyledTextField = styled(TextField)(({ theme, error }) => ({
   // Change text color to red when error is true
   "& .MuiFormHelperText-root": {
     color: error ? theme.palette.error.main : theme.palette.white.main,
-    backgroundColor: alpha(theme.palette.error.main, 0.2),
+    fontSize: "0.75rem",
+    backgroundColor: alpha(theme.palette.white.main, 0.6),
   },
   "& .MuiInputAdornment-root.MuiInputAdornment-positionEnd": {
-    color: theme.palette.text.primary,
+    color: theme.palette.white.main,
     // Add more styles as needed
   },
   "& .MuiFormLabel-root-MuiInputLabel-root": {
@@ -108,29 +121,3 @@ export const StyledTextField = styled(TextField)(({ theme, error }) => ({
 }));
 
 
-export const StyledTableCell = styled(TableCell, {
-  shouldForwardProp: (prop) => prop !== "width",
-})(({ theme, width }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontSize: 14,
-    backgroundColor: "#2a5a68",
-    color: theme.palette.common.white,
-    padding: "15px",
-    borderLeft: "1px solid",
-    borderColor: "#2a5a68",
-    width: width || "auto",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-    padding: "15px",
-    color: theme.palette.common.white,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    borderBottom: "0.01px solid #E75480 !important",
-    width: width || "auto",
-  },
-  "&:last-child": {
-    position: "sticky",
-    right: 0,
-    zIndex: 10,
-  },
-}));

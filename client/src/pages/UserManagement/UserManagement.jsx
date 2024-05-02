@@ -3,10 +3,16 @@ import UserTable from '../../components/UserManagementTable/UserManagementTable'
 import { UserService } from '../../Services/User.Service';
 import UserProfileModal from '../../components/UserProfileModal/UserProfileModal';
 import { SCREEN_MODES } from '../../utilities/app.constants';
-
+import { toast } from 'react-toastify';
+import { validateFormData } from '../../helper/index';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
+import {backgrounds} from '../../assets/Images/index'
+import UserRegistrationsChart from '../../components/UserRegistrationsChart/UserRegistrationsChart';
 const UserManagement = () => {
 
     const INITIAL_USER_FORM={
+        _id:  { value: "", isRequired: false, disable: false, readonly: false, validator: "text", error: "", },
         email:  { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "", },
         fullName:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
         password:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
@@ -22,6 +28,40 @@ const UserManagement = () => {
     const [openModal, setOpenModal] = useState(false);
     const [helperText, setHelperText] = useState(true);
     const [mode, setMode] = useState(null);
+    const [chartData, setChartData] = useState([
+        {
+            "date": "2024-04-25",
+            "count": 0
+        },
+        {
+            "date": "2024-04-26",
+            "count": 0
+        },
+        {
+            "date": "2024-04-27",
+            "count": 0
+        },
+        {
+            "date": "2024-04-28",
+            "count": 0
+        },
+        {
+            "date": "2024-04-29",
+            "count": 0
+        },
+        {
+            "date": "2024-04-30",
+            "count": 0
+        },
+        {
+            "date": "2024-05-01",
+            "count": 0
+        },
+        {
+            "date": "2024-05-02",
+            "count": 4
+        }
+    ]);
 
     useEffect(() => {
         getInitialData();
@@ -35,13 +75,22 @@ const UserManagement = () => {
                 }
             })
             .catch((error) => {});
+        UserService.getChartData().then((res) => {
+            setChartData(res.data);
+        }).catch((error) => {});
     };
 
     const handleRequest = (mode, id) => {
         console.log('mode', mode, id);
         setMode(mode)
         if(mode === SCREEN_MODES.CREATE){
-            setUserForm(INITIAL_USER_FORM)
+            setUserForm({
+                ...INITIAL_USER_FORM,
+                password: {
+                    ...UserForm.password,
+                    isRequired: false,
+                }
+            })
             setOpenModal(true);
         }
         if(mode === SCREEN_MODES.EDIT){
@@ -81,17 +130,50 @@ const UserManagement = () => {
                         password: {
                             ...UserForm.password,
                             value: res.data.password,
+                            isRequired: false,
 
-                        }
+                        },
+                        role: {
+                            ...UserForm.role,
+                            value: res.data.role,
+                        },
+                        _id: {
+                            ...UserForm._id,
+                            value: res.data._id,
+                        },
                     });
                     setOpenModal(true);
                 }
             })
-            .catch((error) => {});
+            .catch((error) => {
+                console.log('error', error);
+                toast.error(error);
+            });
         }
     };
 
     const generateReport = () => {
+        UserService.generateReport().then(async (res) => {
+            console.log('res', res);
+            if (res.status === 200) {
+                const data = res.data;
+                const blob = await pdf(<MyDocument data={data} />).toBlob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'UserReport.pdf');
+                document.body.appendChild(link);
+                link.click();
+                
+                // Cleanup: remove the link and revoke the URL
+                if(link.parentNode) link.parentNode.removeChild(link);
+                URL.revokeObjectURL(url);
+                toast.success("Report Generated Successfully")
+              }
+        }).catch((error) => {
+            console.log('error', error);
+            toast.error(error);
+        });
         console.log('Generate Report');
     };
 
@@ -122,6 +204,15 @@ const UserManagement = () => {
                 value: value,
               },
             });
+          }
+          if(property === "role"){
+            setUserForm({
+                ...UserForm,
+                role: {
+                  ...UserForm.role,
+                  value: value,
+                },
+              });
           }
           if (property === "fullName") {
             setUserForm({
@@ -189,11 +280,197 @@ const UserManagement = () => {
        }
     }
 
-    const HandleBtnResponse=()=>{
-        console.log('HandleBtnResponse');
+    const HandleBtnResponse=async (mode)=>{
+        if(mode===SCREEN_MODES.CREATE){
+            setUserForm({...UserForm,
+            password: {
+                ...UserForm.password,
+                isRequired:false,
+                value: "temp",
+
+            }})
+            const [validateData, isValid] = await validateFormData(UserForm);
+            setUserForm(validateData);
+            if(isValid){
+                const payload = {
+                    email: UserForm.email.value,
+                    fullName: UserForm.fullName.value,
+                    password: UserForm.password.value,
+                    address: UserForm.address.value,
+                    country: UserForm.country.value,
+                    jobCategory: UserForm.jobCategory.value,
+                    dob: UserForm.dob.value,
+                    mobile: UserForm.mobile.value
+
+                }
+                UserService.Register(payload).then((res)=>{
+                    console.log('res',res)
+                    if(res.status === 201){
+                        toast.success("User Created Successfully")
+                        setOpenModal(false);
+                        getInitialData();
+                    }
+                }).catch((err)=>{
+                    console.log("err",err)
+                    toast.error(err)
+                })
+            }
+        }else{
+            const [validateData, isValid] = await validateFormData(UserForm);
+            setUserForm(validateData);
+            console.log("updae",isValid)
+            if(isValid){
+                const payload = {
+                    id: UserForm._id.value,
+                    email: UserForm.email.value,
+                    fullName: UserForm.fullName.value,
+                    password: UserForm.password.value,
+                    address: UserForm.address.value,
+                    country: UserForm.country.value,
+                    jobCategory: UserForm.jobCategory.value,
+                    dob: UserForm.dob.value,
+                    mobile: UserForm.mobile.value,
+                    role: UserForm.role.value
+                }
+
+                UserService.updateUser(payload.id,payload).then((res)=>{
+                    if(res.status === 200){
+                        toast.success("User Updated Successfully")
+                        setOpenModal(false);
+                        getInitialData();
+                    }
+                }).catch((err)=>{
+                    console.log("err",err)
+                    toast.error(err)
+                })
+            }
+        }
     }
+
+    const styles = StyleSheet.create({
+        page: {
+          flexDirection: 'column',
+          backgroundColor: 'transparent', // Set background color to transparent
+        //   color: 'white', // Default text color
+        },
+        content: {
+          position: 'relative', // Set position to relative to allow positioning of other elements
+        },
+        header: {
+          fontSize: 24,
+          textAlign: 'center',
+          color: 'white',
+          marginBottom: 10,
+        },
+        subtitle: {
+          fontSize: 18,
+          textAlign: 'left',
+          color: 'white',
+          padding: 5,
+          marginBottom: 10,
+        },
+        tableContainer: {
+          marginTop: 10,
+        },
+        table: {
+        marginHorizontal: 10,
+          display: 'table',
+          width: 'auto',
+          backgroundColor: 'white',
+          marginBottom: 50,
+        },
+        tableRow: {
+          flexDirection: 'row',
+          backgroundColor: '#5aa6bd',
+          borderBottomWidth: 1,
+        },
+        tableHeader: {
+          width: '25%',
+          padding: 5,
+          backgroundColor: '#418ca3',
+          textAlign: 'left',
+          fontWeight: '700',
+
+        },
+        tableCell: {
+         fontSize: 12,
+          width: '25%',
+          padding: 5,
+          textAlign: 'left',
+        },
+          pageBackground: {
+            position: 'absolute',
+            minWidth: '100%',
+            minHeight: '100%',
+            display: 'block',
+            height: '100%',
+            width: '100%',
+            zIndex: -100, // Set z-index to make sure the background is behind other elements
+
+          },
+          container:{
+            position: 'relative',
+            minHeight: '100%',
+          },
+          details:{
+            alignItems:'flex-start',
+            display: 'flex',
+          },
+        tableSubtitle:{
+            fontSize: 18,
+            textAlign: 'center',
+            color: 'white',
+        }
+      });
+      
+      // Create Document Component
+      const MyDocument = ({ data }) => (
+        <Document>
+          <Page size="A4" style={styles.page}>
+          <View style={styles.container}>
+            <Image src={backgrounds} style={styles.pageBackground} />
+            <View style={styles.content}>
+              <Text style={styles.header}>User Report</Text>
+              
+                  <View style={styles.details}>
+                    <Text style={styles.subtitle}>Total Users Resisted: {data.totalUsers}</Text>
+                    <Text style={styles.subtitle}>Total Admins In System: {data.totalAdmins}</Text>
+                    <Text style={styles.subtitle}>Recently Registered User Count: {data.recentUserCount}</Text>
+                  </View>
+
+
+                {/* Table */}
+              <View style={styles.tableContainer}>
+              <Text style={styles.tableSubtitle}>User Registered Details (last 30 days)</Text>
+                <View style={styles.table}>
+                  {/* Table Header */}
+                  <View style={styles.tableRow}>
+                    <Text style={styles.tableHeader}>Name</Text>
+                    <Text style={styles.tableHeader}>Email</Text>
+                    <Text style={styles.tableHeader}>Country</Text>
+                    <Text style={styles.tableHeader}>Job Category</Text>
+                  </View>
+                  {/* Table Body */}
+                  {data.recentUsers.map((user, index) => (
+                    <View key={index} style={styles.tableRow}>
+                      <Text style={styles.tableCell}>{user.fullName}</Text>
+                      <Text style={styles.tableCell}>{user.email}</Text>
+                      <Text style={styles.tableCell}>{user.country}</Text>
+                      <Text style={styles.tableCell}>{user.jobCategory}</Text>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </View>
+            </View>
+          </Page>
+        </Document>
+      );
+    
     return (
         <div className="ml-64 mt-8 px-4">
+             <h1 className="text-2xl font-bold mb-4">User Management</h1>
+            <UserRegistrationsChart data={chartData}/>
             <UserTable users={users} handleRequest={handleRequest} generateReport={generateReport} />
             <UserProfileModal open={openModal} handleClose={handleCloseModal} UserForm={UserForm} helperText={helperText} onInputHandleChange={onInputHandleChange} handleInputFocus={handleInputFocus} HandleBtnResponse={HandleBtnResponse} mode={mode}/>
         </div>

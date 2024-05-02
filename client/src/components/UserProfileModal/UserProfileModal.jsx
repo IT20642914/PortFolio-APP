@@ -191,8 +191,8 @@ const UserProfileModal = ({ open, handleClose, UserForm,handleInputFocus,helperT
        </LocalizationProvider>
      </Grid>
      <Grid container justifyContent="flex-end" item xs={12} md={12}>
-        {mode&& mode===SCREEN_MODES.CREATE && <Button className={Styles.Btn} onClick={()=>{HandleBtnResponse()}}>Add New User</Button>}
-        {mode&& mode===SCREEN_MODES.EDIT &&     <Button className={Styles.Btn} onClick={()=>{HandleBtnResponse()}}>Update User</Button>}
+        {mode&& mode===SCREEN_MODES.CREATE && <Button className={Styles.Btn} onClick={()=>{HandleBtnResponse(SCREEN_MODES.CREATE)}}>Add New User</Button>}
+        {mode&& mode===SCREEN_MODES.EDIT &&     <Button className={Styles.Btn} onClick={()=>{HandleBtnResponse(SCREEN_MODES.EDIT)}}>Update User</Button>}
         <Button className={Styles.CBtn}onClick={()=>{handleClose()}}>Cancel</Button>
     </Grid>
        </Grid>

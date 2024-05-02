@@ -18,10 +18,18 @@ const getUserById = (id) => {
 const updateUser = (id,payload) => {
     return axiosPrivateInstance.put(`/api/user/?id=${id}`,payload);
 }
+const generateReport = () => {
+    return axiosPrivateInstance.get(`/api/user/generate-report`);
+}
+const getChartData = () => {
+    return axiosPrivateInstance.get(`/api/user/chart`);
+}
 export const UserService = {
     Login,
     Register,
     getAllUsers,
     getUserById,
-    updateUser
+    updateUser,
+    generateReport,
+    getChartData
 }

@@ -115,5 +115,107 @@ const updateUser = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.query.id;
 
-module.exports = { loginUser, registerUser, getAllUsers, getUserById, updateUser };
+    // Delete the user from the database
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const  reportGeneration = async (req, res) => {
+  try {
+    // Total count of admins
+    const adminCount = await User.countDocuments({ role: 'ADMIN' });
+
+    // Total count of users
+    const userCount = await User.countDocuments({ role: 'USER' });
+
+    // Total count of users registered in the last 30 days
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const recentUserCount = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
+    const recentUsers = await User.find({ createdAt: { $gte: thirtyDaysAgo } }).select('-password');
+    // Prepare the report data
+    const report = {
+      totalAdmins: adminCount,
+      totalUsers: userCount,
+      recentUserCount: recentUserCount,
+      recentUsers:recentUsers
+    };
+
+    // Send the report as response
+    res.status(200).json(report);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+}
+
+const registeredUserCountsByDate = async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(currentDate.setDate(currentDate.getDate() - 7));
+
+    // Generate an array of dates for the last 7 days
+    const dateArray = Array.from({ length: 8 }, (_, index) => {
+      const date = new Date(sevenDaysAgo);
+      date.setDate(date.getDate() + index);
+      return date;
+    });
+
+    // Convert the dateArray to an array of string dates in the format YYYY-MM-DD
+    const dateStringArray = dateArray.map(date => date.toISOString().split('T')[0]);
+
+    // Group users by registration date and count the number of registrations for each day
+    const registrationCounts = await User.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: sevenDaysAgo } // Filter users created in the last 7 days
+        }
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    // Initialize an object to store the counts for each day
+    const countsMap = {};
+    dateStringArray.forEach(dateString => {
+      countsMap[dateString] = 0; // Initialize count to 0 for each day
+    });
+
+    // Update the counts with the actual counts from the database
+    registrationCounts.forEach(item => {
+      countsMap[item._id] = item.count;
+    });
+
+    // Format the data into an array of objects with date and count properties
+    const formattedData = dateStringArray.map(dateString => ({
+      date: dateString,
+      count: countsMap[dateString]
+    }));
+
+    res.json(formattedData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+
+}
+
+module.exports = { loginUser, registerUser, getAllUsers, getUserById, updateUser, deleteUser ,reportGeneration,registeredUserCountsByDate};
