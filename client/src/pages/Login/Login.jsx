@@ -35,8 +35,14 @@ const handleLogin = async () => {
       if(res.status === 200){
         localStorage.setItem("token",res.data.data.access_token)
         localStorage.setItem("user",JSON.stringify(res.data.data.user))
+        if(res.data.data.user.role === "ADMIN"){
+          toast.success("User Login Successfully")
+          navigate("/UserManagement")
+        }
+      else{
         toast.success("User Login Successfully")
-        navigate("/UserManagement")
+        navigate("/jobs")
+      }
       }
     }).catch((err)=>{
       console.log("err",err)

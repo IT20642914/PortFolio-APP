@@ -1,12 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import { FaBars, FaSignOutAlt } from "react-icons/fa"; // Importing FontAwesome icons
+import { useNavigate } from "react-router-dom";
 
 const SideNavBar = () => {
   const [showSideNav, setShowSideNav] = useState(false); // State to toggle side navbar
   const [activeTab, setActiveTab] = useState(""); // State to track the active tab
-
+const navigate = useNavigate();
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
     console.log("Logout clicked");
   };
 
