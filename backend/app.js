@@ -46,7 +46,13 @@ app.use("/api/job", jobRouter);
 const applyRouter = require("./routes/applyRoutes");
 app.use("/api/apply", applyRouter);
 
+
+const mediaRouter = require("./routes/medias.js");
+app.use("/media",mediaRouter);
+
 const PORT = process.env.PORT || 5000;
+
+
 
 app.listen(PORT, () => {
   console.log(`Backend is running on port ${PORT}`);
