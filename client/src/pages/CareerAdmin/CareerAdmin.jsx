@@ -51,9 +51,6 @@ const CareerAdmin = () => {
       <SideNavBar />
       <div className="ml-64 mt-8 px-4">
         {" "}
-        {/* <button className="bg-customGray hover:bg-customGray2 text-white hover:text-customGray4 font-bold py-2 px-4 rounded mb-4 mr-4 float-right">
-          <span className="mr-2">+</span> Add
-        </button> */}
         <JobReport/>
         <AddJob/>
         <AdminJobs

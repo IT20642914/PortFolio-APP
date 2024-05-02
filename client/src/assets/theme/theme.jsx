@@ -106,3 +106,31 @@ export const StyledTextField = styled(TextField)(({ theme, error }) => ({
     color: theme.palette.white.main,
   },
 }));
+
+
+export const StyledTableCell = styled(TableCell, {
+  shouldForwardProp: (prop) => prop !== "width",
+})(({ theme, width }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    fontSize: 14,
+    backgroundColor: "#2a5a68",
+    color: theme.palette.common.white,
+    padding: "15px",
+    borderLeft: "1px solid",
+    borderColor: "#2a5a68",
+    width: width || "auto",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+    padding: "15px",
+    color: theme.palette.common.white,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderBottom: "0.01px solid #E75480 !important",
+    width: width || "auto",
+  },
+  "&:last-child": {
+    position: "sticky",
+    right: 0,
+    zIndex: 10,
+  },
+}));

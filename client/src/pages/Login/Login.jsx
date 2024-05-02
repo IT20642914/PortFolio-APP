@@ -33,6 +33,8 @@ const handleLogin = async () => {
     UserService.Login(payload).then((res)=>{
       console.log('res',res)
       if(res.status === 200){
+        localStorage.setItem("token",res.data.data.access_token)
+        localStorage.setItem("user",JSON.stringify(res.data.data.user))
         toast.success("User Login Successfully")
         navigate("/dashboard")
       }
@@ -40,7 +42,6 @@ const handleLogin = async () => {
       console.log("err",err)
       toast.error(err)
     })
-    console.log("Login Success")
   }
 }
 

@@ -1,12 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { FaBars, FaSignOutAlt } from "react-icons/fa"; // Importing FontAwesome icons
 
 const SideNavBar = () => {
   const [showSideNav, setShowSideNav] = useState(false); // State to toggle side navbar
 
+  const handleLogout = () => {
+    console.log("Logout clicked");
+  };
+
   return (
     <>
-      {/* Toggle button */}
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
@@ -37,6 +41,7 @@ const SideNavBar = () => {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-customGray group"
               >
+                {/* Dashboard icon */}
                 <svg
                   className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
@@ -49,7 +54,7 @@ const SideNavBar = () => {
                 <span className="ms-3">Dashboard</span>
               </a>
             </li>
-            {/* Add more sidebar items as needed */}
+
             <li>
               <a
                 href="/adminJobs"
@@ -66,42 +71,11 @@ const SideNavBar = () => {
                 <span className="ms-3">Career</span>
               </a>
             </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-customGray group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 22 21"
-                >
-                  {/* Your SVG icon */}
-                </svg>
-                <span className="ms-3">Category 2</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-customGray group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 22 21"
-                >
-                  {/* Your SVG icon */}
-                </svg>
-                <span className="ms-3">Category 3</span>
-              </a>
-            </li>
+            {/* Add more sidebar items as needed */}
             {/* Logout button */}
             <li>
               <button
-                onClick={() => console.log("Logout clicked")} // Handle logout action
+                onClick={handleLogout} // Handle logout action
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-customGray group w-full"
               >
                 <FaSignOutAlt className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />{" "}
