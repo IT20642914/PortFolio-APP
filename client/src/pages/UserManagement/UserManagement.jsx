@@ -4,10 +4,11 @@ import { UserService } from '../../Services/User.Service';
 import UserProfileModal from '../../components/UserProfileModal/UserProfileModal';
 import { SCREEN_MODES } from '../../utilities/app.constants';
 import { toast } from 'react-toastify';
-
+import { validateFormData } from '../../helper/index';
 const UserManagement = () => {
 
     const INITIAL_USER_FORM={
+        _id:  { value: "", isRequired: false, disable: false, readonly: false, validator: "text", error: "", },
         email:  { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "", },
         fullName:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
         password:  { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
@@ -42,7 +43,13 @@ const UserManagement = () => {
         console.log('mode', mode, id);
         setMode(mode)
         if(mode === SCREEN_MODES.CREATE){
-            setUserForm(INITIAL_USER_FORM)
+            setUserForm({
+                ...INITIAL_USER_FORM,
+                password: {
+                    ...UserForm.password,
+                    isRequired: false,
+                }
+            })
             setOpenModal(true);
         }
         if(mode === SCREEN_MODES.EDIT){
@@ -82,12 +89,17 @@ const UserManagement = () => {
                         password: {
                             ...UserForm.password,
                             value: res.data.password,
+                            isRequired: false,
 
                         },
                         role: {
                             ...UserForm.role,
                             value: res.data.role,
-                        }
+                        },
+                        _id: {
+                            ...UserForm._id,
+                            value: res.data._id,
+                        },
                     });
                     setOpenModal(true);
                 }
@@ -206,8 +218,71 @@ const UserManagement = () => {
        }
     }
 
-    const HandleBtnResponse=(mode)=>{
-        console.log('HandleBtnResponse');
+    const HandleBtnResponse=async (mode)=>{
+        if(mode===SCREEN_MODES.CREATE){
+            setUserForm({...UserForm,
+            password: {
+                ...UserForm.password,
+                isRequired:false,
+                value: "temp",
+
+            }})
+            const [validateData, isValid] = await validateFormData(UserForm);
+            setUserForm(validateData);
+            if(isValid){
+                const payload = {
+                    email: UserForm.email.value,
+                    fullName: UserForm.fullName.value,
+                    password: UserForm.password.value,
+                    address: UserForm.address.value,
+                    country: UserForm.country.value,
+                    jobCategory: UserForm.jobCategory.value,
+                    dob: UserForm.dob.value,
+                    mobile: UserForm.mobile.value
+
+                }
+                UserService.Register(payload).then((res)=>{
+                    console.log('res',res)
+                    if(res.status === 201){
+                        toast.success("User Created Successfully")
+                        setOpenModal(false);
+                        getInitialData();
+                    }
+                }).catch((err)=>{
+                    console.log("err",err)
+                    toast.error(err)
+                })
+            }
+        }else{
+            const [validateData, isValid] = await validateFormData(UserForm);
+            setUserForm(validateData);
+            console.log("updae",isValid)
+            if(isValid){
+                const payload = {
+                    id: UserForm._id.value,
+                    email: UserForm.email.value,
+                    fullName: UserForm.fullName.value,
+                    password: UserForm.password.value,
+                    address: UserForm.address.value,
+                    country: UserForm.country.value,
+                    jobCategory: UserForm.jobCategory.value,
+                    dob: UserForm.dob.value,
+                    mobile: UserForm.mobile.value,
+                    role: UserForm.role.value
+                }
+
+                UserService.updateUser(payload.id,payload).then((res)=>{
+                    if(res.status === 200){
+                        toast.success("User Updated Successfully")
+                        setOpenModal(false);
+                        getInitialData();
+                    }
+                }).catch((err)=>{
+                    console.log("err",err)
+                    toast.error(err)
+                })
+            }
+        }
     }
     return (
         <div className="ml-64 mt-8 px-4">
