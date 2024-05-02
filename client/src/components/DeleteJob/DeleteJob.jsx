@@ -3,15 +3,17 @@ import swal from "sweetalert";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
-const DeleteJob = ({ jobId }) => {
-  const [showModal, setShowModal] = useState(false);
+const DeleteJob = ({ jobId,isOpen,onClose }) => {
+  const [showModal, setShowModal] = useState(isOpen);
 
   const handleCloseModal = () => {
     setShowModal(false);
+    onClose()
   };
 
   const handleShowModal = () => {
     setShowModal(true);
+   
   };
 
   const handleDelete = () => {
@@ -36,13 +38,7 @@ const DeleteJob = ({ jobId }) => {
 
   return (
     <div>
-      {/* Delete button */}
-      <button
-        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-        onClick={handleShowModal}
-      >
-        <FaTrash className="inline-block mr-1" /> Delete
-      </button>
+
 
       {/* Modal */}
       {showModal && (

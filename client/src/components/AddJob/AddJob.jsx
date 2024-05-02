@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import swal from "sweetalert";
 import axios from "axios"
 
-const AddJob = () => {
-  const [showModal, setShowModal] = useState(false);
+const AddJob = ({isOpen ,onClose}) => {
+  const [showModal, setShowModal] = useState(isOpen);
   const [position, setPosition] = useState("");
   const [category, setCategory] = useState("");
   const [company, setCompany] = useState("");
@@ -13,6 +13,7 @@ const AddJob = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    onClose()
   };
 
   const handleShowModal = () => {
@@ -67,12 +68,7 @@ const AddJob = () => {
 
   return (
     <div>
-      <button
-        className="bg-customGray hover:bg-customGray2 text-white hover:text-customGray4 font-bold py-2 px-4 rounded mb-4 mr-4 float-right"
-        onClick={handleShowModal}
-      >
-        <span className="mr-2">+</span> Add
-      </button>
+     
 
       {/* Modal */}
       {showModal && (

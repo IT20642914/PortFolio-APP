@@ -5,15 +5,23 @@ import Jobs from "./pages/Jobs";
 import CareerAdmin from "./pages/CareerAdmin/CareerAdmin";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import SideNavBar from "./components/SideNav/SideNavBar";
 function App() {
 
+  const ADminLayoutRoutes = ({ children }) => (
+    <>
+     <SideNavBar />
+      {children}
+    </>
+  );
+ 
   return (
     <BrowserRouter>
       <Routes>
       <Route path="/"  name="Login" element={<Login />} /> 
       <Route path="/signup"  name="SignUp" element={<SignUp />} />
       <Route path="/jobs" name="jobs" element={<Jobs />} />
-      <Route path="/adminJobs" name="adminJobs" element={<CareerAdmin/>}/>
+      <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
       </Routes>
     </BrowserRouter>
   );

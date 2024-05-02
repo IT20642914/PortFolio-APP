@@ -9,7 +9,7 @@
     font-family: 'Rajdhani', sans-serif;
 } */
 
-nav {
+nav.navbar {
     position: fixed;
     z-index: 9999;
     top: 0;
@@ -20,14 +20,14 @@ nav {
     background-color: #EE3731(255, 255, 255, 0.8);
 }
 
-nav ul {
+nav.navbar ul {
 
     margin: 0;
     padding: .2em 2em;
     float: right;
 }
 
-nav ul li {
+nav.navbar ul li {
     display: inline-block;
     margin: 0;
     padding: .2em .7em;
