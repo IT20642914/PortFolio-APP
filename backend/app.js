@@ -50,10 +50,13 @@ app.use("/api/apply", applyRouter);
 const mediaRouter = require("./routes/medias.js");
 app.use("/media",mediaRouter);
 
+const feedbackRouter = require("./routes/feedbackRoutes");
+app.use("/api/feedbacks", feedbackRouter);
 const PORT = process.env.PORT || 5000;
 
 
-
+const postRouter = require("./routes/posts");
+app.use("/api/portfolio", postRouter);
 app.listen(PORT, () => {
   console.log(`Backend is running on port ${PORT}`);
 });

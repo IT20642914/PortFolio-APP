@@ -28,40 +28,7 @@ const UserManagement = () => {
     const [openModal, setOpenModal] = useState(false);
     const [helperText, setHelperText] = useState(true);
     const [mode, setMode] = useState(null);
-    const [chartData, setChartData] = useState([
-        {
-            "date": "2024-04-25",
-            "count": 0
-        },
-        {
-            "date": "2024-04-26",
-            "count": 0
-        },
-        {
-            "date": "2024-04-27",
-            "count": 0
-        },
-        {
-            "date": "2024-04-28",
-            "count": 0
-        },
-        {
-            "date": "2024-04-29",
-            "count": 0
-        },
-        {
-            "date": "2024-04-30",
-            "count": 0
-        },
-        {
-            "date": "2024-05-01",
-            "count": 0
-        },
-        {
-            "date": "2024-05-02",
-            "count": 4
-        }
-    ]);
+    const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
         getInitialData();

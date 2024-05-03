@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   portfolio_name: {
@@ -25,9 +25,29 @@ const postSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  amount: {
+    type: Number,
+    require: true,
+  },
+  discountPercentage: {
+    type: Number,
+    require: true,
+  },
+  disStartDate: {
+    type: Date,
+    require: true,
+  },
+  disEndDate: {
+    type: Date,
+    require: true,
+  },
+  userID:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   image: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Image',
+    ref: "Image",
   },
   gallery: [
     {
@@ -38,4 +58,4 @@ const postSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model("Post", postSchema);

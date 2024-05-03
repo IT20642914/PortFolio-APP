@@ -98,6 +98,21 @@ const navigate = useNavigate();
               </a>
             </li>
             <li>
+              <a
+                href="/feedbackManagement"
+                onClick={() => handleTabClick("FeedBack Management")}
+                className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-customGray group ${
+                  activeTab === "FeedBack Management" ? "bg-[#418ca3] text-white" : ""
+                }`}
+              >
+                {/* Career icon placeholder */}
+                <svg className="w-5 h-5 transition duration-75" aria-hidden="true" fill="currentColor" viewBox="0 0 22 21">
+                  {/* Your SVG icon */}
+                </svg>
+                <span className="ms-3">FeedBack Management</span>
+              </a>
+            </li>
+            <li>
               <button
                 onClick={handleLogout}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-customGray group w-full"

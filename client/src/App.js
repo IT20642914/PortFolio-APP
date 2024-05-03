@@ -13,7 +13,7 @@ import Add from './components/Add';
 import MediaList from './components/MediaList';
 import UpdateContent from './components/UpdateContent';
 import SingleMedia from "./components/viewone";
-
+import FeedbackManagement from "./pages/FeedbackManagement/FeedbackManagement";
 function App() {
 
   const ADminLayoutRoutes = ({ children }) => (
@@ -39,6 +39,9 @@ function App() {
 
 
             {/* Admin routes */}
+            
+           <Route path="/feedbackManagement" name="adminJobs" element={<ADminLayoutRoutes><FeedbackManagement/></ADminLayoutRoutes>}/>
+
            <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
            <Route path="/UserManagement" name="adminJobs" element={<ADminLayoutRoutes><UserManagement/></ADminLayoutRoutes>}/>
 
