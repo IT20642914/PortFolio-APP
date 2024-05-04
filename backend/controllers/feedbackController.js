@@ -1,6 +1,6 @@
 const feedbackModel = require('../models/feedbackSchema');
 const postModel = require('../models/Portfolio');
-
+const mongoose = require('mongoose');
 // POST method to add feedback
 const AddFeedback = async (req, res) => {
     try {
@@ -164,4 +164,63 @@ const generateFeedbackReport = async (req, res) => {
     }
 };
 
-module.exports = { getALlFeedBack ,AddFeedback,updateSpecificFeedback,deleteSpecificFeedback,generateFeedbackReport};
+const getAverageRatingsForPost = async (req, res) => {
+    const postID = req.query.postID;  // Get postID from query parameters
+
+    try {
+        const averages = await feedbackModel.aggregate([
+            {
+                $match: { "postID": new mongoose.Types.ObjectId(postID) } // Corrected usage of ObjectId
+            },
+            {
+                $unwind: "$feedbackDetails"
+            },
+            {
+                $group: {
+                    _id: null, // Group all documents together
+                    averageResponsibility: { $avg: "$feedbackDetails.responsibility" },
+                    averageFriendliness: { $avg: "$feedbackDetails.friendliness" },
+                    averageCreativity: { $avg: "$feedbackDetails.creativity" },
+                    averageReliability: { $avg: "$feedbackDetails.reliability" },
+                    averageOverallSatisfaction: { $avg: "$feedbackDetails.overallSatisfaction" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0, // Exclude the _id field
+                    averageResponsibility: 1,
+                    averageFriendliness: 1,
+                    averageCreativity: 1,
+                    averageReliability: 1,
+                    averageOverallSatisfaction: 1
+                }
+            }
+        ]);
+
+        if (averages.length === 0) {
+            return res.status(404).send({ message: "No feedback data available for this post to calculate averages" });
+        }
+
+        res.status(200).send(averages[0]); // Send the averages object
+    } catch (error) {
+        res.status(500).send({ message: "Failed to calculate average ratings for the post", error: error.message });
+    }
+};
+
+
+const getPostDetailsAndFeedback = async (req, res) => {
+    try {
+        const postID = req.query.postID;
+        const post = await postModel.findById(postID);
+        const feedbacks = await feedbackModel.find({ postID: postID });
+
+        if (!post) {
+            return res.status(404).send({ message: 'Post not found' });
+        }
+
+        res.status(200).send({ post, feedbacks });
+    } catch (error) {
+        res.status(500).send({ message: 'Server error', error: error.message });
+    }
+}
+module.exports = { getALlFeedBack ,AddFeedback,updateSpecificFeedback,deleteSpecificFeedback,generateFeedbackReport,getAverageRatingsForPost,getPostDetailsAndFeedback};

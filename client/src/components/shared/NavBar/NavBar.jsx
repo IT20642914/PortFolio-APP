@@ -13,15 +13,14 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Styles from './NavBar.module.scss';
-const pages = ['Home', 'Portfolios', 'Videos', 'Contact Us','Admin'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-
+import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
+const pages = ['Home', 'Portfolios', 'Videos', 'Contact Us','Media'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -37,7 +36,13 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+
+  const handleNavigate = (page) => {
+    handleCloseNavMenu();
+    navigate(`/${page.toLowerCase()}`); // Navigate to the route corresponding to the page
+  };
   return (
+    <>
     <AppBar position="fixed"
     sx={{
       WebkitBackdropFilter: "blur(10px)",
@@ -47,8 +52,8 @@ function ResponsiveAppBar() {
       width: "100%",
       height: "7vh",
       lineHeight: "7vh",
-      boxShadow:"0 8px 32px 0 rgba(0, 0, 0, 0.37)",
-      color: "#8ed3d8",
+      justifyContent: "center",
+
     }}
     
     >
@@ -87,25 +92,23 @@ function ResponsiveAppBar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'left',
+                horizontal: 'right',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+            
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+                        {pages.map((page) => (
+            <MenuItem key={page} onClick={() => handleNavigate(page)}>
+              <Typography textAlign="center" >{page}</Typography>
+            </MenuItem>
+          ))}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -128,12 +131,12 @@ function ResponsiveAppBar() {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex',justifyContent:"end", marginRight:"2rem" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={()=>{handleNavigate(page)}}
+                sx={{ my: 2, color: '#8ed3d8', display: 'block', fontWeight: 700, letterSpacing: '.1rem', textTransform: 'uppercase'}}
               >
                 {page}
               </Button>
@@ -164,7 +167,7 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center" sx={{ textAlign:"right",fontWeight:"800" }}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -172,6 +175,32 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
+    </>
   );
 }
 export default ResponsiveAppBar;
+
+// import React from 'react'
+// import './navbar.css'
+// import { Link } from "react-router-dom";
+
+// const NavBar = () => {
+//   return (
+//    <nav className="navbar">
+//     <div className="container">
+//     <h3 className="logo">Logo</h3>
+
+//     <ul className="nav-links">
+//         <Link to= '/'><li>Home</li></Link>
+//         <Link to= '/portfolio'><li>Portfolios</li></Link>
+//         <Link to= '/video'><li>videos</li></Link>
+//         <Link to= '/aboutus'><li>About Us</li></Link>
+//         <Link to= '/contactus'><li>Contact Us</li></Link>
+//         <Link to= '/contactus'><li>admin</li></Link>
+//     </ul>
+//     </div>
+//    </nav>
+//   )
+// }
+
+// export default NavBar

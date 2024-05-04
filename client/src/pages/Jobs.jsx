@@ -3,7 +3,7 @@ import Job from "../components/Job";
 import "./Jobs.css";
 import Categories from "../components/Categories/Categories";
 import axios from "axios";
-import Footer from "../components/Footer/Footer";
+import Footer from "../components/shared/Footer/Footer";
 import NavBar from "../components/NavBar/NavBar";
 
 const Jobs = () => {

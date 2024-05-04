@@ -15,11 +15,21 @@ const deleteSpecificFeedBack = (feedbackId,detailId) => {
 const generateFeedbackReport = () => {
     return axiosPrivateInstance.get(`/api/feedbacks/generate-report`);
 }
+const getAverageRatingsForPost = (postID) => {
+    return axiosPrivateInstance.get(`/api/feedbacks/average-ratings?postID=${postID}`);
 
+}
+
+const getPostDetailsAndFeedback=(postID)=>{
+    return axiosPrivateInstance.get(`/api/feedbacks/getPostDetailsAndFeedback?postID=${postID}`);
+
+}
 export const FeedBackService = {
     addFeedBack,
     getAllFeedBack,
     updateSpecificFeedBack,
     deleteSpecificFeedBack,
-    generateFeedbackReport
+    generateFeedbackReport,
+    getAverageRatingsForPost,
+    getPostDetailsAndFeedback
 }

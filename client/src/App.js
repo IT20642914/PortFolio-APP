@@ -18,18 +18,21 @@ import FeedbackUserView from "./pages/FeedbackUserView/FeedbackUserView";
 import NavBar from "./components/shared/NavBar/NavBar";
 import ClientReservation from "./pages/ClientReservation/ClientReservation";
 import AdminReservation from "./pages/AdminReservation/AdminReservation";
+import Footer from "./components/shared/Footer/Footer";
 function App() {
 
   const ADminLayoutRoutes = ({ children }) => (
     <>
      <SideNavBar />
       {children}
+     
     </>
   );
  const UserLayoutRoutes = ({ children }) => (
     <>
       <NavBar />
       {children}
+      <Footer/>
     </>
   );
   return (
