@@ -7,6 +7,8 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import SideNavBar from "./components/SideNav/SideNavBar";
 import UserManagement from "./pages/UserManagement/UserManagement";
+import ClientReservation from "./pages/ClientReservation/ClientReservation";
+import AdminReservation from "./pages/AdminReservation/AdminReservation";
 function App() {
 
   const ADminLayoutRoutes = ({ children }) => (
@@ -22,10 +24,11 @@ function App() {
       <Route path="/"  name="Login" element={<Login />} /> 
       <Route path="/signup"  name="SignUp" element={<SignUp />} />
       <Route path="/jobs" name="jobs" element={<Jobs />} />
+      <Route path="/reservations" name="reservations" element={<ClientReservation/>} />
       {/* Admin routes */}
            <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
            <Route path="/UserManagement" name="adminJobs" element={<ADminLayoutRoutes><UserManagement/></ADminLayoutRoutes>}/>
-
+           <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
       </Routes>
     </BrowserRouter>
   );
