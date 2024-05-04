@@ -14,6 +14,8 @@ import MediaList from './components/MediaList';
 import UpdateContent from './components/UpdateContent';
 import SingleMedia from "./components/viewone";
 import FeedbackManagement from "./pages/FeedbackManagement/FeedbackManagement";
+import FeedbackUserView from "./pages/FeedbackUserView/FeedbackUserView";
+import NavBar from "./components/shared/NavBar/NavBar";
 function App() {
 
   const ADminLayoutRoutes = ({ children }) => (
@@ -22,7 +24,12 @@ function App() {
       {children}
     </>
   );
- 
+ const UserLayoutRoutes = ({ children }) => (
+    <>
+      <NavBar />
+      {children}
+    </>
+  );
   return (
     <BrowserRouter>
       <Routes>
@@ -37,7 +44,9 @@ function App() {
             <Route path="/media/update/:id" element={<UpdateContent />} />
             <Route path="/media/get/:id" element={<SingleMedia />} />
 
-
+            {/* Feedback routes */}
+           <Route path="/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
+              
             {/* Admin routes */}
             
            <Route path="/feedbackManagement" name="adminJobs" element={<ADminLayoutRoutes><FeedbackManagement/></ADminLayoutRoutes>}/>

@@ -173,7 +173,6 @@ const FeedbackManagement = () => {
         document.body.appendChild(link);
         link.click();
         
-        // Cleanup: remove the link and revoke the URL
         if(link.parentNode) link.parentNode.removeChild(link);
         URL.revokeObjectURL(url);
         toast.success("Report Generated Successfully")
