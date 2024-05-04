@@ -1,5 +1,5 @@
 const feedbackModel = require('../models/feedbackSchema');
-
+const postModel = require('../models/Portfolio');
 
 // POST method to add feedback
 const AddFeedback = async (req, res) => {
@@ -10,12 +10,18 @@ const AddFeedback = async (req, res) => {
   
       if (!feedback) {
         feedback = new feedbackModel({
-          postID,
-          feedbackDetails: feedbackDetails  // Ensure feedbackDetails is an array
+            postID,
+            feedbackDetails: feedbackDetails.map(detail => ({
+                ...detail,
+                createdAt: new Date() // Set createdAt timestamp for new feedback details
+            }))
         });
-      } else {
-        feedback.feedbackDetails.push(...feedbackDetails);  // Use the spread operator if feedbackDetails is an array
-      }
+    } else {
+        feedback.feedbackDetails.push(...feedbackDetails.map(detail => ({
+            ...detail,
+            createdAt: new Date() // Set createdAt timestamp for new feedback details
+        })));
+    }
   
       await feedback.save();
       res.status(201).send({ message: "Feedback added successfully!", feedback });
@@ -28,7 +34,11 @@ const AddFeedback = async (req, res) => {
   // GET method to retrieve all feedbacks
 const getALlFeedBack= async (req, res) => {
     try {
-      const feedbacks = await feedbackModel.find().populate('postID');
+      const feedbacks = await feedbackModel.find().populate({
+        path: 'postID',
+        select: '_id portfolio_name category email'
+    })
+    .exec();
       res.status(200).send(feedbacks);
     } catch (error) {
       res.status(500).send({ message: "Failed to get feedback", error: error.message });
@@ -92,4 +102,66 @@ const deleteSpecificFeedback = async (req, res) => {
     }
 }
 
-module.exports = { getALlFeedBack ,AddFeedback,updateSpecificFeedback,deleteSpecificFeedback};
+
+const generateFeedbackReport = async (req, res) => {
+    try {
+        const [feedbacks, postCounts] = await Promise.all([
+            feedbackModel.aggregate([
+                {
+                    $lookup: {
+                        from: "posts",
+                        localField: "postID",
+                        foreignField: "_id",
+                        as: "postDetails"
+                    }
+                },
+                {
+                    $unwind: "$postDetails"
+                },
+                {
+                    $unwind: "$feedbackDetails"
+                },
+                {
+                    $group: {
+                        _id: "$postID",
+                        portfolioName: { $first: "$postDetails.portfolio_name" },
+                        averageResponsibility: { $avg: "$feedbackDetails.responsibility" },
+                        averageFriendliness: { $avg: "$feedbackDetails.friendliness" },
+                        averageCreativity: { $avg: "$feedbackDetails.creativity" },
+                        averageReliability: { $avg: "$feedbackDetails.reliability" },
+                        averageOverallSatisfaction: { $avg: "$feedbackDetails.overallSatisfaction" },
+                        count: { $sum: 1 }
+                    }
+                },
+                {
+                    $project: {
+                        portfolioName: 1,
+                        averageResponsibility: 1,
+                        averageFriendliness: 1,
+                        averageCreativity: 1,
+                        averageReliability: 1,
+                        averageOverallSatisfaction: 1,
+                        count: 1
+                    }
+                }
+            ]),
+            postModel.countDocuments()
+        ]);
+
+        if (!feedbacks.length) {
+            return res.status(404).json({ message: "No feedback found." });
+        }
+
+        const totalPosts = postCounts;
+        const postWithFeedback = feedbacks.length;
+        res.status(200).json({
+            feedbacks,
+            postWithFeedback,
+            totalPosts
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error generating report", error: error.message });
+    }
+};
+
+module.exports = { getALlFeedBack ,AddFeedback,updateSpecificFeedback,deleteSpecificFeedback,generateFeedbackReport};

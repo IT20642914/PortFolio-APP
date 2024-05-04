@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { create } = require('./Portfolio');
 
 const feedbackSchema = new mongoose.Schema({
   postID: {
@@ -47,6 +48,10 @@ const feedbackSchema = new mongoose.Schema({
     },
     comments: {
       type: String,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
   }]
 });
