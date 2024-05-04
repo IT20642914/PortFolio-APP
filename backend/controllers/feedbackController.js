@@ -223,4 +223,26 @@ const getPostDetailsAndFeedback = async (req, res) => {
         res.status(500).send({ message: 'Server error', error: error.message });
     }
 }
-module.exports = { getALlFeedBack ,AddFeedback,updateSpecificFeedback,deleteSpecificFeedback,generateFeedbackReport,getAverageRatingsForPost,getPostDetailsAndFeedback};
+
+const feedbacksByLoginUser = async (req, res) => {
+    
+    try {
+        const { userId } = req.query.userId;
+        const feedbacks = await feedbackModel.find({ "feedbackDetails.FeedBackedUserID": userId }).populate({
+            path: 'postID',
+            select: '_id portfolio_name category email'
+        })
+        .exec();;
+
+        if (feedbacks.length === 0) {
+            return res.status(404).json({ message: "No feedback found for this user." });
+        }
+
+        res.status(200).json(feedbacks);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+module.exports = { getALlFeedBack ,AddFeedback,updateSpecificFeedback,deleteSpecificFeedback,generateFeedbackReport,getAverageRatingsForPost,getPostDetailsAndFeedback,
+    feedbacksByLoginUser
+};

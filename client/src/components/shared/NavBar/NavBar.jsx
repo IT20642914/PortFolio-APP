@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
 const pages = ['Home', 'Portfolios', 'Videos', 'Contact Us','Media'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'My FeedBacks',  'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
@@ -41,6 +41,15 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
     handleCloseNavMenu();
     navigate(`/${page.toLowerCase()}`); // Navigate to the route corresponding to the page
   };
+
+  const handleSettingsChange=(page)=>{
+    console.log("first",page)
+    if(page=== 'My FeedBacks'){
+      navigate('/myFeedbacks')
+    }
+    setAnchorElNav(null);
+  }
+
   return (
     <>
     <AppBar position="fixed"
@@ -166,7 +175,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={()=>{handleSettingsChange(setting)}}>
                   <Typography textAlign="center" sx={{ textAlign:"right",fontWeight:"800" }}>{setting}</Typography>
                 </MenuItem>
               ))}
@@ -179,28 +188,3 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   );
 }
 export default ResponsiveAppBar;
-
-// import React from 'react'
-// import './navbar.css'
-// import { Link } from "react-router-dom";
-
-// const NavBar = () => {
-//   return (
-//    <nav className="navbar">
-//     <div className="container">
-//     <h3 className="logo">Logo</h3>
-
-//     <ul className="nav-links">
-//         <Link to= '/'><li>Home</li></Link>
-//         <Link to= '/portfolio'><li>Portfolios</li></Link>
-//         <Link to= '/video'><li>videos</li></Link>
-//         <Link to= '/aboutus'><li>About Us</li></Link>
-//         <Link to= '/contactus'><li>Contact Us</li></Link>
-//         <Link to= '/contactus'><li>admin</li></Link>
-//     </ul>
-//     </div>
-//    </nav>
-//   )
-// }
-
-// export default NavBar

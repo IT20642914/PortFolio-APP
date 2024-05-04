@@ -52,6 +52,11 @@ const feedbackSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    FeedBackedUserID:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: '6633f82981777ef336902683'
     }
   }]
 });
