@@ -46,6 +46,9 @@ app.use("/api/job", jobRouter);
 const applyRouter = require("./routes/applyRoutes");
 app.use("/api/apply", applyRouter);
 
+const reservationRouter = require("./routes/Reservations");
+app.use("/api/reservation", reservationRouter);
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
