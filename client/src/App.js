@@ -16,6 +16,8 @@ import SingleMedia from "./components/viewone";
 import FeedbackManagement from "./pages/FeedbackManagement/FeedbackManagement";
 import FeedbackUserView from "./pages/FeedbackUserView/FeedbackUserView";
 import NavBar from "./components/shared/NavBar/NavBar";
+import ClientReservation from "./pages/ClientReservation/ClientReservation";
+import AdminReservation from "./pages/AdminReservation/AdminReservation";
 function App() {
 
   const ADminLayoutRoutes = ({ children }) => (
@@ -44,16 +46,18 @@ function App() {
             <Route path="/media/update/:id" element={<UpdateContent />} />
             <Route path="/media/get/:id" element={<SingleMedia />} />
 
+
+            <Route path="/reservations" name="reservations" element={<ClientReservation/>} />
+
             {/* Feedback routes */}
            <Route path="/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
               
             {/* Admin routes */}
             
            <Route path="/feedbackManagement" name="adminJobs" element={<ADminLayoutRoutes><FeedbackManagement/></ADminLayoutRoutes>}/>
-
            <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
            <Route path="/UserManagement" name="adminJobs" element={<ADminLayoutRoutes><UserManagement/></ADminLayoutRoutes>}/>
-
+           <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
       </Routes>
     </BrowserRouter>
   );

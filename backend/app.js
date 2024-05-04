@@ -52,6 +52,9 @@ app.use("/media",mediaRouter);
 
 const feedbackRouter = require("./routes/feedbackRoutes");
 app.use("/api/feedbacks", feedbackRouter);
+const reservationRouter = require("./routes/Reservations");
+app.use("/api/reservation", reservationRouter);
+
 const PORT = process.env.PORT || 5000;
 
 
