@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, CardContent, Typography, Divider, Avatar, Box } from '@mui/material';
+import { Card, CardContent, Typography, Divider, Avatar, Box, Button } from '@mui/material';
+import { SCREEN_MODES } from '../../utilities/app.constants';
 
-const PortfolioCard = ({ data }) => {
+const PortfolioCard = ({ data ,handleRequest}) => {
     if (!data) {  // Check if data is null or undefined
         return <Typography>Loading...</Typography>; // Or any other placeholder
     }
@@ -36,6 +37,8 @@ const PortfolioCard = ({ data }) => {
                  {contact_no || 'No Contact Number'}
               </Typography>
           </CardContent>
+          <Divider variant="fullWidth" sx={{ my: 1, bgcolor: 'white' }} />
+          <Button variant="contained" onClick={()=>{handleRequest()}} sx={{ bgcolor: '#673ab7', color: 'white', margin: '3.5rem' }}>ADD New Feedback</Button>
         </Card>
     );
 };

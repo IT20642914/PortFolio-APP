@@ -3,13 +3,22 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import Styles from './FeedbackManagementTable.module.scss'; // Ensure you have appropriate styles
 import Rating from '@mui/material/Rating';
 import { SCREEN_MODES } from '../../utilities/app.constants';
+import { useEffect } from 'react';
 const FeedbackManagementTable = ({ feedbacks, handleRequest, generateReport }) => {
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [UserRole, setUserRole] = useState(''); 
   // Function to handle search input change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
+
+  useEffect(() => {
+    const userString = localStorage.getItem('user');
+    const user = JSON.parse(userString);
+    setUserRole("USER"); 
+  console.log("user",user)
+
+  },[])
 
   // Function to filter feedbacks based on search term
   const filteredFeedbacks = feedbacks.filter(feedback =>
@@ -31,13 +40,16 @@ const FeedbackManagementTable = ({ feedbacks, handleRequest, generateReport }) =
         />
         <div className="flex justify-between mb-4 ">
     
-          <button
+       {UserRole==="ADMIN"  &&  <button
             className="bg-[#418ca3] hover:bg-[#5399ac] text-white font-bold py-2 px-4 rounded"
             onClick={generateReport}
           >
             Generate Report
           </button>
+        }
         </div>
+    
+        
       </div>
 
       <div className="container mx-auto overflow-x-auto">
@@ -83,9 +95,15 @@ const FeedbackManagementTable = ({ feedbacks, handleRequest, generateReport }) =
              
                   <td className="py-2">{detail.comments}</td>
                   <td className="py-2 flex justify-center">
-                   
+               {UserRole==="USER" &&   <button
+                      className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-3 px-4 rounded"
+                      onClick={() => handleRequest(SCREEN_MODES.EDIT,feedback._id, detail._id)}
+                    >
+                    <FaEdit className="inline-block mr-1" />Update
+                    </button>
+                    }
                     <button
-                      className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-2 px-4 rounded"
+                      className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-3 px-4 rounded"
                       onClick={() => handleRequest(SCREEN_MODES.DELETE,feedback._id, detail._id)}
                     >
                       <FaTrash className="inline-block mr-1" /> Delete

@@ -8,6 +8,9 @@
   import { Grid } from '@mui/material'
   import PortfolioCard from '../../components/PortfolioCard/PortfolioCard'
   import FeedbackCard from '../../components/FeedbackCard/FeedbackCard'
+  import FeedbackModal from '../../components/FeedbackModal/FeedbackModal '
+  import { useState } from 'react'
+  import { validateFormData } from '../../helper/index'
   const FeedbackUserView = () => {
     const [averageRatings, setAverageRatings] = React.useState({
       averageResponsibility: 0,
@@ -17,8 +20,23 @@
       averageOverallSatisfaction: 0
     })
 
+
+    const INITIAL_FEEDBACK_FORM = {
+      name: { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "" },
+      email: { value: "", isRequired: true, disable: false, readonly: false, validator: "email", error: "" },
+      responsibility : { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
+      friendliness: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
+      creativity: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
+      reliability: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
+      overallSatisfaction: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
+      comments: { value: "", isRequired: false, disable: false, readonly: false, validator: "", error: "" }
+  };
     const [postDetails, setPostDetails] = React.useState({})
     const [feedbackDetails, setFeedbackDetails] = React.useState([])
+    const [feedbackForm, setFeedbackForm] = useState(INITIAL_FEEDBACK_FORM);
+    const [openModal, setOpenModal] = useState(false);
+    const [helperText, setHelperText] = useState(true);
+    const [mode, setMode] = useState(null);
     useEffect(() => {
       
       getInitialData()
@@ -56,12 +74,75 @@ FeedBackService.getPostDetailsAndFeedback(postID).then((response) => {
 
     }
 
+    const handleCloseModal = () => {
+      setFeedbackForm(INITIAL_FEEDBACK_FORM);
+      setOpenModal(false);
+  };  
+  
+  const onInputHandleChange=(property,value)=>{
+      setHelperText(true);          
+      setFeedbackForm({
+          ...feedbackForm,
+          [property]: {
+              ...feedbackForm[property],
+              value: value
+          }
+      });
+  }
+
+  
+const handleInputFocus=(property,section)=>{
+  if (section === "GI")
+      setFeedbackForm({
+    ...feedbackForm,
+    [property]: {
+      ...feedbackForm[property],
+      error: null,
+    },
+  });
+  
+}
+const HandleBtnResponse=async (mode)=>{
+  const [validateData, isValid] = await validateFormData(feedbackForm);
+  setFeedbackForm(validateData);
+  if(isValid){
+ const payload={
+  postID: "6635643ad2e5faddd25dc691",
+  feedbackDetails:[{  
+      name: feedbackForm.name.value,
+      email: feedbackForm.email.value,
+      responsibility: feedbackForm.responsibility.value,
+      friendliness: feedbackForm.friendliness.value,
+      creativity: feedbackForm.creativity.value,
+      reliability: feedbackForm.reliability.value,
+      overallSatisfaction: feedbackForm.overallSatisfaction.value,
+      comments: feedbackForm.comments.value}
+    ]
+ }
+    FeedBackService.addFeedBack(payload).then((res)=>{
+      toast.success(res.data.message)
+      getInitialData()
+      setOpenModal(false);
+      setFeedbackForm(INITIAL_FEEDBACK_FORM);
+  }).catch((err)=>{
+      toast.error(err.response.data.message)
+  })
+  }else{
+    toast.error("Please fill all the required fields")
+  }
+}
+
+const handleRequest = () => {
+  setMode("CREATE");
+  setOpenModal(true);
+
+}
     return (
       <div className={Styles.container}>
         <Grid container spacing={2}>
         <Grid item xs={12} md={2} >
         <section className={Styles.FeedbackUserView}>
-           <PortfolioCard data={postDetails}/>
+           <PortfolioCard data={postDetails} handleRequest={handleRequest}/>
           </section>
         </Grid>
         <Grid item xs={12} md={10}>
@@ -95,6 +176,18 @@ FeedBackService.getPostDetailsAndFeedback(postID).then((response) => {
                 </Grid>
         </Grid>
         </Grid>
+
+
+        <FeedbackModal
+                open={openModal}
+                handleClose={handleCloseModal}
+                FeedbackForm={feedbackForm}
+                mode={mode}
+                onInputHandleChange={onInputHandleChange}
+                helperText={helperText}
+                handleInputFocus={handleInputFocus} 
+                HandleBtnResponse={HandleBtnResponse}
+            />
       </div>
     )
   }

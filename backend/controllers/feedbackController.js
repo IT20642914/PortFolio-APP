@@ -243,6 +243,30 @@ const feedbacksByLoginUser = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 }
+
+const getSpecificFeedbackDetail = async (req, res) => {
+    const { feedbackId, detailId } = req.query;  // Extract parameters from the URL
+
+    try {
+        const feedback = await feedbackModel.findById(feedbackId);  // Find the feedback document
+        if (!feedback) {
+            return res.status(404).send({ message: "Feedback not found" });
+        }
+
+        // Find the specific feedback detail by detailId
+        const detail = feedback.feedbackDetails.find(d => d._id.toString() === detailId);
+        if (!detail) {
+            return res.status(404).send({ message: "Feedback detail not found" });
+        }
+
+        // Send the specific feedback detail
+        res.status(200).send(detail);
+    } catch (error) {
+        res.status(500).send({ message: "Server error", error: error.message });
+    }
+};
+
 module.exports = { getALlFeedBack ,AddFeedback,updateSpecificFeedback,deleteSpecificFeedback,generateFeedbackReport,getAverageRatingsForPost,getPostDetailsAndFeedback,
-    feedbacksByLoginUser
+    feedbacksByLoginUser,
+    getSpecificFeedbackDetail
 };

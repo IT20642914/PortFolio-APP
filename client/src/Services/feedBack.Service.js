@@ -29,6 +29,12 @@ const getFeedbacksByLoginUser=(userId)=>{
     return axiosPrivateInstance.get(`/api/feedbacks/feedbacksByLoginUser?userId=${userId}`);
 
 }
+
+const getSpecificFeedbackDetail=(feedbackId,detailId)=>{
+    return axiosPrivateInstance.get(`/api/feedbacks/getSpecificFeedback?feedbackId=${feedbackId}&detailId=${detailId}`);
+
+
+}
 export const FeedBackService = {
     addFeedBack,
     getAllFeedBack,
@@ -37,6 +43,6 @@ export const FeedBackService = {
     generateFeedbackReport,
     getAverageRatingsForPost,
     getPostDetailsAndFeedback,
-    getFeedbacksByLoginUser
+    getFeedbacksByLoginUser,getSpecificFeedbackDetail
 
 }

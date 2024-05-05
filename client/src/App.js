@@ -19,7 +19,6 @@ import NavBar from "./components/shared/NavBar/NavBar";
 import ClientReservation from "./pages/ClientReservation/ClientReservation";
 import AdminReservation from "./pages/AdminReservation/AdminReservation";
 import Footer from "./components/shared/Footer/Footer";
-
 import MyFeedBacks from "./pages/MyFeedBacks/MyFeedBacks";
 function App() {
 
@@ -57,7 +56,8 @@ function App() {
             {/* UserRoutes*/}
            <Route path="/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
            <Route path="/myFeedBacks" name="UserFeedbacks" element={<UserLayoutRoutes><MyFeedBacks/></UserLayoutRoutes>}/>
-
+         
+           
                        
             {/* Admin routes */}
             

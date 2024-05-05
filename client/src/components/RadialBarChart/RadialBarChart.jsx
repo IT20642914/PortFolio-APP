@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useEffect } from 'react';
 const RadialBarChart = ({rating,label}) => {
+  console.log("reting",rating)
   const [options, setOptions] = useState({
     chart: {
       height: 220,
@@ -44,7 +45,7 @@ setOptions(
           height: 220,
           type: 'radialBar',
         },
-        series: [rating],
+        series: [rating.toFixed(0)],
         plotOptions: {
           radialBar: {
             hollow: {

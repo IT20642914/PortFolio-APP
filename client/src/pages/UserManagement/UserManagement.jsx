@@ -163,6 +163,7 @@ const UserManagement = () => {
       }
     const onInputHandleChange = (property, value) => {
         setHelperText(true);
+        
         if (property === "email") {
           setUserForm({
               ...UserForm,
