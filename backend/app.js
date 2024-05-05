@@ -126,7 +126,7 @@ app.put('/images/update/:id', async (req, res) => {
 });
 
 const postRouter = require("./routes/posts");
-app.use("/api/portfolio", postRouter);
+app.use("", postRouter);
 
 
 const PORT = process.env.PORT || 5000;

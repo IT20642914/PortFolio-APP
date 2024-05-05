@@ -31,7 +31,7 @@ const UserTable = ({ users, handleRequest,generateReport }) => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <div className="flex justify-between mb-4">
+        <div className="flex justify-end mb-4">
           <button
             className="bg-[#418ca3] hover:bg-5399ac text-white font-bold py-2 px-4 rounded mr-2"
             onClick={() => { handleRequest(SCREEN_MODES.CREATE, null); }}

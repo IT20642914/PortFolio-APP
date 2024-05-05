@@ -30,7 +30,7 @@ class AddImage extends Component {
 
     fetchImages = async () => {
         try {
-            const response = await fetch("http://localhost:8070/images");
+            const response = await fetch("http://localhost:5000/images");
             if (response.ok) {
                 const data = await response.json();
                 this.setState({ images: data.data });

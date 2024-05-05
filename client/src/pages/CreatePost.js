@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import '../Styles/CreatePost.css';
 import AddImagesModal from '../components/AddImagesModal';
-import NavBar from '../components/NavBar';
+// import NavBar from '../components/NavBar';
 import images from '../images/aa.png';
 import Footer from './User_UI/U_Pages/footer';
 import Resume from '../components/Image/SkillSync.pdf';
@@ -123,7 +123,7 @@ export default class CreatePost extends Component {
     }
 
     try {
-      const response = await fetch('http://localhost:8070/images/upload', {
+      const response = await fetch('http://localhost:5000/images/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -406,7 +406,7 @@ export default class CreatePost extends Component {
             </div>
           )}
         </div>
-        <NavBar />
+        {/* <NavBar /> */}
         <Footer />
       </section>
     );

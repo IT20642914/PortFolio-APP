@@ -41,7 +41,7 @@ class AddImage extends Component {
         }
 
         try {
-            const response = await fetch("http://localhost:8070/images/upload", {
+            const response = await fetch("http://localhost:5000/images/upload", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ class AddImage extends Component {
 
     handleDeleteImage = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8070/images/delete/${id}`, {
+            const response = await fetch(`http://localhost:5000/images/delete/${id}`, {
                 method: "DELETE"
             });
 
@@ -79,7 +79,7 @@ class AddImage extends Component {
 
     handleUpdateImage = async (id, newTitle, newDescription) => {
         try {
-            const response = await fetch(`http://localhost:8070/images/update/${id}`, {
+            const response = await fetch(`http://localhost:5000/images/update/${id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
@@ -120,7 +120,7 @@ class AddImage extends Component {
 
     fetchImages = async () => {
         try {
-            const response = await fetch("http://localhost:8070/images");
+            const response = await fetch("http://localhost:5000/images");
             if (response.ok) {
                 const data = await response.json();
                 this.setState({ images: data.data });

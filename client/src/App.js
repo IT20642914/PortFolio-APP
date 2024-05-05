@@ -20,6 +20,22 @@ import ClientReservation from "./pages/ClientReservation/ClientReservation";
 import AdminReservation from "./pages/AdminReservation/AdminReservation";
 import Footer from "./components/shared/Footer/Footer";
 import MyFeedBacks from "./pages/MyFeedBacks/MyFeedBacks";
+
+import PortfolioAdmin from './components/PortfolioAdmin';
+import CreatePost from './pages/CreatePost';
+import PostDetails from './pages/PostDetails';
+import AddImage from './pages/AddImage';
+import UserUi from './pages/UserUI';
+import Home from './pages/Home';
+import Portfolio from './pages/User_UI/U_Pages/Portfolio';
+import Admin from './pages/User_UI/U_Pages/Admin';
+import Gallery from './pages/User_UI/U_Pages/Gallery';
+import Services from './pages/User_UI/U_Pages/services';
+import EditForm from './components/EditForm';
+import Email from './components/email';
+import Servisespage from './pages/servisespage';
+import Vchat from './pages/User_UI/U_Pages/vchat';
+
 function App() {
 
   const ADminLayoutRoutes = ({ children }) => (
@@ -42,6 +58,21 @@ function App() {
       <Route path="/"  name="Login" element={<Login />} /> 
       <Route path="/signup"  name="SignUp" element={<SignUp />} />
       <Route path="/jobs" name="jobs" element={<Jobs />} />
+      <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/Gallery" element={<Gallery />} />
+        <Route path="/add" element={<CreatePost />} />
+        <Route path="/addimage" element={<AddImage />} />
+        <Route path="/UserUi" element={<UserUi />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/email" element={<Email/>} />
+        <Route path="/vchat" element={<Vchat />} />
+        <Route path="/servicespage" element={<Servisespage />} />
+        <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/editpost/:id" element={<EditForm />} />
+        <Route path="/userui/:bio" component={UserUi} />
+        <Route path="/userui/:bio" component={UserUi} />
+          <Route path="/home" name="home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>}/>
 
             {/* mediaRoutes */}
              <Route path="/media" element={<Dashboard />} />
@@ -64,10 +95,14 @@ function App() {
            <Route path="/feedbackManagement" name="adminJobs" element={<ADminLayoutRoutes><FeedbackManagement/></ADminLayoutRoutes>}/>
            <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
            <Route path="/UserManagement" name="adminJobs" element={<ADminLayoutRoutes><UserManagement/></ADminLayoutRoutes>}/>
-           <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
+         
+        <Route path="/PortfolioAdmin" name="PortfolioAdmin" element={<ADminLayoutRoutes><PortfolioAdmin/></ADminLayoutRoutes>}/>
+       
+          <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+

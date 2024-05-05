@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
 import '../Styles/home.css';
-import NavBar from '../components/NavBar';
+// import NavBar from '../components/NavBar';
 import Gallery from './User_UI/U_Pages/Gallery';
 import Footer from './User_UI/U_Pages/footer';
 import Services from './User_UI/U_Pages/services';
@@ -120,12 +120,12 @@ const Home = ({ numPosts }) => {
             </section>
           </div>
           {/* Navigation Bar */}
-          <NavBar />
+          {/* <NavBar /> */}
         </div>
         {/* Services Component */}
         <Services />
         <Gallery />
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
 };
