@@ -36,7 +36,7 @@ import Email from './components/email';
 import Servisespage from './pages/servisespage';
 import Vchat from './pages/User_UI/U_Pages/vchat';
 
-
+import UserMediaContent from './pages/UserMediaContent/UserMediaContent';
 import MediaManagement from "./pages/MediaManagement/MediaManagement";
 function App() {
 
@@ -92,13 +92,16 @@ function App() {
       <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
       <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
         <Route path="/home" name="home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>}/>
+          
+          {/* mediaRoutes */}
+        <Route path="/media" name="media" element={<UserLayoutRoutes><UserMediaContent/></UserLayoutRoutes>}/>
 
-            {/* mediaRoutes */}
-             <Route path="/media" element={<Dashboard />} />
-            <Route path="/media/view" element={<MediaList />} />
+         
+             {/* <Route path="/media" element={<Dashboard />} /> */}
+            {/* <Route path="/media/view" element={<MediaList />} />
             <Route path="/media/add" element={<Add />} />
             <Route path="/media/update/:id" element={<UpdateContent />} />
-            <Route path="/media/get/:id" element={<SingleMedia />} />
+            <Route path="/media/get/:id" element={<SingleMedia />} /> */}
 
 
             <Route path="/reservations" name="reservations" element={<ClientReservation/>} />
