@@ -407,7 +407,7 @@ export default class CreatePost extends Component {
           )}
         </div>
         {/* <NavBar /> */}
-        <Footer />
+        {/* <Footer /> */}
       </section>
     );
   }

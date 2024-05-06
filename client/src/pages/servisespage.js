@@ -12,8 +12,8 @@ export default class servisespage extends Component {
         <br></br>
         <br></br>
         <Services />
-        <NavBar />
-        <Footer />
+        {/* <NavBar />
+        <Footer /> */}
       </div>
     )
   }

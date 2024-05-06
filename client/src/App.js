@@ -59,7 +59,7 @@ function App() {
       <Route path="/signup"  name="SignUp" element={<SignUp />} />
       <Route path="/jobs" name="jobs" element={<Jobs />} />
       <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/services" element={<Services />} />
+        {/* <Route path="/services" element={<Services />} />
         <Route path="/Gallery" element={<Gallery />} />
         <Route path="/add" element={<CreatePost />} />
         <Route path="/addimage" element={<AddImage />} />
@@ -71,8 +71,23 @@ function App() {
         <Route path="/post/:id" element={<PostDetails />} />
         <Route path="/editpost/:id" element={<EditForm />} />
         <Route path="/userui/:bio" component={UserUi} />
-        <Route path="/userui/:bio" component={UserUi} />
-          <Route path="/home" name="home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>}/>
+        <Route path="/userui/:bio" component={UserUi} /> */}
+         <Route path="/home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>} />
+        <Route path="/portfolio" element={<UserLayoutRoutes><Portfolio/></UserLayoutRoutes>} />
+      <Route path="/services" element={<UserLayoutRoutes><Services/></UserLayoutRoutes>} />
+      <Route path="/Gallery" element={<UserLayoutRoutes><Gallery/></UserLayoutRoutes>} />
+      <Route path="/add" element={<UserLayoutRoutes><CreatePost/></UserLayoutRoutes>} />
+      <Route path="/addimage" element={<UserLayoutRoutes><AddImage/></UserLayoutRoutes>} />
+      <Route path="/UserUi" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
+      <Route path="/admin" element={<UserLayoutRoutes><Admin/></UserLayoutRoutes>} />
+      <Route path="/email" element={<UserLayoutRoutes><Email/></UserLayoutRoutes>} />
+      <Route path="/vchat" element={<UserLayoutRoutes><Vchat/></UserLayoutRoutes>} />
+      <Route path="/servicespage" element={<UserLayoutRoutes><Servisespage/></UserLayoutRoutes>} />
+      <Route path="/post/:id" element={<UserLayoutRoutes><PostDetails/></UserLayoutRoutes>} />
+      <Route path="/editpost/:id" element={<UserLayoutRoutes><EditForm/></UserLayoutRoutes>} />
+      <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
+      <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
+        <Route path="/home" name="home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>}/>
 
             {/* mediaRoutes */}
              <Route path="/media" element={<Dashboard />} />
@@ -95,8 +110,7 @@ function App() {
            <Route path="/feedbackManagement" name="adminJobs" element={<ADminLayoutRoutes><FeedbackManagement/></ADminLayoutRoutes>}/>
            <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
            <Route path="/UserManagement" name="adminJobs" element={<ADminLayoutRoutes><UserManagement/></ADminLayoutRoutes>}/>
-         
-        <Route path="/PortfolioAdmin" name="PortfolioAdmin" element={<ADminLayoutRoutes><PortfolioAdmin/></ADminLayoutRoutes>}/>
+           <Route path="/PortfolioAdmin" name="PortfolioAdmin" element={<ADminLayoutRoutes><PortfolioAdmin/></ADminLayoutRoutes>}/>
        
           <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
       </Routes>

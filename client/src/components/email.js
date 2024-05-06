@@ -115,8 +115,8 @@ export default function Email() {
           <div className="success-message">Your message has been sent successfully!</div>
         )}
       </div>
-      <NavBar />
-      <Footer />
+      {/* <NavBar />
+      <Footer /> */}
     </div>
   );
 }
