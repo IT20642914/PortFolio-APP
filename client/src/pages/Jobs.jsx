@@ -71,7 +71,7 @@ const Jobs = () => {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <br />
       <br />
       <br />
@@ -113,7 +113,7 @@ const Jobs = () => {
         )}
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

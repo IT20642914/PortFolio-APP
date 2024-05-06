@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Footer from '../pages/User_UI/U_Pages/footer';
 import NavBar from '../components/NavBar';
-
+import { FaEdit, FaTrash } from "react-icons/fa";
+import '../Styles/admin.css'
 class PortfolioAdmin extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +70,7 @@ class PortfolioAdmin extends Component {
     const numPosts = filteredPosts.length; // Get the number of filtered posts
 
     return (
+    
       <section  className="ml-64 mt-3 px-4">
            <h1 className="text-2xl font-bold mb-4">Portfolio Management</h1>
         <div className="container">
@@ -79,6 +81,7 @@ class PortfolioAdmin extends Component {
               </div>
               <h4>All Posts</h4>
             </div>
+            <div  className="container mx-auto px-4 py-4 overflow-x-auto">
           <table className="table">
             <thead>
               <tr>
@@ -95,7 +98,7 @@ class PortfolioAdmin extends Component {
             </thead>
             <tbody>
               {filteredPosts.map((post, index) => (
-                <tr key={post._id}>
+                <tr key={post._id} className='bg-gradient-to-r from-blue-200 to-white shadow-md mb-2'>
                   <td>{index + 1}</td>
                   <td>
                     <img
@@ -114,9 +117,9 @@ class PortfolioAdmin extends Component {
                   <td>{post.category}</td>
                   <td>{post.email}</td>
                   <td>{post.contact_no}</td>
-                  <td>
+                  <td className="py-2 flex justify-center">
                     {/* <button
-                      className="btn btn-warning"
+                      className="btn-portfolio btn-portfolio-warning"
                       onClick={() => this.handleEdit(post._id)}
                     >
                       <i className="fas fa-edit"></i> Edit
@@ -124,29 +127,29 @@ class PortfolioAdmin extends Component {
 
                     
 
-                    <a className="btn btn-warning" href={`/editpost/${post._id}`}>
-                      <i className="fas fa-edit"></i>&nbsp;Edit
+                    <a className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded" href={`/editpost/${post._id}`}>
+                    <FaEdit className="inline-block mr-1" />&nbsp;Edit
                     </a>
 
 
 
                     &nbsp;
                     <button
-                      className="btn btn-danger"
+                      className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-2 px-4 rounded"
                       onClick={() => this.onDelete(post._id)}
                     >
-                      <i className="far fa-trash-alt"></i> Delete
+                 <FaTrash className="inline-block mr-1" /> Delete
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
           <p>Total Posts: {numPosts}</p>
-          <button className="btn btn-success">
-            <a href="/add" style={{ textDecoration: 'none', color: 'white' }}>
+          <button className="btn-portfolio btn-success">
+          
               Create
-            </a>
           </button>
           
         </div>

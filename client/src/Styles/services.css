@@ -32,7 +32,7 @@ body {
     gap: 3rem;
     margin: 0 25rem;
   }
-  .services-container .services-box{
+  .services-container .services-box-service{
     flex: 1 1 10rem;
     display: flex;
     flex-direction: column;
@@ -46,21 +46,21 @@ body {
     transition: 0.3s ease-in-out;
     border: 2px solid #2a2b2a;
   }
-  .services-container .services-box:hover{
+  .services-container .services-box-service:hover{
     transform: scale(1.08);
     background-color: #EE3731;
     color: #ffffff;
     border: none;
   }
-  .services-box h3{
+  .services-box-service h3{
     font-size: 2.6rem;
   }
-  .services-box p{
+  .services-box-service p{
     font-size: 1rem;
     margin: 1rem 0 3rem;
     font-weight: 500;
   }
-  .services-box .btn {
+  .services-box-service .btn {
     display: inline-block;
     padding: 1rem 2.8rem;
     background: #2a2b2a;
@@ -75,12 +75,12 @@ body {
     text-decoration: none; 
     font-family: 'Rajdhani', sans-serif;
   }
-  .services-box .btn{
+  .services-box-service .btn{
     background-color: #EE3731;
     border: 2px solid #ffffff;
    
   }
-.services-box .btn:hover {
+.services-box-service .btn:hover {
     border: 2px solid #ffffff;
     color: #000;
     background-color: #ffffff;

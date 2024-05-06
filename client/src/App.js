@@ -57,7 +57,7 @@ function App() {
       <Routes>
       <Route path="/"  name="Login" element={<Login />} /> 
       <Route path="/signup"  name="SignUp" element={<SignUp />} />
-      <Route path="/jobs" name="jobs" element={<Jobs />} />
+      {/* <Route path="/jobs" name="jobs" element={<Jobs />} /> */}
       <Route path="/portfolio" element={<Portfolio />} />
         {/* <Route path="/services" element={<Services />} />
         <Route path="/Gallery" element={<Gallery />} />
@@ -72,6 +72,8 @@ function App() {
         <Route path="/editpost/:id" element={<EditForm />} />
         <Route path="/userui/:bio" component={UserUi} />
         <Route path="/userui/:bio" component={UserUi} /> */}
+         <Route path="/jobs" element={<UserLayoutRoutes><Jobs/></UserLayoutRoutes>} />
+
          <Route path="/home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>} />
         <Route path="/portfolio" element={<UserLayoutRoutes><Portfolio/></UserLayoutRoutes>} />
       <Route path="/services" element={<UserLayoutRoutes><Services/></UserLayoutRoutes>} />

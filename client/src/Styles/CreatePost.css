@@ -67,7 +67,7 @@ textarea:last-child {
   margin-bottom: 0;
 }
 
-button {
+.crete-post-btn {
   background-color: #3A7D90;
   color: #ffffff;
   border: none;
@@ -77,7 +77,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.crete-post-btn:hover {
   background-color: #234e5a;
 }
 .form-container h2{
@@ -89,7 +89,7 @@ button:hover {
   }
 
   
-  .button-container {
+  .crete-post-btn-container {
     text-align: center;
     margin-top: 20px; /* Adjust margin as needed */
   }

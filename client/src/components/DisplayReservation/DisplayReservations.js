@@ -69,7 +69,7 @@ function DisplayReservations() {
         <div className="container mx-auto px-4 py-8">
           <table className='"w-full table-auto'>
             <thead>
-              <tr>
+              <tr >
                 <th>Order ID</th>
                 <th>Customer Name</th>
                 <th>Reservation Date</th>
@@ -81,7 +81,7 @@ function DisplayReservations() {
             </thead>
             <tbody>
               {reservations.map((reservation, i) => (
-                <tr key={i}>
+                <tr key={i} className='bg-gradient-to-r from-blue-200 to-white shadow-md mb-2'>
                   <td>{reservation.OrderId}</td>
                   <td>{reservation.CustomerId.fullName}</td>
                   <td>{reservation.ReservationDate}</td>
