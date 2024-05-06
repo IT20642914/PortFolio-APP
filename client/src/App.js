@@ -36,6 +36,8 @@ import Email from './components/email';
 import Servisespage from './pages/servisespage';
 import Vchat from './pages/User_UI/U_Pages/vchat';
 
+
+import MediaManagement from "./pages/MediaManagement/MediaManagement";
 function App() {
 
   const ADminLayoutRoutes = ({ children }) => (
@@ -75,7 +77,7 @@ function App() {
          <Route path="/jobs" element={<UserLayoutRoutes><Jobs/></UserLayoutRoutes>} />
 
          <Route path="/home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>} />
-        <Route path="/portfolio" element={<UserLayoutRoutes><Portfolio/></UserLayoutRoutes>} />
+        <Route path="/portfolios" element={<UserLayoutRoutes><Portfolio/></UserLayoutRoutes>} />
       <Route path="/services" element={<UserLayoutRoutes><Services/></UserLayoutRoutes>} />
       <Route path="/Gallery" element={<UserLayoutRoutes><Gallery/></UserLayoutRoutes>} />
       <Route path="/add" element={<UserLayoutRoutes><CreatePost/></UserLayoutRoutes>} />
@@ -107,8 +109,8 @@ function App() {
          
            
                        
-            {/* Admin routes */}
-            
+                {/* Admin routes */}
+           <Route path="/MediaManagement" name="MediaManagement" element={<ADminLayoutRoutes><MediaManagement/></ADminLayoutRoutes>}/>
            <Route path="/feedbackManagement" name="adminJobs" element={<ADminLayoutRoutes><FeedbackManagement/></ADminLayoutRoutes>}/>
            <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
            <Route path="/UserManagement" name="adminJobs" element={<ADminLayoutRoutes><UserManagement/></ADminLayoutRoutes>}/>

@@ -30,7 +30,11 @@ const mediaSchema = new Schema({
     dislikes: {
         type: Number,
         default: 0
-    }
+    },
+    userID:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      }
 });
 
 const Media = mongoose.model("Media", mediaSchema);

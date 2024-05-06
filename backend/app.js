@@ -4,7 +4,7 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const multer = require("multer");
-
+const path = require('path');
 const corsOptions = {
   origin: "*",
   credentials: true,
@@ -55,9 +55,7 @@ app.use("/api/feedbacks", feedbackRouter);
 const reservationRouter = require("./routes/Reservations");
 app.use("/api/reservation", reservationRouter);
 
-
-
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 /////////////////////////imageRoutes////////////////////////
