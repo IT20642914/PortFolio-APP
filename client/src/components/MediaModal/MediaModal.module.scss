@@ -43,6 +43,15 @@
   /* Modal Body */
   .modalBody {
     /* Add styles for modal body content */
+    .upload{
+        margin-top: 1rem;
+        color: aliceblue;
+        background: #3A7D90;
+       }
+       .upload:hover{
+        color: #f6f6f6;
+        background: #117793;
+    }
     .Btn{
         color: aliceblue;
         background: #3A7D90;
