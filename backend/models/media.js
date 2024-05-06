@@ -23,15 +23,17 @@ const mediaSchema = new Schema({
         type: String,
         required: false
     },
-    likes: {
-        type: Number,
-        default: 0
-    },
-    dislikes: {
-        type: Number,
-        default: 0
-    },
-    userID:{
+    likes: [{ // Array of user IDs who liked the media
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
+    dislikes: [{ // Array of user IDs who disliked the media
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
+    userId:{// Owner of the media
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
       }

@@ -44,6 +44,7 @@
     
 
     const getInitialData = () => {
+      //need modification
       localStorage.setItem("postID",'6635643ad2e5faddd25dc691')
       const postID= localStorage.getItem('postID')
     
@@ -106,8 +107,9 @@ const HandleBtnResponse=async (mode)=>{
   const [validateData, isValid] = await validateFormData(feedbackForm);
   setFeedbackForm(validateData);
   if(isValid){
+    const postID= localStorage.getItem('postID')
  const payload={
-  postID: "6635643ad2e5faddd25dc691",
+  postID: postID,
   feedbackDetails:[{  
       name: feedbackForm.name.value,
       email: feedbackForm.email.value,

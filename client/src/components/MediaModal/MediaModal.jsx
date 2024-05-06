@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-sequences */
 import React,{useState} from 'react';
 import { Modal, Button, Grid, MenuItem, InputLabel, FormControl, Input, FormHelperText ,LinearProgress} from '@mui/material';
 import { StyledTextField, theme } from '../../assets/theme/theme'; // Assuming these are styled components and theme from your project
@@ -101,7 +103,6 @@ const MediaModal = ({ open, handleClose, mediaForm, handleInputFocus, helperText
                             >
                                 <MenuItem value="Image">Image</MenuItem>
                                 <MenuItem value="Video">Video</MenuItem>
-                                <MenuItem value="Document">Document</MenuItem>
                             </StyledTextField>
                         </Grid>
                         <Grid item xs={12}>
@@ -137,8 +138,8 @@ const MediaModal = ({ open, handleClose, mediaForm, handleInputFocus, helperText
                            <Button className={Styles.upload} onClick={handleFileUpload} disabled={isDisable} >  Upload File</Button>
                         </Grid>
                         <Grid container justifyContent="flex-end" item xs={12}>
-                            {mode && mode === 'CREATE' && <Button className={Styles.Btn} onClick={() => HandleBtnResponse('CREATE')}>Add Media</Button>}
-                            {mode && mode === 'EDIT' && <Button className={Styles.Btn} onClick={() => HandleBtnResponse('EDIT')}>Update Media</Button>}
+                            {mode && mode === 'CREATE' && <Button className={Styles.Btn} onClick={() => {HandleBtnResponse('CREATE'),setIsDisable(false)}}>Add Media</Button>}
+                            {mode && mode === 'EDIT' && <Button className={Styles.Btn} onClick={() => {HandleBtnResponse('EDIT'),setIsDisable(false)}}>Update Media</Button>}
                             <Button className={Styles.CBtn} onClick={handleClose}>Cancel</Button>
                         </Grid>
                     </Grid>

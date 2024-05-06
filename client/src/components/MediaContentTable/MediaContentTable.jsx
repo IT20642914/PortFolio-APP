@@ -20,9 +20,10 @@ const MediaContentTable = ({ media, handleRequest, generateReport }) => {
   const renderMediaContent = (item) => {
     switch (item.type) {
       case 'Image':
-        return <img src={item.content} alt={item.title} style={{ maxWidth: '100px', maxHeight: '100px' }} />;
+        return <img src={item.content} alt={item.title} style={{ maxWidth: '200px', maxHeight: '200px' }} />;
       case 'Video':
-        return <iframe src={item.content} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ width: '100px', height: '100px' }}></iframe>;
+        // eslint-disable-next-line jsx-a11y/iframe-has-title
+        return <iframe src={item.content} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ width: '200px', height: '200px' }}></iframe>;
       default:
         return null;
     }
@@ -79,8 +80,8 @@ const MediaContentTable = ({ media, handleRequest, generateReport }) => {
                 <td className="py-2">{item.type}</td>
                 <td className="py-2">{item.category}</td>
                 <td className="py-2">{renderMediaContent(item)}</td>
-                <td className="py-2">{item.likes}</td>
-                <td className="py-2">{item.dislikes}</td>
+                <td className="py-2">{item.likes?.length}</td>
+                <td className="py-2">{item.dislikes?.length}</td>
                 <td className="py-2 flex justify-center">
                   <button
                     className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded"

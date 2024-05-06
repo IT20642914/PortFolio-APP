@@ -9,6 +9,7 @@ import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/render
 import { pdf } from '@react-pdf/renderer';
 import {backgrounds} from '../../assets/Images/index'
 import UserRegistrationsChart from '../../components/UserRegistrationsChart/UserRegistrationsChart';
+
 const UserManagement = () => {
 
     const INITIAL_USER_FORM={

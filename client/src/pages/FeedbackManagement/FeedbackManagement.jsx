@@ -40,7 +40,7 @@ const FeedbackManagement = () => {
         page: {
           flexDirection: 'column',
           backgroundColor: 'transparent', // Set background color to transparent
-        //   color: 'white', // Default text color
+        
         },
         content: {
           position: 'relative', // Set position to relative to allow positioning of other elements
@@ -62,7 +62,7 @@ const FeedbackManagement = () => {
           marginTop: 10,
         },
         table: {
-        marginHorizontal: 10,
+           marginHorizontal: 10,
           display: 'table',
           width: 'auto',
           backgroundColor: 'white',
