@@ -27,32 +27,6 @@ router.get("/", (req, res) => {
         });
 });
 
-
-
-router.post("/like/:id", async (req, res) => {
-    try {
-        const media = await Media.findById(req.params.id);
-        media.likes++;
-        await media.save();
-        res.status(200).json({ likes: media.likes });
-    } catch (err) {
-        console.error('Error liking media:', err);
-        res.status(500).json({ error: 'Error liking media' });
-    }
-});
-
-router.post("/dislike/:id", async (req, res) => {
-    try {
-        const media = await Media.findById(req.params.id);
-        media.dislikes++;
-        await media.save();
-        res.status(200).json({ dislikes: media.dislikes });
-    } catch (err) {
-        console.error('Error disliking media:', err);
-        res.status(500).json({ error: 'Error disliking media' });
-    }
-});
-
 router.put("/update/:id", async (req, res) => {
     const mediaId = req.params.id; // Get the ID from the route parameter
     const payload = req.body; // Data from the client to update the media
@@ -170,4 +144,79 @@ router.get("/report", async (req, res) => {
         res.status(500).json({ error: 'Error generating report' });
     }
 });
+
+// Toggle like with automatic dislike removal
+router.patch('/toggle-like', async (req, res) => {
+    const userId = req.body.userId;
+    const mediaId = req.body.id;
+
+    try {
+        const media = await Media.findById(mediaId);
+        if (!media) {
+            return res.status(404).json({ message: "Media not found" });
+        }
+
+        let message = '';
+        const likeIndex = media.likes.indexOf(userId);
+        const dislikeIndex = media.dislikes.indexOf(userId);
+
+        if (likeIndex > -1) {
+            // User already liked it, so remove the like
+            media.likes.splice(likeIndex, 1);
+            message = 'Like removed';
+        } else {
+            // Add a like and remove a dislike if it exists
+            media.likes.push(userId);
+            if (dislikeIndex > -1) {
+                media.dislikes.splice(dislikeIndex, 1);
+            }
+            message = 'Media liked';
+        }
+
+        await media.save();
+        return res.status(200).json({ message });
+    } catch (error) {
+        console.error('Error toggling like:', error);
+        res.status(500).json({ message: 'Error toggling like', error: error.message });
+    }
+});
+
+// Toggle dislike with automatic like removal
+router.patch('/toggle-dislike', async (req, res) => {
+   
+    const userId = req.body.userId;
+    const mediaId = req.body.id;
+
+    try {
+        const media = await Media.findById(mediaId);
+        if (!media) {
+            return res.status(404).json({ message: "Media not found" });
+        }
+
+        let message = '';
+        const likeIndex = media.likes.indexOf(userId);
+        const dislikeIndex = media.dislikes.indexOf(userId);
+
+        if (dislikeIndex > -1) {
+            // User already disliked it, so remove the dislike
+            media.dislikes.splice(dislikeIndex, 1);
+            message = 'Dislike removed';
+        } else {
+            // Add a dislike and remove a like if it exists
+            media.dislikes.push(userId);
+            if (likeIndex > -1) {
+                media.likes.splice(likeIndex, 1);
+            }
+            message = 'Media disliked';
+        }
+
+        await media.save();
+        return res.status(200).json({ message });
+    } catch (error) {
+        console.error('Error toggling dislike:', error);
+        res.status(500).json({ message: 'Error toggling dislike', error: error.message });
+    }
+});
+
+
 module.exports = router;

@@ -21,11 +21,21 @@ const GetMedia = (id) => {
 const getReportMedia = () => {
     return axiosPrivateInstance.get(`media/report`);
 }
+
+const handleLike = (payload) => {
+    return axiosPrivateInstance.patch(`media/toggle-like`,payload);
+}
+const handleDisLike = (payload) => {
+    return axiosPrivateInstance.patch(`media/toggle-dislike`,payload)
+
+}
 export const MediaService = {
     getAllMedia,
     AddMedia,
     DeleteMedia,
     UpdateMedia,
     GetMedia,
-    getReportMedia
+    getReportMedia,
+    handleLike,
+    handleDisLike
 }

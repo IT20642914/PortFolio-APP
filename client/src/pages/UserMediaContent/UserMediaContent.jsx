@@ -27,13 +27,39 @@ const UserMediaContent = () => {
     };
 
     const handleLike = (id) => {
-        console.log('Like', id);
-        // Add your like API interaction here
-    };
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const userId = user._id;
+       const payload = {
+              id:id ,
+              userId:userId
+       }
+        MediaService.handleLike(payload).then((res) => {
+                    initialData();
+                    toast.success('Media liked successfully');
+        }).catch((err) => {
+                    console.error('Error liking media:', err);
+                    toast.error('Failed to like media');
+        });
+            };
 
     const handleDislike = (id) => {
         console.log('Dislike', id);
-        // Add your dislike API interaction here
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const userId = user._id;
+         const payload = {
+                  id:id ,
+                  userId:userId
+                }
+        MediaService.handleDisLike(payload).then((res) => {
+                    initialData();
+                    toast.success('Media disliked successfully');
+        }).catch((err) => {
+                    console.error('Error disliking media:', err);
+                    toast.error('Failed to dislike media');
+        });
+       
     };
 
     const handleTypeFilterChange = (event) => {
