@@ -1,13 +1,10 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Styles from "./MediaContentTable.module.scss";
-import { MediaService } from "../../Services/Media.Service";
 
 const MediaContentTable = ({ media, handleRequest, generateReport }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [mediaContent, setMediaContent] = useState({});
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -20,50 +17,14 @@ const MediaContentTable = ({ media, handleRequest, generateReport }) => {
     )
   );
 
-  useEffect(() => {
-    const fetchMediaContent = async () => {
-      const updatedMediaContent = {};
-      const promises = media.map(async (item) => {
-        if (item.type === 'Image') {
-          try {
-            const response = await MediaService.getImagePath(item.content);
-            // Convert binary data to base64 string
-            const base64String = btoa(
-              new Uint8Array(response.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ''
-              )
-            );
-            updatedMediaContent[item._id] = `data:image/jpeg;base64,${base64String}`;
-          } catch (error) {
-            console.error("Error fetching media content:", error);
-            updatedMediaContent[item._id] = null;
-          }
-        }
-      });
-
-      await Promise.all(promises);
-      setMediaContent(updatedMediaContent);
-    };
-
-    fetchMediaContent();
-  }, [media]);
-  const renderMediaContent = async (item) => {
-    try {
-      const response = await MediaService.getImagePath(item.content);
-      const content = response.data; // Assuming the image path is available in response.data
-
-      switch (item.type) {
-        case "Image":
-          return <img src={content} alt={item.title} style={{ maxWidth: '100px', maxHeight: '100px' }} />;
-        case "Video":
-          return <iframe src={content} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ width: '100px', height: '100px' }}></iframe>;
-        default:
-          return null;
-      }
-    } catch (error) {
-      console.error("Error fetching media content:", error);
-      return null;
+  const renderMediaContent = (item) => {
+    switch (item.type) {
+      case 'Image':
+        return <img src={item.content} alt={item.title} style={{ maxWidth: '100px', maxHeight: '100px' }} />;
+      case 'Video':
+        return <iframe src={item.content} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ width: '100px', height: '100px' }}></iframe>;
+      default:
+        return null;
     }
   };
 
@@ -108,7 +69,7 @@ const MediaContentTable = ({ media, handleRequest, generateReport }) => {
             </tr>
           </thead>
           <tbody>
-            {filteredMedia.map( (item, index) => (
+            {filteredMedia.map((item, index) => (
               <tr
                 key={item._id}
                 className="bg-gradient-to-r from-blue-200 to-white shadow-md mb-2"
@@ -116,25 +77,8 @@ const MediaContentTable = ({ media, handleRequest, generateReport }) => {
                 <td className="py-2">{index + 1}</td>
                 <td className="py-2">{item.title}</td>
                 <td className="py-2">{item.type}</td>
-                <td className="py-2">{item.category}</td> 
-                <td className="py-2">
-                  {item.type === "Image" && mediaContent[item._id] && (
-                    <img
-                      src={mediaContent[item._id]}
-                      alt={item.title}
-                      style={{ maxWidth: '100px', maxHeight: '100px' }}
-                    />
-                  )}
-                  {item.type === "Video" && (
-                    <iframe
-                      src={item.content} // Assuming video content is a URL
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      style={{ width: '100px', height: '100px' }}
-                    ></iframe>
-                  )}
-                </td>
+                <td className="py-2">{item.category}</td>
+                <td className="py-2">{renderMediaContent(item)}</td>
                 <td className="py-2">{item.likes}</td>
                 <td className="py-2">{item.dislikes}</td>
                 <td className="py-2 flex justify-center">
