@@ -99,4 +99,37 @@ router.delete('/post/delete/:id', async (req, res) => {
   }
 });
 
+router.patch('/post/update-discount/:id', async (req, res) => {
+  const { id } = req.params;
+  const { discountPercentage, disStartDate, disEndDate, promoCode } = req.body;
+
+  try {
+    // Construct the update object dynamically
+    const updateData = {};
+    if (discountPercentage !== undefined) updateData.discountPercentage = discountPercentage;
+    if (disStartDate !== undefined) updateData.disStartDate = disStartDate;
+    if (disEndDate !== undefined) updateData.disEndDate = disEndDate;
+    if (promoCode !== undefined) updateData.promoCode = promoCode;
+
+    // Check if any data was provided for update
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ success: false, message: "No valid fields provided for update" });
+    }
+
+    // Perform the update operation
+    const updatedPost = await Post.findByIdAndUpdate(id, { $set: updateData }, { new: true });
+    if (!updatedPost) {
+      return res.status(404).json({ success: false, message: "Post not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Discount details updated successfully",
+      data: updatedPost
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error updating post", error: err.message });
+  }
+});
+
 module.exports = router;

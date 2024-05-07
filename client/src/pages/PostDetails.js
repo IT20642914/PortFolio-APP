@@ -8,6 +8,9 @@ import { FaEdit,FaPlus } from 'react-icons/fa'; // Importing edit icon
 import '../pages/User_UI/Styles/userdetails.css';
 import DiscountModal from '../components/DiscountModal/DiscountModal';
 import dayjs from 'dayjs';
+import { validateFormData } from '../helper/FormValidators';
+import {PaymentService} from '../Services/Payment.Service';
+import { toast } from 'react-toastify';
 function PostDetails() {
   const { id } = useParams(); // Access route parameter 'id' using useParams hook
   const [post, setPost] = useState({});
@@ -23,17 +26,73 @@ const navigate=useNavigate();
     });
   }, [id]);
 
+useEffect(() => {
+  getData()
+}, [])
+
+ const [reservation, setReservation] = useState([]);
+
+const getData=(id)=>{
+  PaymentService.getReservation(id).then((res)=>{
+    if(res.data.success){
+      setReservation(res.data.data)
+    }}).catch((err)=>{
+      console.log("Error",err)
+    })
+
+}
+
   const handleImageClick = (image) => {
     setEnlargedImage((prevImage) => (prevImage ? null : image));
   };
 
+const DISCOUNT_INITIAL_FORM={
+  promoCode: { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "" },
+  discountPercentage: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
+  disStartDate: { value: "", isRequired: true, disable: false, readonly: false, validator: "date", error: "" },
+  disEndDate: { value: "", isRequired: true, disable: false, readonly: false, validator: "date", error: "" },
+}
+
   const [open, setOpen] = useState(false);
-  const [discountForm, setDiscountForm] = useState({
-      promoCode: '',
-      discountPercentage: '',
-      disStartDate: dayjs(),
-      disEndDate: dayjs(),
+  const [discountForm, setDiscountForm] = useState(DISCOUNT_INITIAL_FORM);
+  const [helperText, setHelperText] = useState(true);
+
+
+
+const handleInputFocus = (property) => {
+  setDiscountForm({
+      ...discountForm,
+      [property]: {
+          ...discountForm[property],
+          error: null,
+      },
   });
+};
+
+const handleChange = (property, value) => {
+if(property === "disStartDate" || property === "disEndDate"){
+  value = dayjs(value).format("YYYY-MM-DD");
+  setDiscountForm({
+    ...discountForm,
+    [property]: {
+        ...discountForm[property],
+        value: value,
+    },
+  })
+}else{
+  setDiscountForm({
+    ...discountForm,
+    [property]: {
+        ...discountForm[property],
+        value: value,
+    },
+});
+}
+  
+};
+
+
+
   const handleCloseEnlarged = () => {
     setEnlargedImage(null);
   };
@@ -43,6 +102,34 @@ const navigate=useNavigate();
     const handleNavigate = () => {
       navigate("feedbackUser")
     }
+    const HandleAddDiscount = async() => {
+      setHelperText(true)
+     
+          const [validateData, isValid] = await validateFormData(discountForm);
+          setDiscountForm(validateData);
+      console.log("validateData",validateData)
+          if(isValid){
+              console.log("Valid Data", discountForm)
+              const payload = {
+                  discountPercentage: discountForm.discountPercentage.value,
+                  disStartDate: discountForm.disStartDate.value,
+                  disEndDate: discountForm.disEndDate.value,
+                  promoCode: discountForm.promoCode.value,
+              }
+              // PaymentService.UpdateDiscount(id,payload).then((res) => {
+              //     if(res.data.success){
+              //       toast.success("Discount Added Successfully")
+              //         console.log("Discount Added Successfully")
+              //         handleClose()
+              //     }
+              // }).catch((err) => {
+              //     console.log("Error", err)
+              //     toast.error("Error Adding Discount")
+              // }) 
+
+              
+          }
+  }
   return (
     <div>
       {loading ? (
@@ -159,7 +246,10 @@ const navigate=useNavigate();
                 open={open}
                 handleClose={handleClose}
                 discountForm={discountForm}
-                setDiscountForm={setDiscountForm}
+                handleChange={handleChange}
+                handleInputFocus={handleInputFocus}
+                helperText={helperText}
+                HandleAddDiscount={HandleAddDiscount}
             />
 
         </>
