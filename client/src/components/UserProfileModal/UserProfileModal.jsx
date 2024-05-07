@@ -163,7 +163,7 @@ const UserProfileModal = ({ open, handleClose, UserForm,handleInputFocus,helperT
              required={role.isRequired}
              helperText={helperText && role.error}
              onFocus={() => handleInputFocus('role', 'GI')}
-             onChange={(event) => onInputHandleChange('role', event.target.value)}
+             onChange={(event) => onInputHandleChange('role', event.target.value.toUpperCase())}
            />
          </Grid>
          

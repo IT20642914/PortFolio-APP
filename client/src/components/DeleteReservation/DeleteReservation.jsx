@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import swal from "sweetalert";
 import axios from "axios";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const DeleteReservation = ({ orderId }) => {
   const [showModal, setShowModal] = useState(false);
@@ -39,10 +40,10 @@ const DeleteReservation = ({ orderId }) => {
     <div>
       {/* Delete button */}
       <button
-        className="btn"
+        className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-2 px-4 rounded"
         onClick={handleShowModal}
       >
-        Delete
+           <FaTrash className="inline-block mr-1" /> Delete
       </button>
 
       {/* Modal */}

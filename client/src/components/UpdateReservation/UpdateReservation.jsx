@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import swal from "sweetalert";
 import axios from "axios";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const UpdateReservation = ({ orderId }) => {
   const [CustomerId, setCustomerId] = useState("");
@@ -97,8 +98,8 @@ const UpdateReservation = ({ orderId }) => {
   };
   return (
     <div>
-      <button className="btn" onClick={handleShowModal}>
-        Update
+      <button className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded" onClick={handleShowModal}>
+      <FaEdit className="inline-block mr-1" />   Update
       </button>
 
       {/* Modal */}

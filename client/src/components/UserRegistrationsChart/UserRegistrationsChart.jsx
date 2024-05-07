@@ -1,7 +1,6 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import { Card, CardContent, Typography, Box, Grid } from "@mui/material";
-import { backgrounds } from '../../assets/Images';
 
 
 const UserRegistrationsChart = ({ data }) => {
