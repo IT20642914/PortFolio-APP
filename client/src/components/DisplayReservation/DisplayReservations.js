@@ -96,6 +96,7 @@ function DisplayReservations() {
                   <td>
                     <DeleteReservation orderId={reservation.OrderId} />
                   </td>
+                 
                 </tr>
               ))}
             </tbody>

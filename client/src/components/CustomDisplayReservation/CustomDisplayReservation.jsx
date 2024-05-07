@@ -24,6 +24,10 @@ function CustomDisplayReservation() {
   });
 
 
+  const HandleAddPayment=()=>{
+
+  }
+
   return (
     <div>
       <h2>
@@ -40,6 +44,7 @@ function CustomDisplayReservation() {
               <th>Requests</th>
               <th>Update</th>
               <th>Delete</th>
+              <th>Add Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -58,6 +63,14 @@ function CustomDisplayReservation() {
                 <td>
                   <DeleteReservation orderId={reservation.OrderId} />
                 </td>
+                <td>
+                <button
+                 className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded"
+                onClick={HandleAddPayment}
+              >
+                Add Payment
+              </button>
+              </td>
               </tr>
             ))}
           </tbody>
