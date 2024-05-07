@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { validateFormData } from '../helper/FormValidators';
 import {PaymentService} from '../Services/Payment.Service';
 import { toast } from 'react-toastify';
+import emailjs from '@emailjs/browser';
 function PostDetails() {
   const { id } = useParams(); // Access route parameter 'id' using useParams hook
   const [post, setPost] = useState({});
@@ -32,7 +33,7 @@ useEffect(() => {
 
  const [reservation, setReservation] = useState([]);
 
-const getData=(id)=>{
+const getData=()=>{
   PaymentService.getReservation(id).then((res)=>{
     if(res.data.success){
       setReservation(res.data.data)
@@ -116,16 +117,31 @@ if(property === "disStartDate" || property === "disEndDate"){
                   disEndDate: discountForm.disEndDate.value,
                   promoCode: discountForm.promoCode.value,
               }
-              // PaymentService.UpdateDiscount(id,payload).then((res) => {
-              //     if(res.data.success){
-              //       toast.success("Discount Added Successfully")
-              //         console.log("Discount Added Successfully")
-              //         handleClose()
-              //     }
-              // }).catch((err) => {
-              //     console.log("Error", err)
-              //     toast.error("Error Adding Discount")
-              // }) 
+              //prathiba
+              try {
+                reservation.forEach((item)=>{
+                  emailjs.send("service_portfolio","template_pkeg4cd",{
+                    from_name: "Portfolio Team",
+                    to_name: item.CustomerId.fullName,
+                    discount: payload.discountPercentage,
+                    promo_code: payload.promoCode,
+                    reply_to: item.CustomerId.email,
+                    });
+                })
+              } catch (error) {
+                toast.error("Error Sending Email")
+              }
+           
+              PaymentService.UpdateDiscount(id,payload).then((res) => {
+                  if(res.data.success){
+                    toast.success("Discount Added Successfully")
+                      console.log("Discount Added Successfully")
+                      handleClose()
+                  }
+              }).catch((err) => {
+                  console.log("Error", err)
+                  toast.error("Error Adding Discount")
+              }) 
 
               
           }
