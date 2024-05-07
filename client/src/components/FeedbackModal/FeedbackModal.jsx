@@ -61,6 +61,11 @@ const FeedbackModal = ({ open, handleClose, FeedbackForm, handleInputFocus, help
                                 }}
                                 disabled={responsibility.disable}
                                 size="large"
+                                sx={{
+                                    "& .MuiRating-icon": {
+                                        fontSize: "1.5rem",  // Adjust size as needed
+                                    }
+                                }}
                             />
                             <div className={Styles.ratingLabel}>Responsibility ({responsibility.value || 0}/5)</div>
                         </Grid>
@@ -73,6 +78,11 @@ const FeedbackModal = ({ open, handleClose, FeedbackForm, handleInputFocus, help
                                 }}
                                 disabled={friendliness.disable}
                                 size="large"
+                                sx={{
+                                    "& .MuiRating-icon": {
+                                        fontSize: "1.5rem",  // Adjust size as needed
+                                    }
+                                }}
                             />
                             <div className={Styles.ratingLabel}>Friendliness ({friendliness.value || 0}/5)</div>
                         </Grid>
@@ -82,6 +92,11 @@ const FeedbackModal = ({ open, handleClose, FeedbackForm, handleInputFocus, help
                                 value={Number(creativity.value)}
                                 onChange={(event, newValue) => {
                                     onInputHandleChange('creativity', newValue);
+                                }}
+                                sx={{
+                                    "& .MuiRating-icon": {
+                                        fontSize: "1.5rem",  // Adjust size as needed
+                                    }
                                 }}
                                 disabled={creativity.disable}
                                 size="large"
@@ -97,6 +112,11 @@ const FeedbackModal = ({ open, handleClose, FeedbackForm, handleInputFocus, help
                                 }}
                                 disabled={reliability.disable}
                                 size="large"
+                                sx={{
+                                    "& .MuiRating-icon": {
+                                        fontSize: "1.5rem",  // Adjust size as needed
+                                    }
+                                }}
                             />
                             <div className={Styles.ratingLabel}>Reliability ({reliability.value || 0}/5)</div>
                         </Grid>
@@ -108,6 +128,11 @@ const FeedbackModal = ({ open, handleClose, FeedbackForm, handleInputFocus, help
                                     onInputHandleChange('overallSatisfaction', newValue);
                                 }}
                                 disabled={overallSatisfaction.disable}
+                                sx={{
+                                    "& .MuiRating-icon": {
+                                        fontSize: "1.5rem",  // Adjust size as needed
+                                    }
+                                }}
                                 size="large"
                             />
                             <div className={Styles.ratingLabel}>Overall Satisfaction ({overallSatisfaction.value || 0}/5)</div>

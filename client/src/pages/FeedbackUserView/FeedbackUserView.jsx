@@ -8,7 +8,7 @@
   import { Grid } from '@mui/material'
   import PortfolioCard from '../../components/PortfolioCard/PortfolioCard'
   import FeedbackCard from '../../components/FeedbackCard/FeedbackCard'
-  import FeedbackModal from '../../components/FeedbackModal/FeedbackModal '
+  import FeedbackModal from '../../components/FeedbackModal/FeedbackModal'
   import { useState } from 'react'
   import { validateFormData } from '../../helper/index'
   const FeedbackUserView = () => {

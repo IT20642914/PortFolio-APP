@@ -1,18 +1,19 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams hook
+import { useNavigate, useParams } from 'react-router-dom'; // Import useParams hook
 import cover from '../images/aa.png';
 import NavBar from '../components/NavBar';
 import Footer from './User_UI/U_Pages/footer';
 import { FaEdit,FaPlus } from 'react-icons/fa'; // Importing edit icon
 import '../pages/User_UI/Styles/userdetails.css';
-
+import DiscountModal from '../components/DiscountModal/DiscountModal';
+import dayjs from 'dayjs';
 function PostDetails() {
   const { id } = useParams(); // Access route parameter 'id' using useParams hook
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
   const [enlargedImage, setEnlargedImage] = useState(null);
-
+const navigate=useNavigate(); 
   useEffect(() => {
     axios.get(`/post/${id}`).then((res) => {
       if (res.data.success) {
@@ -26,10 +27,22 @@ function PostDetails() {
     setEnlargedImage((prevImage) => (prevImage ? null : image));
   };
 
+  const [open, setOpen] = useState(false);
+  const [discountForm, setDiscountForm] = useState({
+      promoCode: '',
+      discountPercentage: '',
+      disStartDate: dayjs(),
+      disEndDate: dayjs(),
+  });
   const handleCloseEnlarged = () => {
     setEnlargedImage(null);
   };
+  const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
+    const handleNavigate = () => {
+      navigate("feedbackUser")
+    }
   return (
     <div>
       {loading ? (
@@ -61,6 +74,21 @@ function PostDetails() {
 
               <div style={{display:"flex"}}>
               <div
+              className="addFeedback-button"
+              style={{
+                display:"flex",
+                position: 'absolute',
+                top: '350px',
+                right: '403px',
+                cursor: 'pointer',
+                color: '#fff',
+                zIndex: 999
+              }}
+              onClick={()=>{handleNavigate()}}
+            >
+              Add Feedback  |  <FaPlus style={{marginLeft:"0.3rem"}} size={24} /> 
+            </div>
+              <div
               className="addDiscount-button"
               style={{
                 display:"flex",
@@ -71,11 +99,9 @@ function PostDetails() {
                 color: '#fff',
                 zIndex: 999
               }}
-              onClick={() => {
-                
-              }}
+              onClick={handleOpen}
             >
-              ADD Discount  |  <FaPlus style={{marginLeft:"0.3rem"}} size={24} /> 
+              Add Discount  |  <FaPlus style={{marginLeft:"0.3rem"}} size={24} /> 
             </div>
             </div>
               <div
@@ -129,8 +155,13 @@ function PostDetails() {
               <img src={enlargedImage.image} alt={enlargedImage.title} className="enlargedImage" style={{ maxWidth: '80%', maxHeight: '80%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '8px' }} />
             </div>
           )}
-          {/* <NavBar />
-          <Footer /> */}
+      <DiscountModal
+                open={open}
+                handleClose={handleClose}
+                discountForm={discountForm}
+                setDiscountForm={setDiscountForm}
+            />
+
         </>
       )}
     </div>

@@ -6,7 +6,7 @@ import { FeedBackService } from '../../Services/feedBack.Service'
 import { toast } from 'react-toastify'
 import { SCREEN_MODES } from '../../utilities/app.constants'
 import { useEffect } from 'react'
-import FeedbackModal from '../../components/FeedbackModal/FeedbackModal '
+import FeedbackModal from '../../components/FeedbackModal/FeedbackModal'
 import { validateFormData } from '../../helper/index';
 
 const MyFeedBacks = () => {
