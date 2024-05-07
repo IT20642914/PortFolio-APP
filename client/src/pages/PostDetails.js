@@ -12,6 +12,7 @@ import { validateFormData } from "../helper/FormValidators";
 import { PaymentService } from "../Services/Payment.Service";
 import { toast } from "react-toastify";
 import emailjs from "@emailjs/browser";
+import AddReservationClient from "../components/AddReservationClient/AddReservationClient";
 function PostDetails() {
   const { id } = useParams(); // Access route parameter 'id' using useParams hook
   const [post, setPost] = useState({});
@@ -26,6 +27,9 @@ function PostDetails() {
       }
     });
   }, [id]);
+  const userString = localStorage.getItem("user");
+  const user = JSON.parse(userString);
+  const CustomerId = user._id;
 
   useEffect(() => {
     getData();
@@ -342,6 +346,18 @@ function PostDetails() {
                   </div>
                 ))}
             </div>
+          </div>
+          <br />
+          <div className="justify-content-right">
+            {/* <div
+              className="absolute right-7 px-4 py-2 cursor-pointer text-white z-50 bg-gray-500 bg-opacity-50 rounded-lg"
+            >
+              Reserve
+            </div> */}
+            <AddReservationClient
+              CustomerId={CustomerId}
+              ServiceProviderId={id}
+            />
           </div>
           {enlargedImage && (
             <div
