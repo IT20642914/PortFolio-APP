@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'; // Import useParams hook
 import cover from '../images/aa.png';
 import NavBar from '../components/NavBar';
 import Footer from './User_UI/U_Pages/footer';
-import { FaEdit } from 'react-icons/fa'; // Importing edit icon
+import { FaEdit,FaPlus } from 'react-icons/fa'; // Importing edit icon
 import '../pages/User_UI/Styles/userdetails.css';
 
 function PostDetails() {
@@ -58,6 +58,26 @@ function PostDetails() {
                 </div>
               </div>
              
+
+              <div style={{display:"flex"}}>
+              <div
+              className="addDiscount-button"
+              style={{
+                display:"flex",
+                position: 'absolute',
+                top: '350px',
+                right: '203px',
+                cursor: 'pointer',
+                color: '#fff',
+                zIndex: 999
+              }}
+              onClick={() => {
+                
+              }}
+            >
+              ADD Discount  |  <FaPlus style={{marginLeft:"0.3rem"}} size={24} /> 
+            </div>
+            </div>
               <div
               className="edit-button"
               style={{
@@ -66,13 +86,14 @@ function PostDetails() {
                 right: '20px',
                 cursor: 'pointer',
                 color: '#fff',
-                zIndex: 999
+                zIndex: 999,
+                display:"flex"
               }}
               onClick={() => {
                 window.location.href = `/editpost/${post._id}`;
               }}
             >
-              Edit | <FaEdit size={24} /> {/* Edit button with edit icon */}
+              Edit | <FaEdit style={{marginLeft:"0.5rem"}} size={24} /> {/* Edit button with edit icon */}
             </div>
         
             </div>

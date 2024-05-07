@@ -7,11 +7,13 @@ import CustomDisplayReservation from '../../components/CustomDisplayReservation/
 const ClientReservation = () => {
   return (
     <>
-      <NavBar />
+      <br />
+      <br />
+      <br />
+      <br />
       <br />
       <br />
       <CustomDisplayReservation/>
-      <Footer />
     </>
   );
 }

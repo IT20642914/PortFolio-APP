@@ -104,11 +104,11 @@ function App() {
             <Route path="/media/get/:id" element={<SingleMedia />} /> */}
 
 
-            <Route path="/reservations" name="reservations" element={<ClientReservation/>} />
 
             {/* UserRoutes*/}
            <Route path="/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
            <Route path="/myFeedBacks" name="UserFeedbacks" element={<UserLayoutRoutes><MyFeedBacks/></UserLayoutRoutes>}/>
+           <Route path="/reservations" name="reservations" element={<UserLayoutRoutes><ClientReservation/></UserLayoutRoutes>}/>
          
            
                        
