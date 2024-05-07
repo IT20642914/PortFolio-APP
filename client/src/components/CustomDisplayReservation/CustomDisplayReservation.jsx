@@ -8,9 +8,12 @@ function CustomDisplayReservation() {
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
+    const userString = localStorage.getItem('user');
+    const user = JSON.parse(userString);
+    const userId = user._id;
     axios
       .get(
-        `http://localhost:5000/api/reservation/CustomerReservations/66333bfd36da811eda6d0c91`
+        `http://localhost:5000/api/reservation/CustomerReservations/${userId}`
       )
       .then((res) => {
         setReservations(res.data);
