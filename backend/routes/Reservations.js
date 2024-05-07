@@ -130,9 +130,7 @@ router.route("/search").get(async (req, res) => {
     if (search) {
       // Search by service provider id
       reservations = await Reservation.find({
-        $or: [
-          { ServiceProviderId: { $regex: search, $options: "i" } },
-        ],
+        $or: [{ OrderId: { $regex: search, $options: "i" } }],
       });
     } else {
       reservations = await Reservation.find();

@@ -14,8 +14,8 @@ const ReservationSchema = new mongoose.Schema(
       ref: "User",
     },
     ServiceProviderId: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
     },
     Requests: {
       type: String,
