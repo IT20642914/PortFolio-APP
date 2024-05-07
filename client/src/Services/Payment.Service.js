@@ -9,7 +9,18 @@ const getReservation = (id) => {
     return axiosPrivateInstance.get(`api/reservation/ServiceProviderReservations/${id}`);
 }
 
+const getReservationByOrderID = (id) => {
+    return axiosPrivateInstance.get(`api/reservation/getOne/${id}`);
+
+}
+
+const AddPayment = (payload) => {
+    return axiosPrivateInstance.post(`api/payments/payment/add`,payload);
+}
+
 export const PaymentService = {
     UpdateDiscount,
-    getReservation
+    getReservation,
+    getReservationByOrderID,
+    AddPayment
 }

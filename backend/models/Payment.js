@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { post } = require("../routes/userRoutes");
 const Schema = mongoose.Schema;
 const paymentSchema = new Schema({
   amount: {
@@ -38,6 +39,10 @@ const paymentSchema = new Schema({
   UserId:{
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
+  },
+  postAmount:{
+    type: String,
     required: true,
   },
   

@@ -147,7 +147,7 @@ router.route("/getOne/:OrderId").get(async (req, res) => {
   try {
     const reservation = await Reservation.findOne({
       OrderId: req.params.OrderId,
-    }).populate("CustomerId");
+    }).populate("CustomerId ServiceProviderId");
     res.status(200).json(reservation);
   } catch (err) {
     res.status(500).json(err);
