@@ -3,9 +3,38 @@ import axios from "axios";
 import "../../Styles/display.css";
 import UpdateReservation from "../UpdateReservation/UpdateReservation";
 import DeleteReservation from "../DeleteReservation/DeleteReservation";
-
+import PaymentModal from "../PaymentModal/PaymentModal";
+import { PaymentService } from "../../Services/Payment.Service";
+import moment from "moment";
+import { validateFormData } from "../../helper/FormValidators";
+import { toast } from "react-toastify";
 function CustomDisplayReservation() {
+
+  const INITIAL_PAYMENT_FORM = {
+    amount: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "", },
+    date: { value: "", isRequired: true, disable: false, readonly: false, validator: "date", error: "", },
+    bank: { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+    branch: { value: "", isRequired: true, disable: false, readonly: false, validator: "text", error: "", },
+    remark: { value: "", isRequired: false, disable: false, readonly: false, validator: "text", error: "", },
+    reservationId: { value: "", isRequired: true, disable: false, readonly: false, validator: "null", error: "", },
+    ServiceProviderId: { value: "", isRequired: true, disable: false, readonly: false, validator: "null", error: "", },
+    bankSlipUrl: { value: "", isRequired: true, disable: false, readonly: false, validator: "null", error: "", },
+    UserId: { value: "", isRequired: true, disable: false, readonly: false, validator: "null", error: "", },
+    promoCode:{ value: "", isRequired: false, disable: true, readonly: true, validator: "null", error: "", },
+    postAmount:{ value: "", isRequired: false, disable: true, readonly: true, validator: "null", error: "", },
+    discountPercentage:{ value: "", isRequired: false, disable: true, readonly: true, validator: "null", error: "", },
+    disStartDate:{ value: "", isRequired: false, disable: true, readonly: true, validator: "null", error: "", },
+    disEndDate:{ value: "", isRequired: false, disable: true, readonly: true, validator: "null", error: "", },
+};
+
+const [PaymentForm, setPaymentForm] = useState(INITIAL_PAYMENT_FORM);
+const [openModal, setOpenModal] = useState(false);
+const [helperText, setHelperText] = useState(true);
+const [mode, setMode] = useState(null);
+
   const [reservations, setReservations] = useState([]);
+
+
 
   useEffect(() => {
     const userString = localStorage.getItem('user');
@@ -21,9 +50,120 @@ function CustomDisplayReservation() {
       .catch((error) => {
         console.error("Error fetching reservations:", error);
       });
+  },[]);
+
+
+  const HandleAddPayment=(orderId)=>{
+    console.log("orderId",orderId);
+
+PaymentService.getReservationByOrderID(orderId).then((res)=>{
+  console.log("respose",res.data);
+if(res.data){
+  const userString = localStorage.getItem('user');
+  const user = JSON.parse(userString);
+  const userId = user._id;
+
+  setPaymentForm({
+    ...PaymentForm,
+    postAmount: {
+      ...PaymentForm.postAmount,
+      value: res.data.ServiceProviderId.amount,
+    },
+    discountPercentage: {
+      ...PaymentForm.discountPercentage,
+      value: res.data.ServiceProviderId.discountPercentage,
+    },
+    disStartDate: {
+      ...PaymentForm.disStartDate,
+      value: moment(res.data.ServiceProviderId.disStartDate).format('MMMM Do YYYY'),
+    },
+    disEndDate: {
+      ...PaymentForm.disEndDate,
+      value:  moment(res.data.ServiceProviderId.disEndDate).format('MMMM Do YYYY'),
+    },
+    reservationId: {
+      ...PaymentForm.reservationId,
+      value: res.data._id,
+    },
+    ServiceProviderId: {
+      ...PaymentForm.ServiceProviderId,
+      value: res.data.ServiceProviderId._id,
+    },
+    promoCode: {
+      ...PaymentForm.promoCode,
+      value: res.data.ServiceProviderId.promoCode,
+    },
+    UserId: {
+      ...PaymentForm.UserId,
+      value: userId,
+    },
   });
+  console.log("PaymentForm",PaymentForm);
+}
 
+}).catch((error)=>{
+  console.error("Error fetching reservation:",error);
+});
+    setOpenModal(true);
+  }
+  const handleClose=()=>{
+    setPaymentForm(INITIAL_PAYMENT_FORM);
+    setOpenModal(false);
+  }
 
+  const handleInputFocus = (field) => {
+    setPaymentForm({
+      ...PaymentForm,
+      [field]: {
+        ...PaymentForm[field],
+        error: "",
+      },
+    });
+  }
+
+  const onInputHandleChange = (field, value) => {
+    setPaymentForm({
+      ...PaymentForm,
+      [field]: {
+        ...PaymentForm[field],
+        value: value,
+      },
+    });
+  }
+
+  const handlePaymentSubmit=async ()=>{
+    setHelperText(true);
+    const [validateData, isValid] = await validateFormData(PaymentForm);
+    setPaymentForm(validateData);
+    console.log("first",isValid)
+    console.log("first",PaymentForm);
+    if(isValid){
+
+      const paymentData = {
+        amount: PaymentForm.amount.value,
+        date: PaymentForm.date.value,
+        bank: PaymentForm.bank.value,
+        branch: PaymentForm.branch.value,
+        remark: PaymentForm.remark.value,
+        reservationId: PaymentForm.reservationId.value,
+        ServiceProviderId: PaymentForm.ServiceProviderId.value,
+        bankSlipUrl: PaymentForm.bankSlipUrl.value,
+        UserId: PaymentForm.UserId.value,
+        postAmount: PaymentForm.postAmount.value,
+
+      }
+      PaymentService.AddPayment(paymentData).then((res)=>{
+        console.log("Payment added successfully",res.data);
+        toast.success("Payment added successfully");
+        handleClose();
+      }).catch((error)=>{
+        console.error("Error adding payment:",error);
+        toast.error("Error adding payment");
+      });
+      
+    }
+
+  }
   return (
     <div>
       <h2>
@@ -40,6 +180,7 @@ function CustomDisplayReservation() {
               <th>Requests</th>
               <th>Update</th>
               <th>Delete</th>
+              <th>Add Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -58,11 +199,22 @@ function CustomDisplayReservation() {
                 <td>
                   <DeleteReservation orderId={reservation.OrderId} />
                 </td>
+                <td>
+                <button
+                 className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded"
+                onClick={()=>HandleAddPayment(reservation.OrderId)}
+              >
+                Add Payment
+              </button>
+              </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+         <PaymentModal open={openModal} paymentForm={PaymentForm} handleClose={handleClose}  handleInputFocus={handleInputFocus} onInputHandleChange={onInputHandleChange} helperText={helperText} handlePaymentSubmit={handlePaymentSubmit} />
+      
     </div>
   );
 }

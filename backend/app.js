@@ -52,6 +52,9 @@ app.use("/media",mediaRouter);
 
 const feedbackRouter = require("./routes/feedbackRoutes");
 app.use("/api/feedbacks", feedbackRouter);
+
+const PaymentRouter = require("./routes/paymentRoutes.js");
+app.use("/api/payments", PaymentRouter);
 const reservationRouter = require("./routes/Reservations");
 app.use("/api/reservation", reservationRouter);
 

@@ -41,6 +41,11 @@ const postSchema = new mongoose.Schema({
     type: Date,
     require: true,
   },
+  promoCode:{
+    type: String,
+    require: false,
+    default: null,
+  },
   userID:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
