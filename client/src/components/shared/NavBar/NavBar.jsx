@@ -16,7 +16,7 @@ import Styles from './NavBar.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
-const pages = ['Home', 'Portfolios', 'Reservations', 'Jobs','Media'];
+const pages = ['Home', 'Portfolios', 'Qualification','Reservations', 'Jobs','Media'];
 const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

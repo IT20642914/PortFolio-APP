@@ -61,6 +61,13 @@ app.use("/api/reservation", reservationRouter);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
+const resultRouter = require("./routes/results");
+// Mount the results router under the "/results" path
+app.use("/results", resultRouter);
+
+const questionRouter = require("./routes/questions");
+app.use("/questions", questionRouter);
+
 /////////////////////////imageRoutes////////////////////////
 const imageSchema = new mongoose.Schema({
   image: String,

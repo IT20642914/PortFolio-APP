@@ -39,6 +39,17 @@ import Vchat from './pages/User_UI/U_Pages/vchat';
 import UserMediaContent from './pages/UserMediaContent/UserMediaContent';
 import MediaManagement from "./pages/MediaManagement/MediaManagement";
 import MyPayment from "./pages/MyPayment/MyPayment";
+
+import QuestionForm from "./components/QuestionForm";
+import AllQuestions from "./components/AllQuestions";
+import EditQuestions from "./components/EditQuestions";
+import Introduction from "./components/Introduction";
+import Question from "./components/Question";
+import QuizIndroduction from "./components/QuizIndroduction";
+import Scoreboard from "./components/Scoreboard";
+// import Footer from "./components/Footer";
+// import NavBar from "./components/Header";
+import SupportAdmin from "./components/SupportAdmin";
 function App() {
 
 
@@ -106,7 +117,15 @@ function App() {
             <Route path="/media/add" element={<Add />} />
             <Route path="/media/update/:id" element={<UpdateContent />} />
             <Route path="/media/get/:id" element={<SingleMedia />} /> */}
-
+        {/* <Route path="/qualification" element={<Introduction />} /> */}
+        {/* <Route path="/quiz" element={<Question />} /> */}
+        {/* <Route path="/add" element={<QuestionForm />} /> */}
+        {/* <Route path="/all" element={<AllQuestions />} /> */}
+        {/* <Route path="all/update/:id" element={<EditQuestions />} /> */}
+        {/* <Route path="/intro" element={<QuizIndroduction />} />
+        <Route path="/score" element={<Scoreboard />} />
+   
+        <Route path="/support" element={<SupportAdmin />} /> */}
 
 
             {/* UserRoutes*/}
@@ -115,6 +134,12 @@ function App() {
            <Route path="/reservations" name="reservations" element={<UserLayoutRoutes><ClientReservation/></UserLayoutRoutes>}/>
            <Route path="/MyPayment" name="reservations" element={<UserLayoutRoutes><MyPayment/></UserLayoutRoutes>}/>
          
+           <Route path="/qualification" name="qualification" element={<UserLayoutRoutes><Introduction/></UserLayoutRoutes>}/>
+           <Route path="/score" name="score" element={<UserLayoutRoutes><Question/></UserLayoutRoutes>}/>
+          
+           <Route path="/intro" name="intro" element={<UserLayoutRoutes><Scoreboard/></UserLayoutRoutes>}/>
+           <Route path="/quiz" name="quiz" element={<UserLayoutRoutes><QuizIndroduction/></UserLayoutRoutes>}/>
+           <Route path="/support" name="support" element={<UserLayoutRoutes><SupportAdmin/></UserLayoutRoutes>}/>
            
                        
                 {/* Admin routes */}
@@ -123,7 +148,10 @@ function App() {
            <Route path="/adminJobs" name="adminJobs" element={<ADminLayoutRoutes><CareerAdmin/></ADminLayoutRoutes>}/>
            <Route path="/UserManagement" name="adminJobs" element={<ADminLayoutRoutes><UserManagement/></ADminLayoutRoutes>}/>
            <Route path="/PortfolioAdmin" name="PortfolioAdmin" element={<ADminLayoutRoutes><PortfolioAdmin/></ADminLayoutRoutes>}/>
-       
+           <Route path="/qualificationManager" name="all" element={<ADminLayoutRoutes><AllQuestions/></ADminLayoutRoutes>}/>
+           <Route path="/qualificationManager/add" name="add" element={<ADminLayoutRoutes><QuestionForm/></ADminLayoutRoutes>}/>
+
+           <Route path="/qualificationManager/update/:id" name="qualificationManager/update/:id" element={<ADminLayoutRoutes><EditQuestions/></ADminLayoutRoutes>}/>
           <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
       </Routes>
     </BrowserRouter>
