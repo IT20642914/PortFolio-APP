@@ -3,9 +3,8 @@ import Gallery from './Portfolio/Gallery';
 
 const Portfolio = () => {
   return (
-    <div>
+    <div style={{margin:"6rem"}}>
       <Gallery/>
-      <p>nlfkfkfkfkfllllllllllll</p>
     </div>
   );
 };

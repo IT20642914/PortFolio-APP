@@ -65,6 +65,7 @@ const QuestionForm = () => {
   };
 
   return (
+    <div style={{marginTop:"7rem"}}>
     <div id="formContainer">
       <h1>Add Questions</h1>
       <form id="questionForm" onSubmit={handleSubmit}>
@@ -108,6 +109,7 @@ const QuestionForm = () => {
 
         <button type="submit">Submit</button>
       </form>
+    </div>
     </div>
   );
 };

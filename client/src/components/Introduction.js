@@ -5,7 +5,7 @@ import SupportEngine from "./SupportEngine";
 
 export default function Introduction() {
   return (
-    <div className="intro-container">
+    <div className="intro-container" >
       <h1>Welcome to the Quiz!</h1>
       <p>
         Are you ready to test your knowledge? This quiz covers a variety of
@@ -13,10 +13,10 @@ export default function Introduction() {
         below to explore all the questions or start the quiz right away!
       </p>
       <div className="button-container">
-        <Link to={"/all"}>
-          <button className="action-button">All Questions</button>
-        </Link>
         <Link to={"/intro"}>
+          <button className="action-button">Results</button>
+        </Link>
+        <Link to={"/Quiz"}>
           <button className="action-button">Start Quiz</button>
         </Link>
       </div>

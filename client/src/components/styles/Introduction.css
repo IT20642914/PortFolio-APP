@@ -1,10 +1,12 @@
 .body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0; /* Background color */
+  
 }
 
 .intro-container {
-  margin: 5%;
+  height: 45vh;
+  margin: 7%;
   justify-content: center;
   padding: 20px;
   background-color: #f3f3f3;

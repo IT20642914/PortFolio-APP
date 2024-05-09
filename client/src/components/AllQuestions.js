@@ -103,12 +103,12 @@ export default function AllQuestions() {
   };
 
   return (
-    <div>
+    <div  className="ml-64 mt-8 px-4">
       <div id="topRightContainer">
         <div id="search">
           <SearchContainer onSearch={handleSearch} />
         </div>
-        <Link to="/add">
+        <Link to="/qualificationManager/add">
           <button id="addQuestions">
             <FontAwesomeIcon icon={faPlus} className="plus" />
             Add Questions
