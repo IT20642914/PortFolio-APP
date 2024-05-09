@@ -50,9 +50,22 @@ const deletePayment = async (req, res) => {
     }
 };
 
+const getPaymentById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const payment = await Payment.findById(id);
+        if (!payment) {
+            return res.status(404).send({ message: "Payment not found" });
+        }
+        res.status(200).send(payment);
+    } catch (error) {
+        res.status(500).send({ message: "Failed to get payment details", error: error.message });
+    }
+};
 module.exports = {
     addPayment,
     getAllPayments,
     updatePayment,
-    deletePayment
+    deletePayment,
+    getPaymentById
 };

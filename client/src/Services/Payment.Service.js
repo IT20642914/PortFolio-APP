@@ -22,10 +22,23 @@ const getAllPayments = () => {
     return axiosPrivateInstance.get(`api/payments/payment/getall`);
 }
 
+const getPaymentDetailsById = (id) => {
+    return axiosPrivateInstance.get(`api/payments/payment/get/${id}`);
+}
+
+const updatePayment = (id,payload) => {
+    return axiosPrivateInstance.patch(`api/payments/payment/update/${id}`,payload);
+}
+const deletePayment = (id) => {
+    return axiosPrivateInstance.delete(`api/payments/payment/delete/${id}`);
+}
 export const PaymentService = {
     UpdateDiscount,
     getReservation,
     getReservationByOrderID,
     AddPayment,
-    getAllPayments
+    getAllPayments,
+    getPaymentDetailsById,
+    updatePayment,
+    deletePayment
 }

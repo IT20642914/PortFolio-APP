@@ -9,7 +9,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import LinearProgress from '@mui/material/LinearProgress';
 import upload from '../../utilities/upload';
-const PaymentModal = ({ open, handleClose, paymentForm, handleInputFocus, helperText, onInputHandleChange, handlePaymentSubmit  }) => {
+const PaymentModal = ({ mode,open, handleClose, paymentForm, handleInputFocus, helperText, onInputHandleChange, handlePaymentSubmit  }) => {
     const [file, setFile] = useState(null);
     const [isDisable, setIsDisable] = useState(false);
     const [isloading, setIsLoading] = useState(false);
@@ -76,6 +76,8 @@ const handleFileChange = async (event) => {
                     <span className={Styles.modalCloseButton} onClick={handleClose}>X</span>
                 </div>
                 <div className={Styles.modalBody}>
+            {mode === 'edit' && (
+                <>
                  <Typography variant="h6" sx={{fontWeight:"bold"}} gutterBottom>
                         Discount Details
                     </Typography>
@@ -158,6 +160,8 @@ const handleFileChange = async (event) => {
 
                             </Grid>
                     </Grid>
+                    </>
+                )}
                     <div style={{ width: '100%', height: '1px', backgroundColor: '#ccc', margin: '20px 0' }}></div>
                     <Typography variant="h6" sx={{fontWeight:"bold"}} gutterBottom>
                         Please Fill Below Payment Details

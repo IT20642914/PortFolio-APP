@@ -2,24 +2,45 @@ import React, { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { SCREEN_MODES } from "../../utilities/app.constants";
 import Styles from "./PaymentTable.module.scss";
+import { Grid } from "@mui/material";
 
 const PaymentTable = ({ payments, handleRequest, generateReport }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   // Function to handle search input change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  
   // Function to filter payments based on search term
-  const filteredPayments = payments.filter((payment) =>
-    Object.values(payment).some(
-      (value) =>
-        typeof value === "string" &&
-        value.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
+  const filteredPayments = payments.filter((payment) => {
+    const paymentDate = new Date(payment.date);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return (
+      Object.values(payment).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchTerm.toLowerCase())
+      ) &&
+      (!startDate || paymentDate >= start) &&
+      (!endDate || paymentDate <= end)
+    );
+  });
 
+   // Function to handle start date change
+   const handleStartDateChange = (e) => {
+    
+    setStartDate(e.target.value);
+  };
+
+  // Function to handle end date change
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
   return (
     <div className={Styles.tableContainer}>
       <div className="container mx-auto px-4 py-4 overflow-x-auto">
@@ -30,6 +51,27 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
+        <Grid container spacing={2}>
+          <Grid item sx={12}>
+         <input
+         aria-label="Start Date"
+          type="date"
+          className="border border-gray-400 px-3 py-2 rounded-md mb-4 mr-2"
+          placeholder="Start Date"
+          value={startDate}
+          onChange={handleStartDateChange}
+        />
+           </Grid>
+           <Grid item sx={12}>
+        <input
+          type="date"
+          className="border border-gray-400 px-3 py-2 rounded-md mb-4"
+          placeholder="End Date"
+          value={endDate}
+          onChange={handleEndDateChange}
+        />
+           </Grid>
+        </Grid>
         <div className="flex justify-end mb-4">
           <button
             className="bg-[#418ca3] hover:bg-5399ac text-white font-bold py-2 px-4 rounded mr-2"
@@ -80,7 +122,7 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
                 <td className="py-2">{payment.reservationId.OrderId}</td> 
                <td className="py-2">{payment.ServiceProviderId.portfolio_name}</td>
                 <td className="py-2">
-                <img src={payment.bankSlipUrl} alt="payment slip" />
+                <img src={payment.bankSlipUrl} style={{ width:"12rem" ,height:"12rem"}} alt="payment slip" />
                 </td>
                 <td className="py-2">{payment.postAmount}</td>
                 <td className="py-2 flex justify-center">
