@@ -39,6 +39,17 @@ import Vchat from './pages/User_UI/U_Pages/vchat';
 import UserMediaContent from './pages/UserMediaContent/UserMediaContent';
 import MediaManagement from "./pages/MediaManagement/MediaManagement";
 import MyPayment from "./pages/MyPayment/MyPayment";
+
+import QuestionForm from "./components/QuestionForm";
+import AllQuestions from "./components/AllQuestions";
+import EditQuestions from "./components/EditQuestions";
+import Introduction from "./components/Introduction";
+import Question from "./components/Question";
+import QuizIndroduction from "./components/QuizIndroduction";
+import Scoreboard from "./components/Scoreboard";
+// import Footer from "./components/Footer";
+// import NavBar from "./components/Header";
+import SupportAdmin from "./components/SupportAdmin";
 function App() {
 
 
@@ -106,7 +117,16 @@ function App() {
             <Route path="/media/add" element={<Add />} />
             <Route path="/media/update/:id" element={<UpdateContent />} />
             <Route path="/media/get/:id" element={<SingleMedia />} /> */}
-
+        <Route path="/qualification" element={<Introduction />} />
+        <Route path="/quiz" element={<Question />} />
+        <Route path="/add" element={<QuestionForm />} />
+        <Route path="/all" element={<AllQuestions />} />
+        <Route path="all/update/:id" element={<EditQuestions />} />
+        <Route path="/intro" element={<QuizIndroduction />} />
+        <Route path="/score" element={<Scoreboard />} />
+        {/* <Route path="/Footer" element={<Footer />} />
+        <Route path="/navbar" element={<NavBar />} /> */}
+        <Route path="/support" element={<SupportAdmin />} />
 
 
             {/* UserRoutes*/}
