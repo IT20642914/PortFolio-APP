@@ -18,9 +18,14 @@ const AddPayment = (payload) => {
     return axiosPrivateInstance.post(`api/payments/payment/add`,payload);
 }
 
+const getAllPayments = () => {
+    return axiosPrivateInstance.get(`api/payments/payment/getall`);
+}
+
 export const PaymentService = {
     UpdateDiscount,
     getReservation,
     getReservationByOrderID,
-    AddPayment
+    AddPayment,
+    getAllPayments
 }

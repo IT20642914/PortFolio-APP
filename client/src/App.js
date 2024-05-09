@@ -38,8 +38,12 @@ import Vchat from './pages/User_UI/U_Pages/vchat';
 
 import UserMediaContent from './pages/UserMediaContent/UserMediaContent';
 import MediaManagement from "./pages/MediaManagement/MediaManagement";
+import MyPayment from "./pages/MyPayment/MyPayment";
 function App() {
 
+
+
+  
   const ADminLayoutRoutes = ({ children }) => (
     <>
      <SideNavBar />
@@ -109,6 +113,7 @@ function App() {
            <Route path="/post/:id/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
            <Route path="/myFeedBacks" name="UserFeedbacks" element={<UserLayoutRoutes><MyFeedBacks/></UserLayoutRoutes>}/>
            <Route path="/reservations" name="reservations" element={<UserLayoutRoutes><ClientReservation/></UserLayoutRoutes>}/>
+           <Route path="/MyPayment" name="reservations" element={<UserLayoutRoutes><MyPayment/></UserLayoutRoutes>}/>
          
            
                        

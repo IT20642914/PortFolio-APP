@@ -8,7 +8,7 @@ const {
 } = require("../controllers/paymentController");
 
 router.post("/payment/add", addPayment);
-router.get("/payment/get", getAllPayments);
+router.get("/payment/getall", getAllPayments);
 router.patch("/payment/update/:id", updatePayment);
 router.delete("/payment/delete/:id", deletePayment);
 
