@@ -62,10 +62,44 @@ const getPaymentById = async (req, res) => {
         res.status(500).send({ message: "Failed to get payment details", error: error.message });
     }
 };
+
+const generatePaymentReport = async (req, res) => {
+    const userId = req.params.userId; // Get the user ID from the request parameters
+    try {
+        // Fetch payment records for the specified user
+        const payments = await Payment.find({ UserId: userId });
+        let totalDiscount = 0;
+        let totalAmountPaid = 0;
+
+        payments.forEach(payment => {
+            const amountPaid = parseFloat(payment.amount);
+            const postAmount = parseFloat(payment.postAmount);
+            const discount = postAmount - amountPaid;
+
+            totalDiscount += discount; // Sum up all discounts
+            totalAmountPaid += amountPaid; // Sum up all amounts paid
+        });
+
+        res.json({
+            totalDiscount: totalDiscount.toFixed(2),
+            totalAmountPaid: totalAmountPaid.toFixed(2),
+            count: payments.length,
+            payments:payments
+        });
+    } catch (error) {
+        res.status(500).send({
+            message: "Error retrieving payment data for user ID: " + userId,
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     addPayment,
     getAllPayments,
     updatePayment,
     deletePayment,
-    getPaymentById
+    getPaymentById,
+    generatePaymentReport
+    
 };

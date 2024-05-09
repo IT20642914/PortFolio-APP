@@ -32,6 +32,10 @@ const updatePayment = (id,payload) => {
 const deletePayment = (id) => {
     return axiosPrivateInstance.delete(`api/payments/payment/delete/${id}`);
 }
+const  generatePaymentReport=(userID)=>{
+    return axiosPrivateInstance.get(`api/payments/report/${userID}`);
+
+}
 export const PaymentService = {
     UpdateDiscount,
     getReservation,
@@ -40,5 +44,6 @@ export const PaymentService = {
     getAllPayments,
     getPaymentDetailsById,
     updatePayment,
-    deletePayment
+    deletePayment,
+    generatePaymentReport
 }
