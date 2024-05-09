@@ -135,10 +135,10 @@ function App() {
            <Route path="/MyPayment" name="reservations" element={<UserLayoutRoutes><MyPayment/></UserLayoutRoutes>}/>
          
            <Route path="/qualification" name="qualification" element={<UserLayoutRoutes><Introduction/></UserLayoutRoutes>}/>
-           <Route path="/score" name="score" element={<UserLayoutRoutes><Question/></UserLayoutRoutes>}/>
+           <Route path="/quiz" name="quiz" element={<UserLayoutRoutes><Question/></UserLayoutRoutes>}/>
           
            <Route path="/intro" name="intro" element={<UserLayoutRoutes><Scoreboard/></UserLayoutRoutes>}/>
-           <Route path="/quiz" name="quiz" element={<UserLayoutRoutes><QuizIndroduction/></UserLayoutRoutes>}/>
+           <Route path="/score" name="score" element={<UserLayoutRoutes><QuizIndroduction/></UserLayoutRoutes>}/>
            <Route path="/support" name="support" element={<UserLayoutRoutes><SupportAdmin/></UserLayoutRoutes>}/>
            
                        

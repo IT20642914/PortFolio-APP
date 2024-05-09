@@ -13,11 +13,15 @@ import { PaymentService } from "../Services/Payment.Service";
 import { toast } from "react-toastify";
 import emailjs from "@emailjs/browser";
 import AddReservationClient from "../components/AddReservationClient/AddReservationClient";
+import EMBLEMS from '../components/images/EMBLEM.png'
+import { Margin } from "@mui/icons-material";
+import { Grid } from "@mui/material";
 function PostDetails() {
   const { id } = useParams(); // Access route parameter 'id' using useParams hook
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
   const [enlargedImage, setEnlargedImage] = useState(null);
+  const [pass, setPass] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     axios.get(`/post/${id}`).then((res) => {
@@ -45,6 +49,13 @@ function PostDetails() {
       })
       .catch((err) => {
         console.log("Error", err);
+      });
+
+      axios.get(`http://localhost:5000/results/check-pass/${id}`).then((res) => {
+        setPass(res.data.hasPassed);
+      }).catch((err) => {
+        console.log("Error", err);
+        toast.error("Error Fetching Results");
       });
   };
 
@@ -203,6 +214,7 @@ function PostDetails() {
                     alignItems: "center",
                   }}
                 />
+
                 <div
                   className="text-overlay"
                   style={{
@@ -230,6 +242,8 @@ function PostDetails() {
                   <h5>
                     Email : {post.email} | contact No : {post.contact_no}
                   </h5>
+             {pass && <img id="emblem2" src={EMBLEMS} style={{width:"120px"}}></img>}
+                  
                 </div>
               </div>
               <div
@@ -252,6 +266,7 @@ function PostDetails() {
                       borderRadius: "50%",
                     }}
                   />
+
                 </div>
               </div>
 
@@ -312,11 +327,25 @@ function PostDetails() {
             </div>
           </div>
 
-          <div className="bioDescription">
+          <div className="bioDescription" tyle={{
+    display: "flex !important", 
+    flexDirection: "column", 
+    alignItems: "center", 
+    justifyContent: "center",
+    textAlign: "center",
+    marginTop: "5rem"
+  }}>
             <h5>Bio</h5>
             <p>{post.bio}</p>
             <h5>Description</h5>
             <p>{post.description}</p>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+
+          </Grid>
+          </Grid>
+
+
           </div>
           <div className="imageContainer">
             <div className="gallery">

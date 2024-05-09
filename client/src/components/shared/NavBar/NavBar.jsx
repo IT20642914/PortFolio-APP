@@ -53,7 +53,16 @@ const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
     else if(page=== 'Logout'){
       localStorage.clear()
       navigate('/login')
-    }
+    }else if(
+      page=== 'Profile'){
+      //   const userString = localStorage.getItem('user');
+      //   const user = JSON.parse(userString);
+        
+      //   const userId = user._id;
+      
+      // navigate(`/post/${userId}`)
+      }
+    
     setAnchorElNav(null);
   }
 

@@ -47,7 +47,7 @@ const QuestionForm = () => {
 
     // If all validations pass, submit the form
     try {
-      await axios.post("http://localhost:8070/questions/add", {
+      await axios.post("http://localhost:5000/questions/add", {
         questionText,
         options: trimmedOptions,
         correctOption,
