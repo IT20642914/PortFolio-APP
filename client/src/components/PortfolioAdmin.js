@@ -84,7 +84,7 @@ class PortfolioAdmin extends Component {
             <div  className="container mx-auto px-4 py-4 overflow-x-auto">
           <table className="table">
             <thead>
-              <tr>
+              <tr className="bg-gray-200" style={{background:"#418ca3"}}>
                 <th>#</th>
                 <th>Image</th>
                 <th>Name</th>

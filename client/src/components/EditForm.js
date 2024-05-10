@@ -308,7 +308,7 @@ export default function EditForm() {
           </div>
         )}
       </div>
-      <NavBar />
+      {/* <NavBar /> */}
     </section>
   );
 }

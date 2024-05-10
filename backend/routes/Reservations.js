@@ -175,10 +175,10 @@ router.route("/updateReservation/:OrderId").put(async (req, res) => {
 });
 
 //Delete
-router.route("/deleteReservation/:Orderid").delete(async (req, res) => {
-  let orderId = req.params.Orderid;
+router.route("/deleteReservation/:orderId").delete(async (req, res) => {
+  const orderId = req.params.orderId;
 
-  await Reservation.findOneAndDelete(orderId)
+  await Reservation.findOneAndDelete({ OrderId: orderId })
     .then(() => {
       res.status(200).send({ status: "Reservation Deleted" });
     })

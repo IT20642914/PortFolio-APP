@@ -51,7 +51,10 @@ function PostDetails() {
         console.log("Error", err);
       });
 
-      axios.get(`http://localhost:5000/results/check-pass/${id}`).then((res) => {
+      const userString = localStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const userId = user._id;
+      axios.get(`http://localhost:5000/results/check-pass/${userId}`).then((res) => {
         setPass(res.data.hasPassed);
       }).catch((err) => {
         console.log("Error", err);

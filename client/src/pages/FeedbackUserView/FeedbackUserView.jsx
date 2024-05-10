@@ -45,7 +45,7 @@
 
     const getInitialData = () => {
       //need modification
-      localStorage.setItem("postID",'6635643ad2e5faddd25dc691')
+      localStorage.setItem("postID",'663e700c1967857e8d3ef312')
       const postID= localStorage.getItem('postID')
     
     FeedBackService.getAverageRatingsForPost(postID).then((response) => {

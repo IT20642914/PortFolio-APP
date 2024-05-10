@@ -119,7 +119,7 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
                 <td className="py-2">{payment.bank}</td>
                 <td className="py-2">{payment.branch}</td>
                 <td className="py-2">{payment.remark}</td>
-                <td className="py-2">{payment.reservationId.OrderId}</td> 
+                <td className="py-2">{payment.reservationId?.OrderId}</td> 
                <td className="py-2">{payment.ServiceProviderId.portfolio_name}</td>
                 <td className="py-2">
                 <img src={payment.bankSlipUrl} style={{ width:"12rem" ,height:"12rem"}} alt="payment slip" />
