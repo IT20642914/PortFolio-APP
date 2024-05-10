@@ -53,7 +53,7 @@ const UpdateReservation = ({ orderId }) => {
         console.log(res.data);
         // const jobData = res.data;
         setCustomerId(res.data.CustomerId._id);
-        setServiceProviderId(res.data.ServiceProviderId);
+        setServiceProviderId(res.data.ServiceProviderId._id);
         setRequests(res.data.Requests);
         setReservationDate(res.data.ReservationDate);
       })

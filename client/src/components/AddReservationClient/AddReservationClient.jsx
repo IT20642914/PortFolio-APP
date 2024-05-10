@@ -48,6 +48,8 @@ const AddReservationClient = ({ CustomerId, ServiceProviderId }) => {
   const sendData = (e) => {
     e.preventDefault();
     const reservationData = {
+      CustomerId,
+      ServiceProviderId,
       Requests,
       ReservationDate,
     };

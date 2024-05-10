@@ -41,7 +41,7 @@ const handleLogin = async () => {
         }
       else{
         toast.success("User Login Successfully")
-        navigate("/jobs")
+        navigate("/home")
       }
       }
     }).catch((err)=>{

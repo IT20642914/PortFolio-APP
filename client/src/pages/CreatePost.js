@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import '../Styles/CreatePost.css';
 import AddImagesModal from '../components/AddImagesModal';
-// import NavBar from '../components/NavBar';
+import NavBar from '../components/NavBar';
 import images from '../images/aa.png';
 import Footer from './User_UI/U_Pages/footer';
 import Resume from '../components/Image/SkillSync.pdf';
@@ -61,10 +61,7 @@ export default class CreatePost extends Component {
       alert('Please fill in all fields correctly.');
       return;
     }
-    const userString = localStorage.getItem('user');
-    const user = JSON.parse(userString);
-    const userId = user._id;
-    
+
     const data = {
       topic,
       description,
@@ -75,7 +72,6 @@ export default class CreatePost extends Component {
       contact_no,
       gallery,
       image: image_id,
-      userId:userId
     };
 
     axios
@@ -361,7 +357,7 @@ export default class CreatePost extends Component {
                 </div>
                 {image && (
                   <div className='col-6'>
-                    <button className='crete-post-btn' onClick={this.handleSubmitImage}>Upload</button>
+                    <button onClick={this.handleSubmitImage}>Upload</button>
                   </div>
                 )}
               </div>
@@ -391,12 +387,12 @@ export default class CreatePost extends Component {
                     </div>
                   </div>
                 ))}
-              <button className='crete-post-btn' type='submit'>Save</button>
+              <button type='submit'>Save</button>
             </form>
             <br></br>
             <label >You should download and refer to the terms and conditions for a comprehensive understanding of our policies and guidelines.</label>
             <div>
-              <button  className='download-button'>
+              <button className='download-button'>
                 <a href={Resume} download='Resume' style={{ textDecoration: 'none', color: 'white' }}>Download</a>
               </button>
             </div>
@@ -410,8 +406,8 @@ export default class CreatePost extends Component {
             </div>
           )}
         </div>
-        {/* <NavBar /> */}
-        {/* <Footer /> */}
+        {/* <NavBar />
+        <Footer /> */}
       </section>
     );
   }
