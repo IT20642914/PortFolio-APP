@@ -6,9 +6,10 @@ import NavBar from '../components/NavBar';
 import images from '../images/aa.png';
 import Footer from './User_UI/U_Pages/footer';
 import Resume from '../components/Image/SkillSync.pdf';
-
 export default class CreatePost extends Component {
   constructor(props) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    
     super(props);
     this.state = {
       amount: '',
@@ -61,8 +62,12 @@ export default class CreatePost extends Component {
       alert('Please fill in all fields correctly.');
       return;
     }
-
+    const userString = localStorage.getItem('user');
+    const user = JSON.parse(userString);
+    const userId = user._id;
+    
     const data = {
+      userID:userId,
       amount,
       description,
       category,
@@ -74,8 +79,7 @@ export default class CreatePost extends Component {
       image: image_id,
     };
 
-    axios
-      .post('/post/save', data)
+    axios.post('/post/save', data)
       .then((res) => {
         if (res.data.success) {
           this.setState({
@@ -89,7 +93,9 @@ export default class CreatePost extends Component {
             image: null,
             image_id: '',
             gallery: [],
+
           });
+          console.log("respose",res.data)
           alert('Data saved successfully!');
         }
       })
