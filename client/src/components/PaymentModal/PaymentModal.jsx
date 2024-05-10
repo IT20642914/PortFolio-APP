@@ -76,7 +76,7 @@ const handleFileChange = async (event) => {
                     <span className={Styles.modalCloseButton} onClick={handleClose}>X</span>
                 </div>
                 <div className={Styles.modalBody}>
-            {mode === 'edit' && (
+            {mode !== 'edit' && (
                 <>
                  <Typography variant="h6" sx={{fontWeight:"bold"}} gutterBottom>
                         Discount Details

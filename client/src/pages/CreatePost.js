@@ -11,7 +11,7 @@ export default class CreatePost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topic: '',
+      amount: '',
       description: '',
       category: '',
       portfolio_name: '',
@@ -37,7 +37,7 @@ export default class CreatePost extends Component {
     e.preventDefault();
 
     const {
-      topic,
+      amount,
       description,
       category,
       portfolio_name,
@@ -49,7 +49,7 @@ export default class CreatePost extends Component {
     } = this.state;
 
     if (
-      !topic ||
+      !amount ||
       !description ||
       !category ||
       !portfolio_name ||
@@ -63,7 +63,7 @@ export default class CreatePost extends Component {
     }
 
     const data = {
-      topic,
+      amount,
       description,
       category,
       portfolio_name,
@@ -79,7 +79,7 @@ export default class CreatePost extends Component {
       .then((res) => {
         if (res.data.success) {
           this.setState({
-            topic: '',
+            amount: '',
             description: '',
             category: '',
             portfolio_name: '',
@@ -170,7 +170,7 @@ export default class CreatePost extends Component {
 
   render() {
     const {
-      topic,
+      amount,
       description,
       category,
       portfolio_name,
@@ -198,13 +198,13 @@ export default class CreatePost extends Component {
               </span>
             </h2>
             <form className='form' onSubmit={this.onSubmit}>
-              <div className={`row ${topic ? '' : 'error'}`}>
+              <div className={`row ${amount ? '' : 'error'}`}>
                 <div className='col-6'>
-                  <label style={{ fontSize: 'larger' }}>Topic:</label>
+                  <label style={{ fontSize: 'larger' }}>amount:</label>
                   <input
                     type='text'
-                    name='topic'
-                    value={topic}
+                    name='amount'
+                    value={amount}
                     onChange={this.handleInputChange}
                   />
                 </div>
