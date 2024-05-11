@@ -12,6 +12,7 @@
   import FeedbackModal from '../../components/FeedbackModal/FeedbackModal'
   import { useState } from 'react'
   import { validateFormData } from '../../helper/index'
+import { max } from 'moment';
   const FeedbackUserView = () => {
     const [averageRatings, setAverageRatings] = React.useState({
       averageResponsibility: 0,
@@ -30,7 +31,7 @@
       creativity: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
       reliability: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
       overallSatisfaction: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
-      comments: { value: "", isRequired: false, disable: false, readonly: false, validator: "", error: "" }
+      comments: { value: "", isRequired: true, disable: false, readonly: false, validator: "comment", error: "",max: 100 }
   };
     const [postDetails, setPostDetails] = React.useState({})
     const [feedbackDetails, setFeedbackDetails] = React.useState([])

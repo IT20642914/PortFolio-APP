@@ -18,7 +18,8 @@ const MyFeedBacks = () => {
         creativity: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
         reliability: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
         overallSatisfaction: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
-        comments: { value: "", isRequired: false, disable: false, readonly: false, validator: "", error: "" }
+        comments: { value: "", isRequired: true, disable: false, readonly: false, validator: "comment", error: "",max: 100 }
+
     };
     
     const [feedbacks, setFeedbacks] = useState([]);
@@ -76,7 +77,8 @@ const userId = user._id;
                     creativity: { value: feedbackData.creativity, isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
                     reliability: { value: feedbackData.reliability, isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
                     overallSatisfaction: { value: feedbackData.overallSatisfaction, isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
-                    comments: { value: feedbackData.comments, isRequired: true, disable: false, readonly: false, validator: "none", error: "" }   
+                    comments: { value: feedbackData.comments, isRequired: true, disable: false, readonly: false,  validator: "comment", error: "",max: 100}  
+
             })
             setOpenModal(true);
 
@@ -121,6 +123,9 @@ const userId = user._id;
       const HandleBtnResponse=async (mode)=>{
         const [validateData, isValid] = await validateFormData(feedbackForm);
         setFeedbackForm(validateData);
+        if(isValid){
+
+     
         if(mode === SCREEN_MODES.EDIT){
 
             const payload={
@@ -142,6 +147,7 @@ const userId = user._id;
                 toast.error(err.response.data.message)
             })
         }
+    }
       }
   return (
     <div className={Styles.container}>

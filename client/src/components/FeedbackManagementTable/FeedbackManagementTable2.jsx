@@ -19,8 +19,9 @@ const FeedbackManagementTable2 = ({ feedbacks, handleRequest, generateReport }) 
   };
 
   const filteredFeedbacks = feedbacks.filter(feedback =>
-    feedback.feedbackDetails.some(detail =>
-      (detail.email.toLowerCase() ?? "").includes(searchTerm) 
+    feedback.postDetails.some(detail =>
+      (detail.portfolio_name.toLowerCase() ?? "").includes(searchTerm) ||
+        (detail.category.toLowerCase() ?? "").includes(searchTerm) 
     )
   );
 

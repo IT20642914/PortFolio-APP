@@ -160,6 +160,32 @@ export const validateFormData = async (data) => {
           }
         }
       }
+      if(fieldData.validator === 'comment'){
+        let error = null;
+        if (fieldData.isRequired && !fieldData.value) {
+          error = 'This field is required.';
+          isValid = false;
+        } else if (fieldData.value) {
+          const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+          if (specialCharRegex.test(fieldData.value)) {
+              error = 'Special characters are not allowed.';
+              isValid = false;
+          }
+          if (fieldData.max !== undefined) {
+            if (fieldData.value.length > fieldData.max) {
+              error = `Character length should be less than ${fieldData.max}.`;
+              isValid = false;
+            }
+          }
+        }
+        validatedData = {
+          ...validatedData,
+          [field]: {
+            ...fieldData,
+            error: error
+          }
+        }
+      }
     }
     if (validatedData.max !== undefined && validatedData.max.value !== '' && validatedData.min.value !== '') {
       if (Number(validatedData.max.value) <= Number(validatedData.min.value)) {
