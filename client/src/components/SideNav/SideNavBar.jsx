@@ -182,7 +182,7 @@ const navigate = useNavigate();
                 <span className="ms-3">Portfolio Management</span>
               </a>
             </li>
-            <li>
+                    <li>
               <a
                 href="/MediaManagement"
                 onClick={() => handleTabClick("MediaManagement")}
@@ -195,6 +195,21 @@ const navigate = useNavigate();
                   {/* Your SVG icon */}
                              </svg>
                 <span className="ms-3">Media Management  </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/paymentManagement"
+                onClick={() => handleTabClick("paymentManagement")}
+                className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-customGray group ${
+                  activeTab === "paymentManagement" ? "bg-[#418ca3] text-white" : ""
+                }`}
+              >
+                {/* Career icon placeholder */}
+                <svg className="w-5 h-5 transition duration-75" aria-hidden="true" fill="currentColor" viewBox="0 0 22 21">
+                  {/* Your SVG icon */}
+                             </svg>
+                <span className="ms-3">Payment Management  </span>
               </a>
             </li>
             <li>

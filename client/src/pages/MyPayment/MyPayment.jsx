@@ -43,7 +43,10 @@ useEffect(() => {
 
 const initialData = async () => {
     try {
-        const res = await PaymentService.getAllPayments();
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const userId = user._id;
+        const res = await PaymentService.getPaymentsByUserId(userId);
         console.log("ress",res.data )
         setPayments(res.data);
     } catch (error) {

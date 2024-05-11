@@ -93,6 +93,22 @@ const generatePaymentReport = async (req, res) => {
         });
     }
 };
+const getPaymentsByUserId = async (req, res) => {
+    const { userId } = req.params;  // Extracting userId from request parameters
+
+    try {
+        // Querying the database for all payments related to the userId
+        const payments = await Payment.find({ UserId: userId }).populate('reservationId ServiceProviderId');
+
+        if (!payments.length) {
+            return res.status(404).send({ message: "No payments found for this user." });
+        }
+
+        res.status(200).send(payments);
+    } catch (error) {
+        res.status(500).send({ message: "Failed to retrieve payments", error: error.message });
+    }
+};
 
 module.exports = {
     addPayment,
@@ -100,6 +116,7 @@ module.exports = {
     updatePayment,
     deletePayment,
     getPaymentById,
-    generatePaymentReport
+    generatePaymentReport,
+    getPaymentsByUserId
     
 };

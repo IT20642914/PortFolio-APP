@@ -51,20 +51,10 @@ import Scoreboard from "./components/Scoreboard";
 // import NavBar from "./components/Header";
 import SupportAdmin from "./components/SupportAdmin";
 import MyPosts from "./pages/MyPosts/MyPosts";
-import { useState,useEffect } from "react";
+import PaymentManagement from "./pages/PaymentManagement/PaymentManagement";
 function App() {
-const [isLogged, setIsLogged] = useState(false);
 
-useEffect(() => {
-  const userString = localStorage.getItem('user');
-  const user = userString ? JSON.parse(userString) : null;
-  if (user && user._id) {
-      console.log('logged in');
-      setIsLogged(true);
-  }
-}, [])
 
-  
 //   const ADminLayoutRoutes = ({ children }) => (
 //     <>
 //      <SideNavBar />
@@ -198,7 +188,8 @@ const UserLayoutRoutes = ({ children }) => {
            <Route path="/qualificationManager/add" name="add" element={<ADminLayoutRoutes><QuestionForm/></ADminLayoutRoutes>}/>
 
            <Route path="/qualificationManager/update/:id" name="qualificationManager/update/:id" element={<ADminLayoutRoutes><EditQuestions/></ADminLayoutRoutes>}/>
-          <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
+           <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
+          <Route path="/paymentManagement" name="adminReservations" element={<ADminLayoutRoutes><PaymentManagement/></ADminLayoutRoutes>}/>
       </Routes>
     </BrowserRouter>
   );

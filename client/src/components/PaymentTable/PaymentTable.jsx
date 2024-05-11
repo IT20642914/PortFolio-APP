@@ -41,6 +41,31 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
   };
+
+  if (!payments.length) {
+
+      
+    return (
+      <table className="w-full table-auto">
+      <thead>
+      <tr className="bg-gray-200">
+        <th className="py-2">NO</th>
+        <th className="py-2"> Paid Amount</th>
+        <th className="py-2">Discount</th>
+        <th className="py-2">Date</th>
+        <th className="py-2">Bank</th>
+        <th className="py-2">Branch</th>
+        <th className="py-2">Remark</th>
+        <th className="py-2">Reservation ID</th>
+        <th className="py-2">Service Provider ID</th>
+        <th className="py-2">Bank Slip</th>
+        <th className="py-2">Post Amount</th>
+        <th className="py-2">Actions</th>
+      </tr>
+    </thead>
+    <div className={Styles.tableContainer}>No Payments Found</div>
+    </table>)
+  }
   return (
     <div className={Styles.tableContainer}>
       <div className="container mx-auto px-4 py-4 overflow-x-auto">
