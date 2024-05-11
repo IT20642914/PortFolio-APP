@@ -13,11 +13,16 @@ import { PaymentService } from "../Services/Payment.Service";
 import { toast } from "react-toastify";
 import emailjs from "@emailjs/browser";
 import AddReservationClient from "../components/AddReservationClient/AddReservationClient";
+import EMBLEMS from '../components/images/EMBLEM.png'
+import { Margin } from "@mui/icons-material";
+import { Grid } from "@mui/material";
 function PostDetails() {
-  const { id } = useParams(); // Access route parameter 'id' using useParams hook
+  const { id,userID } = useParams(); // Access route parameter 'id' using useParams hook
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
   const [enlargedImage, setEnlargedImage] = useState(null);
+  const [pass, setPass] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     axios.get(`/post/${id}`).then((res) => {
@@ -27,9 +32,9 @@ function PostDetails() {
       }
     });
   }, [id]);
-  const userString = localStorage.getItem("user");
-  const user = JSON.parse(userString);
-  const CustomerId = user._id;
+  // const userString = localStorage.getItem("user");
+  // const user = JSON.parse(userString);
+  const CustomerId = userID;
 
   useEffect(() => {
     getData();
@@ -45,6 +50,18 @@ function PostDetails() {
       })
       .catch((err) => {
         console.log("Error", err);
+      });
+
+      const userString = localStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const userId = user._id;
+
+      setIsAuthor(userID === userId)
+      axios.get(`http://localhost:5000/results/check-pass/${userID}`).then((res) => {
+        setPass(res.data.hasPassed);
+      }).catch((err) => {
+        console.log("Error", err);
+        toast.error("Error Fetching Results");
       });
   };
 
@@ -203,6 +220,7 @@ function PostDetails() {
                     alignItems: "center",
                   }}
                 />
+
                 <div
                   className="text-overlay"
                   style={{
@@ -230,6 +248,8 @@ function PostDetails() {
                   <h5>
                     Email : {post.email} | contact No : {post.contact_no}
                   </h5>
+             {pass && <img id="emblem2" src={EMBLEMS} style={{width:"120px"}}></img>}
+                  
                 </div>
               </div>
               <div
@@ -252,6 +272,7 @@ function PostDetails() {
                       borderRadius: "50%",
                     }}
                   />
+
                 </div>
               </div>
 
@@ -274,7 +295,7 @@ function PostDetails() {
                   Add Feedback |{" "}
                   <FaPlus style={{ marginLeft: "0.3rem" }} size={24} />
                 </div>
-                <div
+              {isAuthor&&  <div
                   className="addDiscount-button"
                   style={{
                     display: "flex",
@@ -289,9 +310,9 @@ function PostDetails() {
                 >
                   Add Discount |{" "}
                   <FaPlus style={{ marginLeft: "0.3rem" }} size={24} />
-                </div>
+                </div>}
               </div>
-              <div
+              {isAuthor&&   <div
                 className="edit-button"
                 style={{
                   position: "absolute",
@@ -309,14 +330,29 @@ function PostDetails() {
                 Edit | <FaEdit style={{ marginLeft: "0.5rem" }} size={24} />{" "}
                 {/* Edit button with edit icon */}
               </div>
+              }
             </div>
           </div>
 
-          <div className="bioDescription">
+          <div className="bioDescription" tyle={{
+    display: "flex !important", 
+    flexDirection: "column", 
+    alignItems: "center", 
+    justifyContent: "center",
+    textAlign: "center",
+    marginTop: "5rem"
+  }}>
             <h5>Bio</h5>
             <p>{post.bio}</p>
             <h5>Description</h5>
             <p>{post.description}</p>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+
+          </Grid>
+          </Grid>
+
+
           </div>
           <div className="imageContainer">
             <div className="gallery">

@@ -9,6 +9,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import LinearProgress from '@mui/material/LinearProgress';
 import upload from '../../utilities/upload';
+import { SCREEN_MODES } from '../../utilities/app.constants';
 const PaymentModal = ({ mode,open, handleClose, paymentForm, handleInputFocus, helperText, onInputHandleChange, handlePaymentSubmit  }) => {
     const [file, setFile] = useState(null);
     const [isDisable, setIsDisable] = useState(false);
@@ -65,18 +66,22 @@ const handleFileChange = async (event) => {
 
 
     return (
+       
         <Modal
             open={open}
             onClose={handleClose}
             className={Styles.modalContainer}
         >
-            <div className={Styles.modalContent}>
+            <div className={Styles.modalContent} style={{
+        maxHeight: '95vh', // Maximum height to ensure it doesn't overflow the viewport
+        overflowY: 'auto' // Scroll inside modal if content is too long
+    }}>
                 <div className={Styles.modalHeader}>
                     <h2 className={Styles.modalTitle}>Payment Details</h2>
                     <span className={Styles.modalCloseButton} onClick={handleClose}>X</span>
                 </div>
                 <div className={Styles.modalBody}>
-            {mode === 'edit' && (
+            {mode !== SCREEN_MODES.EDIT && (
                 <>
                  <Typography variant="h6" sx={{fontWeight:"bold"}} gutterBottom>
                         Discount Details
@@ -271,6 +276,7 @@ const handleFileChange = async (event) => {
                 </div>
             </div>
         </Modal>
+        
     );
 };
 

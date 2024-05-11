@@ -18,7 +18,7 @@ export default function AllQuestions() {
   useEffect(() => {
     function getQuestions() {
       axios
-        .get("http://localhost:8070/questions")
+        .get("http://localhost:5000/questions")
         .then((res) => {
           setQuestions(res.data);
           setFilteredQuestions(res.data);
@@ -38,7 +38,7 @@ export default function AllQuestions() {
     );
     if (confirmation) {
       axios
-        .delete(`http://localhost:8070/questions/delete/${id}`)
+        .delete(`http://localhost:5000/questions/delete/${id}`)
         .then(() => {
           console.log("Question deleted successfully");
           window.location.reload();

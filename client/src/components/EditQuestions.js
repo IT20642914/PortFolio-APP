@@ -15,7 +15,7 @@ const EditQuestions = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/questions/${id}`)
+      .get(`http://localhost:5000/questions/${id}`)
       .then((res) => {
         setQuestion(res.data);
       })
@@ -65,7 +65,7 @@ const EditQuestions = () => {
     }
 
     try {
-      await axios.put(`http://localhost:8070/questions/update/${id}`, question);
+      await axios.put(`http://localhost:5000/questions/update/${id}`, question);
       navigate("/all");
     } catch (error) {
       console.error(error);

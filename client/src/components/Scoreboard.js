@@ -23,7 +23,7 @@ const Scoreboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8070/results/scores")
+      .get("http://localhost:5000/results/scores")
       .then((response) => {
         setRankedMarks(response.data);
       })
@@ -102,7 +102,7 @@ const Scoreboard = () => {
           {rankedMarks.map((score, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>username</td>
+              <td>{score.userName}</td>
               <td>{score.correctAnswers}</td>
               <td>{score.timeTaken}</td>
             </tr>

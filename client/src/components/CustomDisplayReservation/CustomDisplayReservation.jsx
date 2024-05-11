@@ -31,7 +31,7 @@ const [PaymentForm, setPaymentForm] = useState(INITIAL_PAYMENT_FORM);
 const [openModal, setOpenModal] = useState(false);
 const [helperText, setHelperText] = useState(true);
 const [mode, setMode] = useState(null);
-
+const [search, setSearch] = useState("");
   const [reservations, setReservations] = useState([]);
 
 
@@ -130,7 +130,23 @@ if(res.data){
       },
     });
   }
-
+  function searchHandler(e) {
+    e.preventDefault();
+    if (search.trim().length === 0) {
+      // If the search query is empty, do not fetch data
+      return;
+    }
+    console.log(search);
+    axios
+      .get(`http://localhost:5000/api/reservation/search?search=${search}`)
+      .then((res) => {
+        console.log(res.data);
+        setReservations(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   const handlePaymentSubmit=async ()=>{
     setHelperText(true);
     const [validateData, isValid] = await validateFormData(PaymentForm);
@@ -164,12 +180,35 @@ if(res.data){
     }
 
   }
+  
   return (
     <div>
       <h2>
         <center>All Reservations</center>
       </h2>
-      
+      <div className="flex justify-center">
+          <form
+            className="search"
+            onSubmit={searchHandler}
+            style={{ flexDirection: "row", marginTop: "25px" }}
+          >
+            <input
+              type="search"
+              name="q"
+              id="search"
+              value={search}
+              placeholder="Enter text to search"
+              onChange={(e) => {
+                setSearch(e.target.value);
+                //   console.log(search);
+              }}
+              required
+              className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 mr-5"
+              style={{ width: "500px" }}
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
       <div className="container mx-auto px-4 py-8 mt-2">
         <table className='"w-full table-auto'>
           <thead>
@@ -213,7 +252,7 @@ if(res.data){
         </table>
       </div>
 
-         <PaymentModal open={openModal} paymentForm={PaymentForm} handleClose={handleClose}  handleInputFocus={handleInputFocus} onInputHandleChange={onInputHandleChange} helperText={helperText} handlePaymentSubmit={handlePaymentSubmit} />
+        <PaymentModal open={openModal} paymentForm={PaymentForm} handleClose={handleClose}  handleInputFocus={handleInputFocus} onInputHandleChange={onInputHandleChange} helperText={helperText} handlePaymentSubmit={handlePaymentSubmit} />
       
     </div>
   );

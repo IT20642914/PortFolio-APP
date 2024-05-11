@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
 import Jobs from "./pages/Jobs";
 // import Home from "./pages/Home";
 import CareerAdmin from "./pages/CareerAdmin/CareerAdmin";
@@ -50,31 +50,66 @@ import Scoreboard from "./components/Scoreboard";
 // import Footer from "./components/Footer";
 // import NavBar from "./components/Header";
 import SupportAdmin from "./components/SupportAdmin";
+import MyPosts from "./pages/MyPosts/MyPosts";
+import PaymentManagement from "./pages/PaymentManagement/PaymentManagement";
 function App() {
 
 
-
-  
-  const ADminLayoutRoutes = ({ children }) => (
-    <>
-     <SideNavBar />
-      {children}
+//   const ADminLayoutRoutes = ({ children }) => (
+//     <>
+//      <SideNavBar />
+//       {children}
      
-    </>
-  );
- const UserLayoutRoutes = ({ children }) => (
+//     </>
+//   );
+ const UserALLLayoutRoutes = ({ children }) => (
     <>
       <NavBar />
       {children}
       <Footer/>
     </>
   );
+const ADminLayoutRoutes = ({ children }) => {
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  const isAdmin = user && user.role === 'ADMIN'; // Check if the user role is 'admin'
+
+  if (!isAdmin) {
+    // If not admin, redirect to login or another appropriate page
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <>
+      <SideNavBar />
+      {children}
+    </>
+  );
+};
+
+const UserLayoutRoutes = ({ children }) => {
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  const isLogged = user && user._id; // Check if the user is logged in
+
+  if (!isLogged) {
+    // If not logged in, redirect to login
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <>
+      <NavBar />
+      {children}
+      <Footer />
+    </>
+  );
+};
   return (
     <BrowserRouter>
       <Routes>
       <Route path="/"  name="Login" element={<Login />} /> 
       <Route path="/signup"  name="SignUp" element={<SignUp />} />
-      {/* <Route path="/jobs" name="jobs" element={<Jobs />} /> */}
       <Route path="/portfolio" element={<Portfolio />} />
         {/* <Route path="/services" element={<Services />} />
         <Route path="/Gallery" element={<Gallery />} />
@@ -91,7 +126,7 @@ function App() {
         <Route path="/userui/:bio" component={UserUi} /> */}
          <Route path="/jobs" element={<UserLayoutRoutes><Jobs/></UserLayoutRoutes>} />
 
-         <Route path="/home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>} />
+         <Route path="/home" element={<UserALLLayoutRoutes><Home/></UserALLLayoutRoutes>} />
         <Route path="/portfolios" element={<UserLayoutRoutes><Portfolio/></UserLayoutRoutes>} />
       <Route path="/services" element={<UserLayoutRoutes><Services/></UserLayoutRoutes>} />
       <Route path="/Gallery" element={<UserLayoutRoutes><Gallery/></UserLayoutRoutes>} />
@@ -102,7 +137,7 @@ function App() {
       <Route path="/email" element={<UserLayoutRoutes><Email/></UserLayoutRoutes>} />
       <Route path="/vchat" element={<UserLayoutRoutes><Vchat/></UserLayoutRoutes>} />
       <Route path="/servicespage" element={<UserLayoutRoutes><Servisespage/></UserLayoutRoutes>} />
-      <Route path="/post/:id" element={<UserLayoutRoutes><PostDetails/></UserLayoutRoutes>} />
+      <Route path="/post/:id/:userID" element={<UserLayoutRoutes><PostDetails/></UserLayoutRoutes>} />
       <Route path="/editpost/:id" element={<UserLayoutRoutes><EditForm/></UserLayoutRoutes>} />
       <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
       <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
@@ -129,18 +164,19 @@ function App() {
 
 
             {/* UserRoutes*/}
-           <Route path="/post/:id/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
+           <Route path="/post/:id/:userID/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
            <Route path="/myFeedBacks" name="UserFeedbacks" element={<UserLayoutRoutes><MyFeedBacks/></UserLayoutRoutes>}/>
            <Route path="/reservations" name="reservations" element={<UserLayoutRoutes><ClientReservation/></UserLayoutRoutes>}/>
            <Route path="/MyPayment" name="reservations" element={<UserLayoutRoutes><MyPayment/></UserLayoutRoutes>}/>
          
            <Route path="/qualification" name="qualification" element={<UserLayoutRoutes><Introduction/></UserLayoutRoutes>}/>
-           <Route path="/score" name="score" element={<UserLayoutRoutes><Question/></UserLayoutRoutes>}/>
+           <Route path="/quiz" name="quiz" element={<UserLayoutRoutes><Question/></UserLayoutRoutes>}/>
           
            <Route path="/intro" name="intro" element={<UserLayoutRoutes><Scoreboard/></UserLayoutRoutes>}/>
-           <Route path="/quiz" name="quiz" element={<UserLayoutRoutes><QuizIndroduction/></UserLayoutRoutes>}/>
+           <Route path="/score" name="score" element={<UserLayoutRoutes><QuizIndroduction/></UserLayoutRoutes>}/>
            <Route path="/support" name="support" element={<UserLayoutRoutes><SupportAdmin/></UserLayoutRoutes>}/>
-           
+             
+           <Route path="/myPosts" name="MyPosts" element={<UserLayoutRoutes><MyPosts/></UserLayoutRoutes>}/>
                        
                 {/* Admin routes */}
            <Route path="/MediaManagement" name="MediaManagement" element={<ADminLayoutRoutes><MediaManagement/></ADminLayoutRoutes>}/>
@@ -152,7 +188,8 @@ function App() {
            <Route path="/qualificationManager/add" name="add" element={<ADminLayoutRoutes><QuestionForm/></ADminLayoutRoutes>}/>
 
            <Route path="/qualificationManager/update/:id" name="qualificationManager/update/:id" element={<ADminLayoutRoutes><EditQuestions/></ADminLayoutRoutes>}/>
-          <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
+           <Route path="/adminReservations" name="adminReservations" element={<ADminLayoutRoutes><AdminReservation/></ADminLayoutRoutes>}/>
+          <Route path="/paymentManagement" name="adminReservations" element={<ADminLayoutRoutes><PaymentManagement/></ADminLayoutRoutes>}/>
       </Routes>
     </BrowserRouter>
   );

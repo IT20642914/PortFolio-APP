@@ -15,16 +15,15 @@ const FeedbackManagementTable = ({ feedbacks, handleRequest, generateReport }) =
   useEffect(() => {
     const userString = localStorage.getItem('user');
     const user = JSON.parse(userString);
-    setUserRole("USER"); 
-  console.log("user",user)
+    setUserRole(user.role);
 
   },[])
 
   // Function to filter feedbacks based on search term
   const filteredFeedbacks = feedbacks.filter(feedback =>
     feedback.feedbackDetails.some(detail =>
-      feedback.postID.portfolio_name.toLowerCase().includes(searchTerm) ||
-      feedback.postID.category.toLowerCase().includes(searchTerm) 
+      feedback.postID?.portfolio_name?.toLowerCase().includes(searchTerm) ||
+      feedback.postID?.category?.toLowerCase().includes(searchTerm) 
     )
   );
 
@@ -38,9 +37,10 @@ const FeedbackManagementTable = ({ feedbacks, handleRequest, generateReport }) =
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <div className="flex justify-between mb-4 ">
+        <div className="flex justify-end mb-4 ">
     
        {UserRole==="ADMIN"  &&  <button
+         
             className="bg-[#418ca3] hover:bg-[#5399ac] text-white font-bold py-2 px-4 rounded"
             onClick={generateReport}
           >

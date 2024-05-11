@@ -6,6 +6,7 @@ const resultSchema = new mongoose.Schema({
   UserID: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
+    required: true,
   },
 });
 

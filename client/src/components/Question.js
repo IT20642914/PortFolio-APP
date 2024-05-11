@@ -20,7 +20,7 @@ export default function Question() {
     const fetchQuestions = async () => {
       setIsLoading(true);
       try {
-        const res = await axios.get("http://localhost:8070/questions/quiz");
+        const res = await axios.get("http://localhost:5000/questions/quiz");
         setQuestions(res.data);
         setSelectedOptions({});
       } catch (error) {
@@ -57,17 +57,21 @@ export default function Question() {
       const endTime = Date.now();
       const timeTaken = endTime - startTime;
       const correctAnswersCount = correctAnswerCount;
-
+      const userString = localStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const userId = user._id;
       axios
-        .post("http://localhost:8070/results", {
+        .post("http://localhost:5000/results", {
           correctAnswers: correctAnswersCount,
           milliseconds: timeTaken,
+          userId: userId,
+
         })
         .then((response) => {
           console.log("Marks and time saved successfully");
 
           // Redirect to the score page
-          window.location.href = `/score?correct=${correctAnswersCount}&time=${timeTaken}`;
+          window.location.href = `/intro?correct=${correctAnswersCount}&time=${timeTaken}`;
         })
         .catch((error) => {
           console.error("Error saving marks and time:", error);

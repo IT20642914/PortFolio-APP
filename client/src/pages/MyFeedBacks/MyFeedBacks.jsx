@@ -1,6 +1,6 @@
 import React, { Children } from 'react'
 import Styles from './MyFeedBacks.module.scss'
-import FeedbackManagementTable from '../../components/FeedbackManagementTable/FeedbackManagementTable'
+import FeedbackManagementTable2 from '../../components/FeedbackManagementTable/FeedbackManagementTable2'
 import { useState } from 'react'
 import { FeedBackService } from '../../Services/feedBack.Service'
 import { toast } from 'react-toastify'
@@ -18,7 +18,8 @@ const MyFeedBacks = () => {
         creativity: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
         reliability: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
         overallSatisfaction: { value: "", isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
-        comments: { value: "", isRequired: false, disable: false, readonly: false, validator: "", error: "" }
+        comments: { value: "", isRequired: true, disable: false, readonly: false, validator: "comment", error: "",max: 100 }
+
     };
     
     const [feedbacks, setFeedbacks] = useState([]);
@@ -48,7 +49,7 @@ const userId = user._id;
             setFeedbacks(res.data)
             console.log("res",res)
         }).catch((err)=>{
-            toast.error(err.response.data.message)
+            // toast.error("No Any From Feedbacks Added")
         })
     })
 
@@ -58,7 +59,7 @@ const userId = user._id;
                 toast.success(res.data.message)
                 initialDataLoad()
             }).catch((err)=>{
-                toast.error(err.response.data.message)
+                toast.error(err)
             })
         }
 
@@ -76,7 +77,8 @@ const userId = user._id;
                     creativity: { value: feedbackData.creativity, isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
                     reliability: { value: feedbackData.reliability, isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
                     overallSatisfaction: { value: feedbackData.overallSatisfaction, isRequired: true, disable: false, readonly: false, validator: "number", error: "" },
-                    comments: { value: feedbackData.comments, isRequired: true, disable: false, readonly: false, validator: "none", error: "" }   
+                    comments: { value: feedbackData.comments, isRequired: true, disable: false, readonly: false,  validator: "comment", error: "",max: 100}  
+
             })
             setOpenModal(true);
 
@@ -121,6 +123,9 @@ const userId = user._id;
       const HandleBtnResponse=async (mode)=>{
         const [validateData, isValid] = await validateFormData(feedbackForm);
         setFeedbackForm(validateData);
+        if(isValid){
+
+     
         if(mode === SCREEN_MODES.EDIT){
 
             const payload={
@@ -142,11 +147,12 @@ const userId = user._id;
                 toast.error(err.response.data.message)
             })
         }
+    }
       }
   return (
     <div className={Styles.container}>
     <h1 className="text-2xl font-bold mb-4">My FeedBacks</h1>
-        <FeedbackManagementTable feedbacks={feedbacks} handleRequest={handleRequest} generateReport={{}}/>
+        <FeedbackManagementTable2 feedbacks={feedbacks} handleRequest={handleRequest} generateReport={{}}/>
         <FeedbackModal
                 open={openModal}
                 handleClose={handleCloseModal}

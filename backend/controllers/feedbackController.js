@@ -224,17 +224,59 @@ const getPostDetailsAndFeedback = async (req, res) => {
     }
 }
 
-const feedbacksByLoginUser = async (req, res) => {
+// const feedbacksByLoginUser = async (req, res) => {
     
-    try {
-        const { userId } = req.query.userId;
-        const feedbacks = await feedbackModel.find({ "feedbackDetails.FeedBackedUserID": userId }).populate({
-            path: 'postID',
-            select: '_id portfolio_name category email'
-        })
-        .exec();;
+//     try {
+//         const  userId  = req.query.userId;
+//         const feedbacks = await feedbackModel.find({ "feedbackDetails.FeedBackedUserID": userId }).populate({
+//             path: 'postID',
+//             select: '_id portfolio_name category email'
+//         })
+//         .exec();;
 
-        if (feedbacks.length === 0) {
+//         if (feedbacks.length === 0) {
+//             return res.status(404).json({ message: "No feedback found for this user." });
+//         }
+
+//         res.status(200).json(feedbacks);
+//     } catch (error) {
+//         res.status(500).json({ message: "Server error", error: error.message });
+//     }
+// }
+
+const feedbacksByLoginUser = async (req, res) => {
+    try {
+        const userId = req.query.userId;
+        const objectIdUserId = new mongoose.Types.ObjectId(userId);
+
+        // Use MongoDB aggregation to filter subdocuments in the feedbackDetails array
+        const feedbacks = await feedbackModel.aggregate([
+            {
+                $unwind: "$feedbackDetails"  // Deconstructs the feedbackDetails array
+            },
+            {
+                $match: {
+                    "feedbackDetails.FeedBackedUserID": objectIdUserId  // Match feedbackDetails where FeedBackedUserID is the userId
+                }
+            },
+            {
+                $group: {
+                    _id: '$_id',  // Group back by the original document ID
+                    postID: { $first: '$postID' },  // Use $first to take the first occurrence of these fields since they are unchanged
+                    feedbackDetails: { $push: '$feedbackDetails' }  // Push matched feedbackDetails back into an array
+                }
+            },
+            {
+                $lookup: {  // Repopulate the postID details as required
+                    from: 'posts',
+                    localField: 'postID',
+                    foreignField: '_id',
+                    as: 'postDetails'
+                }
+            }
+        ]);
+
+        if (!feedbacks.length) {
             return res.status(404).json({ message: "No feedback found for this user." });
         }
 
@@ -243,6 +285,7 @@ const feedbacksByLoginUser = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 }
+
 
 const getSpecificFeedbackDetail = async (req, res) => {
     const { feedbackId, detailId } = req.query;  // Extract parameters from the URL

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React,{useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,9 +17,22 @@ import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
 const pages = ['Home', 'Portfolios', 'Qualification','Reservations', 'Jobs','Media'];
-const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
+const settings = [ 'Profile','My FeedBacks', 'My Payment', 'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [isloading, setIsLoading] = React.useState(false);
+
+
+
+
+  useEffect(() => {
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const isLogged = user && user._id; // Check if the user is l
+
+    setIsLoading(isLogged)
+  }, [])
+  
   const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -52,8 +65,17 @@ const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
     }
     else if(page=== 'Logout'){
       localStorage.clear()
-      navigate('/login')
-    }
+      navigate('/')
+    }else if(
+      page=== 'Profile'){
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        
+        const userId = user._id;
+      
+      navigate(`/myPosts`)
+      }
+    
     setAnchorElNav(null);
   }
 
@@ -159,7 +181,7 @@ const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+      {isloading&&    <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -187,7 +209,7 @@ const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box>}
         </Toolbar>
       </Container>
     </AppBar>

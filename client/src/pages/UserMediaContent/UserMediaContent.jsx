@@ -3,14 +3,13 @@ import Styles from './UserMediaContent.module.scss';
 import MediaCard from '../../components/MediaCard/MediaCard';
 import { MediaService } from '../../Services/Media.Service';
 import { toast } from 'react-toastify';
-import { Grade } from '@mui/icons-material';
-import { Grid } from '@mui/material';
-import { G } from '@react-pdf/renderer';
+import { Grid, TextField, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 
 const UserMediaContent = () => {
     const [medias, setMedias] = useState([]);
     const [typeFilter, setTypeFilter] = useState('All');
     const [categoryFilter, setCategoryFilter] = useState('All');
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         initialData();
@@ -25,6 +24,21 @@ const UserMediaContent = () => {
             toast.error('Failed to fetch media');
         }
     };
+
+    const handleTypeFilterChange = (event) => {
+        setTypeFilter(event.target.value);
+    };
+
+    const handleCategoryFilterChange = (event) => {
+        setCategoryFilter(event.target.value);
+    };
+
+    const filteredMedias = medias.filter(media => {
+        return (typeFilter === 'All' || media.type === typeFilter) &&
+               (categoryFilter === 'All' || media.category === categoryFilter) &&
+               (media.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                media.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    });
 
     const handleLike = (id) => {
         const userString = localStorage.getItem('user');
@@ -62,44 +76,57 @@ const UserMediaContent = () => {
        
     };
 
-    const handleTypeFilterChange = (event) => {
-        setTypeFilter(event.target.value);
-    };
-
-    const handleCategoryFilterChange = (event) => {
-        setCategoryFilter(event.target.value);
-    };
-
-    const filteredMedias = medias.filter(media => {
-        return (typeFilter === 'All' || media.type === typeFilter) &&
-               (categoryFilter === 'All' || media.category === categoryFilter);
-    });
-
     return (
         <div className={Styles.container}>
-            <Grid container spacing={2} sx={{justifyContent:"center",display:"flex"}}>
-     
-            <Grid item xs={4}>
-                <select value={typeFilter} onChange={handleTypeFilterChange}>
-                    <option value="All">All Types</option>
-                    <option value="Image">Image</option>
-                    <option value="Video">Video</option>
-                </select>
+            <Grid container spacing={2} sx={{ justifyContent: "center", display: "flex" }}>
+            <Grid item xs={12} sm={3}>
+                    <TextField
+                        fullWidth
+                        label="Search Media"
+                        variant="filled"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </Grid>
-                <Grid item xs={4}>
-                <select value={categoryFilter} onChange={handleCategoryFilterChange}>
-                    <option value="All">All Categories</option>
-                    <option value="Photography">Photography</option>
-                    <option value="YouTube">YouTube</option>
-                    {/* Add more categories as needed */}
-                </select>
+                <Grid item xs={12} sm={3}>
+                    <FormControl fullWidth>                       
+                        <InputLabel>Type</InputLabel>
+                        <Select
+                            value={typeFilter}
+                            label="Type"
+                            onChange={handleTypeFilterChange}
+                        >
+                            <MenuItem value="All">All Types</MenuItem>
+                            <MenuItem value="Image">Image</MenuItem>
+                            <MenuItem value="Video">Video</MenuItem>
+                        </Select>
+                    </FormControl>
                 </Grid>
-                <Grid item xs={12} sx={{display:"flex", justifyContent:"space-evenly"}}>
-            {filteredMedias.map(media => (
-                <MediaCard key={media._id} media={media} handleLike={handleLike} handleDislike={handleDislike} />
-            ))}
-               </Grid>
-            </Grid>    
+                <Grid item xs={12} sm={3}>
+                    <FormControl fullWidth>
+                        <InputLabel>Category</InputLabel>
+                        <Select
+                            value={categoryFilter}
+                            label="Category"
+                            onChange={handleCategoryFilterChange}
+                        >
+                            <MenuItem value="All">All Categories</MenuItem>
+                            <MenuItem value="Photography">Photography</MenuItem>
+                            <MenuItem value="YouTube">YouTube</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+               
+                <Grid item xs={12}>
+                    <Grid container spacing={2} justifyContent="center">
+                        {filteredMedias.map(media => (
+                            <Grid item key={media._id} xs={12} sm={6} md={4} lg={3}>
+                                <MediaCard media={media}  handleDislike={handleDislike} handleLike={handleLike}/>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Grid>
+            </Grid>
         </div>
     );
 };

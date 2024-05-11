@@ -168,7 +168,7 @@ class AddImagesModal extends Component {
                     <h5 className='title'>Add Your Image</h5>
                     <br></br>
                     <label htmlFor='uploadImage' className='uploadBox'>
-                      <FiUpload className='uploadIcon' />
+                      <FiUpload  style={{marginLeft:"7rem"}}className='uploadIcon' />
                       <input
                         type='file'
                         id='uploadImage'

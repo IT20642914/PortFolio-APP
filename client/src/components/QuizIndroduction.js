@@ -22,7 +22,7 @@ export default function QuizIntroduction() {
         <li id="instruction">Each correct answer earns you points.</li>
         <li id="instruction">At the end of the quiz, you'll see your score.</li>
       </ol>
-      <Link to={"/score"}>
+      <Link to={"/quiz"}>
         <button className="start-button">Start Quiz</button>
       </Link>
     </div>
