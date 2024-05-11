@@ -24,6 +24,10 @@ const generateReport = () => {
 const getChartData = () => {
     return axiosPrivateInstance.get(`/api/user/chart`);
 }
+
+const deleteUserByid = (id) => {
+    return axiosPrivateInstance.delete(`/api/user/?id=${id}`);
+}
 export const UserService = {
     Login,
     Register,
@@ -31,5 +35,6 @@ export const UserService = {
     getUserById,
     updateUser,
     generateReport,
-    getChartData
+    getChartData,
+    deleteUserByid
 }

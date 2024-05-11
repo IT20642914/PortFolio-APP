@@ -118,6 +118,19 @@ const UserManagement = () => {
                 toast.error(error);
             });
         }
+        if(mode === SCREEN_MODES.DELETE){
+            UserService.deleteUserByid(id)
+            .then((res) => {
+                if (res.status === 200) {
+                    toast.success("User Deleted Successfully");
+                    getInitialData();
+                }
+            })
+            .catch((error) => {
+                console.log('error', error);
+                toast.error(error);
+            });
+        }
     };
 
     const generateReport = () => {
