@@ -9,7 +9,7 @@ const PortfolioCard = ({ data ,handleRequest}) => {
     const { portfolio_name, bio, description, category, email, contact_no } = data;
     
     return (
-        <Card sx={{ maxWidth: 345, m: "1rem", bgcolor: '#418ca3', minHeight: 545 }}> 
+        <Card sx={{ maxWidth: 500, m: "1rem", bgcolor: '#418ca3', minHeight: 545 }}> 
           <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
             <Avatar sx={{ bgcolor: "#673ab7", width: "7rem", height: "7rem" }}>
                     {portfolio_name ? portfolio_name.charAt(0) : '?'}
