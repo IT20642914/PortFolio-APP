@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React,{useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +20,19 @@ const pages = ['Home', 'Portfolios', 'Qualification','Reservations', 'Jobs','Med
 const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment','My Posts', 'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [isloading, setIsLoading] = React.useState(false);
+
+
+
+
+  useEffect(() => {
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const isLogged = user && user._id; // Check if the user is l
+
+    setIsLoading(isLogged)
+  }, [])
+  
   const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -168,7 +181,7 @@ const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment','My Posts',
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+      {isloading&&    <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -196,7 +209,7 @@ const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment','My Posts',
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box>}
         </Toolbar>
       </Container>
     </AppBar>

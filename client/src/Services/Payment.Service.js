@@ -40,6 +40,11 @@ const  generatePaymentReport=(userID)=>{
 const getPaymentsByUserId = (id) => {
     return axiosPrivateInstance.get(`api/payments/user/${id}`);
 }
+
+const getAdminReportData = () => {
+    return axiosPrivateInstance.get(`api/payments/admin/report`);
+
+}
 export const PaymentService = {
     UpdateDiscount,
     getReservation,
@@ -50,5 +55,6 @@ export const PaymentService = {
     updatePayment,
     deletePayment,
     generatePaymentReport,
-    getPaymentsByUserId
+    getPaymentsByUserId,
+    getAdminReportData
 }

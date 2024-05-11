@@ -3,6 +3,7 @@
   import Styles from './FeedbackUserView.module.scss'
   import RadialBarChart from '../../components/RadialBarChart/RadialBarChart'
   import { useEffect } from 'react'
+  import { useNavigate, useParams } from "react-router-dom";
   import { FeedBackService } from '../../Services/feedBack.Service'
   import { toast } from 'react-toastify'
   import { Grid } from '@mui/material'
@@ -37,6 +38,8 @@
     const [openModal, setOpenModal] = useState(false);
     const [helperText, setHelperText] = useState(true);
     const [mode, setMode] = useState(null);
+   
+    const { id,userID } = useParams(); 
     useEffect(() => {
       
       getInitialData()
@@ -44,9 +47,8 @@
     
 
     const getInitialData = () => {
-      //need modification
-      localStorage.setItem("postID",'663e700c1967857e8d3ef312')
-      const postID= localStorage.getItem('postID')
+   
+      const postID= id
     
     FeedBackService.getAverageRatingsForPost(postID).then((response) => {
 
@@ -106,8 +108,11 @@ const handleInputFocus=(property,section)=>{
 const HandleBtnResponse=async (mode)=>{
   const [validateData, isValid] = await validateFormData(feedbackForm);
   setFeedbackForm(validateData);
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+
   if(isValid){
-    const postID= localStorage.getItem('postID')
+    const postID= id
  const payload={
   postID: postID,
   feedbackDetails:[{  
@@ -118,8 +123,11 @@ const HandleBtnResponse=async (mode)=>{
       creativity: feedbackForm.creativity.value,
       reliability: feedbackForm.reliability.value,
       overallSatisfaction: feedbackForm.overallSatisfaction.value,
-      comments: feedbackForm.comments.value}
-    ]
+      comments: feedbackForm.comments.value,
+      FeedBackedUserID: user._id}
+      
+    ],
+    
  }
     FeedBackService.addFeedBack(payload).then((res)=>{
       toast.success(res.data.message)
@@ -135,6 +143,14 @@ const HandleBtnResponse=async (mode)=>{
 }
 
 const handleRequest = () => {
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  setFeedbackForm({
+    ...feedbackForm,
+    name: { ...feedbackForm.name, value: user.fullName},
+    email: { ...feedbackForm.email, value: user.email}
+  });
+  
   setMode("CREATE");
   setOpenModal(true);
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { SCREEN_MODES } from "../../utilities/app.constants";
 import Styles from "./PaymentTable.module.scss";
@@ -8,6 +8,15 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [Role, setRole] = useState(null);
+
+    useEffect(() => {
+      const userString = localStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const Role = user.role;
+      setRole(Role);
+    }, [])
+
 
   // Function to handle search input change
   const handleSearchChange = (e) => {
@@ -98,12 +107,12 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
            </Grid>
         </Grid>
         <div className="flex justify-end mb-4">
-          <button
+        {Role&& Role==="USER"&&  <button
             className="bg-[#418ca3] hover:bg-5399ac text-white font-bold py-2 px-4 rounded mr-2"
             onClick={() => { handleRequest(SCREEN_MODES.CREATE, null); }}
           >
             Add New Payment
-          </button>
+          </button> }
           <button
             className="bg-[#418ca3] hover:bg-5399ac text-white font-bold py-2 px-4 rounded"
             onClick={() => { generateReport(); }}
@@ -128,7 +137,7 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
               <th className="py-2">Service Provider ID</th>
               <th className="py-2">Bank Slip</th>
               <th className="py-2">Post Amount</th>
-              <th className="py-2">Actions</th>
+              {Role&& Role==="USER"&&  <th className="py-2">Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -150,7 +159,7 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
                 <img src={payment.bankSlipUrl} style={{ width:"12rem" ,height:"12rem"}} alt="payment slip" />
                 </td>
                 <td className="py-2">{payment.postAmount}</td>
-                <td className="py-2 flex justify-center">
+               {Role&& Role==="USER"&& <td className="py-2 flex justify-center">
                   <button
                     className="mr-2 bg-customGray3 hover:bg-blue-300 text-customGray4 font-bold py-2 px-4 rounded"
                     onClick={() => { handleRequest(SCREEN_MODES.EDIT, payment._id); }}
@@ -163,7 +172,7 @@ const PaymentTable = ({ payments, handleRequest, generateReport }) => {
                   >
                     <FaTrash className="inline-block mr-1" /> Delete
                   </button>
-                </td>
+                </td>}
               </tr>
             ))}
           </tbody>

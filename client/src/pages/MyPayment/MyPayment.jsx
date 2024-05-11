@@ -51,7 +51,6 @@ const initialData = async () => {
         setPayments(res.data);
     } catch (error) {
         console.error('Error fetching payments:', error);
-        toast.error('Failed to fetch payments');
     }
 
 }

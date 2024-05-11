@@ -62,13 +62,13 @@ function App() {
      
 //     </>
 //   );
-//  const UserLayoutRoutes = ({ children }) => (
-//     <>
-//       <NavBar />
-//       {children}
-//       <Footer/>
-//     </>
-//   );
+ const UserALLLayoutRoutes = ({ children }) => (
+    <>
+      <NavBar />
+      {children}
+      <Footer/>
+    </>
+  );
 const ADminLayoutRoutes = ({ children }) => {
   const userString = localStorage.getItem('user');
   const user = userString ? JSON.parse(userString) : null;
@@ -126,7 +126,7 @@ const UserLayoutRoutes = ({ children }) => {
         <Route path="/userui/:bio" component={UserUi} /> */}
          <Route path="/jobs" element={<UserLayoutRoutes><Jobs/></UserLayoutRoutes>} />
 
-         <Route path="/home" element={<UserLayoutRoutes><Home/></UserLayoutRoutes>} />
+         <Route path="/home" element={<UserALLLayoutRoutes><Home/></UserALLLayoutRoutes>} />
         <Route path="/portfolios" element={<UserLayoutRoutes><Portfolio/></UserLayoutRoutes>} />
       <Route path="/services" element={<UserLayoutRoutes><Services/></UserLayoutRoutes>} />
       <Route path="/Gallery" element={<UserLayoutRoutes><Gallery/></UserLayoutRoutes>} />
@@ -164,7 +164,7 @@ const UserLayoutRoutes = ({ children }) => {
 
 
             {/* UserRoutes*/}
-           <Route path="/post/:id/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
+           <Route path="/post/:id/:userID/feedbackUser" name="UserFeedbacks" element={<UserLayoutRoutes><FeedbackUserView/></UserLayoutRoutes>}/>
            <Route path="/myFeedBacks" name="UserFeedbacks" element={<UserLayoutRoutes><MyFeedBacks/></UserLayoutRoutes>}/>
            <Route path="/reservations" name="reservations" element={<UserLayoutRoutes><ClientReservation/></UserLayoutRoutes>}/>
            <Route path="/MyPayment" name="reservations" element={<UserLayoutRoutes><MyPayment/></UserLayoutRoutes>}/>

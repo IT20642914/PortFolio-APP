@@ -1,6 +1,6 @@
 import React, { Children } from 'react'
 import Styles from './MyFeedBacks.module.scss'
-import FeedbackManagementTable from '../../components/FeedbackManagementTable/FeedbackManagementTable'
+import FeedbackManagementTable2 from '../../components/FeedbackManagementTable/FeedbackManagementTable2'
 import { useState } from 'react'
 import { FeedBackService } from '../../Services/feedBack.Service'
 import { toast } from 'react-toastify'
@@ -48,7 +48,7 @@ const userId = user._id;
             setFeedbacks(res.data)
             console.log("res",res)
         }).catch((err)=>{
-            toast.error(err.response.data.message)
+            // toast.error("No Any From Feedbacks Added")
         })
     })
 
@@ -58,7 +58,7 @@ const userId = user._id;
                 toast.success(res.data.message)
                 initialDataLoad()
             }).catch((err)=>{
-                toast.error(err.response.data.message)
+                toast.error(err)
             })
         }
 
@@ -146,7 +146,7 @@ const userId = user._id;
   return (
     <div className={Styles.container}>
     <h1 className="text-2xl font-bold mb-4">My FeedBacks</h1>
-        <FeedbackManagementTable feedbacks={feedbacks} handleRequest={handleRequest} generateReport={{}}/>
+        <FeedbackManagementTable2 feedbacks={feedbacks} handleRequest={handleRequest} generateReport={{}}/>
         <FeedbackModal
                 open={openModal}
                 handleClose={handleCloseModal}
