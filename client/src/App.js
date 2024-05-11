@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
 import Jobs from "./pages/Jobs";
 // import Home from "./pages/Home";
 import CareerAdmin from "./pages/CareerAdmin/CareerAdmin";
@@ -50,31 +50,76 @@ import Scoreboard from "./components/Scoreboard";
 // import Footer from "./components/Footer";
 // import NavBar from "./components/Header";
 import SupportAdmin from "./components/SupportAdmin";
+import MyPosts from "./pages/MyPosts/MyPosts";
+import { useState,useEffect } from "react";
 function App() {
+const [isLogged, setIsLogged] = useState(false);
 
-
+useEffect(() => {
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  if (user && user._id) {
+      console.log('logged in');
+      setIsLogged(true);
+  }
+}, [])
 
   
-  const ADminLayoutRoutes = ({ children }) => (
-    <>
-     <SideNavBar />
-      {children}
+//   const ADminLayoutRoutes = ({ children }) => (
+//     <>
+//      <SideNavBar />
+//       {children}
      
+//     </>
+//   );
+//  const UserLayoutRoutes = ({ children }) => (
+//     <>
+//       <NavBar />
+//       {children}
+//       <Footer/>
+//     </>
+//   );
+const ADminLayoutRoutes = ({ children }) => {
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  const isAdmin = user && user.role === 'ADMIN'; // Check if the user role is 'admin'
+
+  if (!isAdmin) {
+    // If not admin, redirect to login or another appropriate page
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <>
+      <SideNavBar />
+      {children}
     </>
   );
- const UserLayoutRoutes = ({ children }) => (
+};
+
+const UserLayoutRoutes = ({ children }) => {
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
+  const isLogged = user && user._id; // Check if the user is logged in
+
+  if (!isLogged) {
+    // If not logged in, redirect to login
+    return <Navigate to="/" replace />;
+  }
+
+  return (
     <>
       <NavBar />
       {children}
-      <Footer/>
+      <Footer />
     </>
   );
+};
   return (
     <BrowserRouter>
       <Routes>
       <Route path="/"  name="Login" element={<Login />} /> 
       <Route path="/signup"  name="SignUp" element={<SignUp />} />
-      {/* <Route path="/jobs" name="jobs" element={<Jobs />} /> */}
       <Route path="/portfolio" element={<Portfolio />} />
         {/* <Route path="/services" element={<Services />} />
         <Route path="/Gallery" element={<Gallery />} />
@@ -102,7 +147,7 @@ function App() {
       <Route path="/email" element={<UserLayoutRoutes><Email/></UserLayoutRoutes>} />
       <Route path="/vchat" element={<UserLayoutRoutes><Vchat/></UserLayoutRoutes>} />
       <Route path="/servicespage" element={<UserLayoutRoutes><Servisespage/></UserLayoutRoutes>} />
-      <Route path="/post/:id" element={<UserLayoutRoutes><PostDetails/></UserLayoutRoutes>} />
+      <Route path="/post/:id/:userID" element={<UserLayoutRoutes><PostDetails/></UserLayoutRoutes>} />
       <Route path="/editpost/:id" element={<UserLayoutRoutes><EditForm/></UserLayoutRoutes>} />
       <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
       <Route path="/userui/:bio" element={<UserLayoutRoutes><UserUi/></UserLayoutRoutes>} />
@@ -140,7 +185,8 @@ function App() {
            <Route path="/intro" name="intro" element={<UserLayoutRoutes><Scoreboard/></UserLayoutRoutes>}/>
            <Route path="/score" name="score" element={<UserLayoutRoutes><QuizIndroduction/></UserLayoutRoutes>}/>
            <Route path="/support" name="support" element={<UserLayoutRoutes><SupportAdmin/></UserLayoutRoutes>}/>
-           
+             
+           <Route path="/myPosts" name="MyPosts" element={<UserLayoutRoutes><MyPosts/></UserLayoutRoutes>}/>
                        
                 {/* Admin routes */}
            <Route path="/MediaManagement" name="MediaManagement" element={<ADminLayoutRoutes><MediaManagement/></ADminLayoutRoutes>}/>

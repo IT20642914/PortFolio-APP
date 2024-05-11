@@ -17,11 +17,12 @@ import EMBLEMS from '../components/images/EMBLEM.png'
 import { Margin } from "@mui/icons-material";
 import { Grid } from "@mui/material";
 function PostDetails() {
-  const { id } = useParams(); // Access route parameter 'id' using useParams hook
+  const { id,userID } = useParams(); // Access route parameter 'id' using useParams hook
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
   const [enlargedImage, setEnlargedImage] = useState(null);
   const [pass, setPass] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     axios.get(`/post/${id}`).then((res) => {
@@ -31,9 +32,9 @@ function PostDetails() {
       }
     });
   }, [id]);
-  const userString = localStorage.getItem("user");
-  const user = JSON.parse(userString);
-  const CustomerId = user._id;
+  // const userString = localStorage.getItem("user");
+  // const user = JSON.parse(userString);
+  const CustomerId = userID;
 
   useEffect(() => {
     getData();
@@ -54,7 +55,9 @@ function PostDetails() {
       const userString = localStorage.getItem('user');
       const user = JSON.parse(userString);
       const userId = user._id;
-      axios.get(`http://localhost:5000/results/check-pass/${userId}`).then((res) => {
+
+      setIsAuthor(userID === userId)
+      axios.get(`http://localhost:5000/results/check-pass/${userID}`).then((res) => {
         setPass(res.data.hasPassed);
       }).catch((err) => {
         console.log("Error", err);
@@ -292,7 +295,7 @@ function PostDetails() {
                   Add Feedback |{" "}
                   <FaPlus style={{ marginLeft: "0.3rem" }} size={24} />
                 </div>
-                <div
+              {isAuthor&&  <div
                   className="addDiscount-button"
                   style={{
                     display: "flex",
@@ -307,9 +310,9 @@ function PostDetails() {
                 >
                   Add Discount |{" "}
                   <FaPlus style={{ marginLeft: "0.3rem" }} size={24} />
-                </div>
+                </div>}
               </div>
-              <div
+              {isAuthor&&   <div
                 className="edit-button"
                 style={{
                   position: "absolute",
@@ -327,6 +330,7 @@ function PostDetails() {
                 Edit | <FaEdit style={{ marginLeft: "0.5rem" }} size={24} />{" "}
                 {/* Edit button with edit icon */}
               </div>
+              }
             </div>
           </div>
 

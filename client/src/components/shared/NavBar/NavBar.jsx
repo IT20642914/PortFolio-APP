@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ResponsiveAppBar() {
 const pages = ['Home', 'Portfolios', 'Qualification','Reservations', 'Jobs','Media'];
-const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
+const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment','My Posts', 'Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
@@ -52,15 +52,15 @@ const settings = ['Profile', 'Account', 'My FeedBacks', 'My Payment', 'Logout'];
     }
     else if(page=== 'Logout'){
       localStorage.clear()
-      navigate('/login')
+      navigate('/')
     }else if(
-      page=== 'Profile'){
-      //   const userString = localStorage.getItem('user');
-      //   const user = JSON.parse(userString);
+      page=== 'My Posts'){
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
         
-      //   const userId = user._id;
+        const userId = user._id;
       
-      // navigate(`/post/${userId}`)
+      navigate(`/myPosts`)
       }
     
     setAnchorElNav(null);

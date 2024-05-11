@@ -31,6 +31,25 @@ router.get('/posts', async (req, res) => {
     });
   }
 });
+// Get posts by userID
+router.get('/posts/user/:userID', async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const userPosts = await Post.find({ userID: userID }).populate('userID').populate('image');
+    if (!userPosts.length) {
+      return res.status(404).json({ success: false, message: "No posts found for this user" });
+    }
+    res.status(200).json({
+      success: true,
+      posts: userPosts
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
 
 // Get a specific post
 router.get("/post/:id", async (req, res) => {

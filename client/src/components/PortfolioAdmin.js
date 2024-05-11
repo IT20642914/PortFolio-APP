@@ -108,7 +108,7 @@ class PortfolioAdmin extends Component {
                     />
                   </td>
                   <td>
-                    <a href={`/post/${post._id}`} style={{ textDecoration: 'none' }}>
+                    <a href={`/post/${post._id}/${post.userID}`} style={{ textDecoration: 'none' }}>
                       {post.portfolio_name}
                     </a>
                   </td>
