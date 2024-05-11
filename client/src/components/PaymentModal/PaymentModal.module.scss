@@ -1,13 +1,13 @@
 /* Modal Container */
 .modalContainer {
-  margin-top: 1rem;
    padding-top: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     color: aliceblue;
-    overflow: auto; /* Enable scrolling if content overflows */
+    
+    overflow: auto; 
   }
   
   /* Modal Content */

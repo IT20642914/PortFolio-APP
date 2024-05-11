@@ -252,7 +252,7 @@ if(res.data){
         </table>
       </div>
 
-         <PaymentModal open={openModal} paymentForm={PaymentForm} handleClose={handleClose}  handleInputFocus={handleInputFocus} onInputHandleChange={onInputHandleChange} helperText={helperText} handlePaymentSubmit={handlePaymentSubmit} />
+        <PaymentModal open={openModal} paymentForm={PaymentForm} handleClose={handleClose}  handleInputFocus={handleInputFocus} onInputHandleChange={onInputHandleChange} helperText={helperText} handlePaymentSubmit={handlePaymentSubmit} />
       
     </div>
   );
