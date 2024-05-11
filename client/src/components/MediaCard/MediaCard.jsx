@@ -4,6 +4,7 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 
 const MediaCard = ({ media, handleLike, handleDislike }) => {
+    console.log("meadia",media)
     return (
         <Card sx={{ minWidth: 345, maxWidth: 345,  m: 2,  }}>
             {media.type === 'Image' ? (

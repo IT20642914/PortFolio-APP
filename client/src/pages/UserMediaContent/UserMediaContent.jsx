@@ -40,6 +40,42 @@ const UserMediaContent = () => {
                 media.description.toLowerCase().includes(searchTerm.toLowerCase()));
     });
 
+    const handleLike = (id) => {
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const userId = user._id;
+       const payload = {
+              id:id ,
+              userId:userId
+       }
+        MediaService.handleLike(payload).then((res) => {
+                    initialData();
+                    toast.success('Media liked successfully');
+        }).catch((err) => {
+                    console.error('Error liking media:', err);
+                    toast.error('Failed to like media');
+        });
+            };
+
+    const handleDislike = (id) => {
+        console.log('Dislike', id);
+        const userString = localStorage.getItem('user');
+        const user = JSON.parse(userString);
+        const userId = user._id;
+         const payload = {
+                  id:id ,
+                  userId:userId
+                }
+        MediaService.handleDisLike(payload).then((res) => {
+                    initialData();
+                    toast.success('Media disliked successfully');
+        }).catch((err) => {
+                    console.error('Error disliking media:', err);
+                    toast.error('Failed to dislike media');
+        });
+       
+    };
+
     return (
         <div className={Styles.container}>
             <Grid container spacing={2} sx={{ justifyContent: "center", display: "flex" }}>
@@ -85,7 +121,7 @@ const UserMediaContent = () => {
                     <Grid container spacing={2} justifyContent="center">
                         {filteredMedias.map(media => (
                             <Grid item key={media._id} xs={12} sm={6} md={4} lg={3}>
-                                <MediaCard media={media} />
+                                <MediaCard media={media}  handleDislike={handleDislike} handleLike={handleLike}/>
                             </Grid>
                         ))}
                     </Grid>

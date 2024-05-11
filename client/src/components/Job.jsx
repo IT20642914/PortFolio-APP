@@ -4,6 +4,7 @@ import ApplyJob from "./ApplyJob/ApplyJob";
 
 const Job = ({ job }) => {
   const navigate = useNavigate();
+  console.log("first", job)
 
   // Breadcrumb category
   const category = "Category > Job";
@@ -19,13 +20,16 @@ const Job = ({ job }) => {
       <div className="text-customGray text-sm mb-2">
         <span className="font-semibold">{firstWord}</span> {rest.join(" ")}
       </div>
+     
       {/* Job Title */}
       <h2 className="text-xl font-semibold mb-2">{job.position}</h2>
+      <h3> { job?.company}</h3>
       {/* Job Description */}
       <p className="text-customGray mb-4">{job.keyResponsibility}</p>
       {/* Experience */}
       {/* <p className="text-gray-700">Experience: {job.exp} years</p> */}
       {/* Technologies */}
+
       <div className="techs">
         {job.skills.map((tech, idx) => (
           <span key={job.id + idx} className="text-customGray">

@@ -131,9 +131,9 @@ router.route("/search").get(async (req, res) => {
       // Search by service provider id
       reservations = await Reservation.find({
         $or: [{ OrderId: { $regex: search, $options: "i" } }],
-      });
+      }).populate("CustomerId");
     } else {
-      reservations = await Reservation.find();
+      reservations = await Reservation.find().populate("CustomerId");
     }
 
     res.status(200).json(reservations);
