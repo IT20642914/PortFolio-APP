@@ -41,8 +41,8 @@ const MyPosts = () => {
             setFilteredPosts(posts);
         } else {
             const filtered = posts.filter(post => 
-                post.portfolio_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                post.description.toLowerCase().includes(searchTerm.toLowerCase())
+                post?.portfolio_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                post?.description?.toLowerCase().includes(searchTerm.toLowerCase())
             );
             setFilteredPosts(filtered);
         }
