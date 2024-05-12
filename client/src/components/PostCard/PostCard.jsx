@@ -3,10 +3,11 @@ import { Card, CardContent, CardMedia, Typography, Button, CardActions } from '@
 
 const PostCard = ({ post ,handleNavigate}) => {
   return (
-    <Card sx={{ maxWidth: 345, m: 2 ,maxHeight:500,minHeight:500 }}>
+    <Card sx={{ maxWidth: 345, m: 2 ,maxHeight:600,minHeight:600 }}>
       <CardMedia
         component="img"
-        height="140"
+        // height="140"
+        maxheight="140"
         image={post.image ? post.image.image : 'https://via.placeholder.com/140'}
         alt="Post image"
         style={{ objectFit: 'cover' }}

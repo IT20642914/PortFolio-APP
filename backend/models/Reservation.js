@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const ReservationSchema = new mongoose.Schema(
   {
     OrderId: {
-      type: String,
-      default: () => new ObjectId().toString(),
+      type: mongoose.Schema.Types.ObjectId, 
+      default: () => new mongoose.Types.ObjectId(),
       unique: true,
-      required: true,
-    },
+      required: true
+  },
     CustomerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
