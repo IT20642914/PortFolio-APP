@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-// const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 
 const ReservationSchema = new mongoose.Schema(
   {
     OrderId: {
       type: String,
-      // default: `OD${uuidv4().split('-')[0]}`,
+      default: `OD${uuidv4().split('-')[0]}`,
       unique: true,
       required: true,
     },

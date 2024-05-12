@@ -32,9 +32,9 @@ function PostDetails() {
       }
     });
   }, [id]);
-  // const userString = localStorage.getItem("user");
-  // const user = JSON.parse(userString);
-  const CustomerId = userID;
+  const userString = localStorage.getItem("user");
+  const user = JSON.parse(userString);
+  const CustomerId = user._id;
 
   useEffect(() => {
     getData();

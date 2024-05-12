@@ -4,17 +4,26 @@ let Payment = require("../models/Payment");
 const express = require("express");
 const router = express.Router();
 
-async function generateReservationId() {
-  let reservationNumber = await Reservation.countDocuments({});
-  return reservationNumber < 9
-    ? "OD00" + (reservationNumber + 1)
-    : "OD0" + (reservationNumber + 1);
-}
+// async function generateReservationId() {
+//   let reservationNumber = await Reservation.countDocuments({});
+  
+//   // Increment the reservation number
+//   let formattedReservationNumber = reservationNumber + 1;
+  
+//   // Pad the reservation number with zeros to ensure it's 3 digits long
+//   let paddedReservationNumber = formattedReservationNumber.toString().padStart(3, '0');
+  
+//   // Construct the reservation ID based on the padded number
+//   return formattedReservationNumber < 10
+//     ? "OD00" + paddedReservationNumber
+//     : "OD0" + paddedReservationNumber;
+// }
+
 
 //create
 router.route("/addReservation").post(async (req, res) => {
   //creating the variables for the atributes
-  const OrderId = await generateReservationId();
+  // const OrderId = await generateReservationId();
   const CustomerId = req.body.CustomerId;
   const ServiceProviderId = req.body.ServiceProviderId;
   const Requests = req.body.Requests;
@@ -22,8 +31,6 @@ router.route("/addReservation").post(async (req, res) => {
 
   //assinging the atributes to a variable of the type of the reservation model
   const newReservation = new Reservation({
-    //Initializing
-    OrderId,
     CustomerId,
     ServiceProviderId,
     Requests,
