@@ -5,7 +5,7 @@ const ReservationSchema = new mongoose.Schema(
   {
     OrderId: {
       type: String,
-      default: () => uuidv4(),
+      default: () => new ObjectId().toString(),
       unique: true,
       required: true,
     },
