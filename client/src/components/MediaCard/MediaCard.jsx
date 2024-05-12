@@ -17,7 +17,6 @@ const MediaCard = ({ media, handleLike, handleDislike }) => {
                 />
             ) : (   
                 <CardMedia
-
                     allowFullScreen={true}
                     component="iframe"
                     height="250"
