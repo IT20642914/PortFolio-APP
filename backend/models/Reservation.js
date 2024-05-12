@@ -5,7 +5,7 @@ const ReservationSchema = new mongoose.Schema(
   {
     OrderId: {
       type: String,
-      default: `OD${uuidv4().split('-')[0]}`,
+      default: () => uuidv4(),
       unique: true,
       required: true,
     },

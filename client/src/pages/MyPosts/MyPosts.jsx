@@ -9,7 +9,7 @@ const MyPosts = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [user, setUser] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +24,7 @@ const MyPosts = () => {
         const userString = localStorage.getItem('user');
         const user = JSON.parse(userString);
         const userId = user._id;
+        setUser(user); // Set user data
         console.log(userId)
         PostService.getPostsDetailsByUserID(userId).then((response) => {
             console.log(response.data)
@@ -55,6 +56,14 @@ const MyPosts = () => {
     }
     return (
         <div className={Styles.container}>
+             <div className={Styles.userInfo}>
+                <h2 className="text-lg font-bold">User Information</h2>
+                {Object.entries(user).map(([key, value]) => (
+                    !['_id', 'createdAt', 'updatedAt', '__v'].includes(key) && (
+                        <p key={key}><strong>{key}:</strong> {value}</p>
+                    )
+                ))}
+            </div>
             <h1 className="text-2xl font-bold mb-4">My Posts</h1>
             <TextField
                 fullWidth

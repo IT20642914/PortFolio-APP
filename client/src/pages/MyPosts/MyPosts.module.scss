@@ -1,4 +1,12 @@
 .container{
     margin-top: 10rem;
     margin-left: 2rem;
+    /* MyPosts.module.scss */
+.userInfo {
+    text-align: center;
+  }
+  
+  .userInfo p {
+    margin-bottom: 0.5rem; /* Adjust margin as needed */
+  }
 }
