@@ -31,7 +31,8 @@ const MyPosts = () => {
             setPosts(response.data.posts);
             setFilteredPosts(response.data.posts);
         }).catch((error) => {
-            toast.error('Error in fetching posts');
+            console.log("error",error)
+            // toast.error('Error in fetching posts');
         });
     };
 
