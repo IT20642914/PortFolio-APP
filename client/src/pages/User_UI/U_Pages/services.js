@@ -36,7 +36,7 @@ export default class services extends Component {
       </h3>
       <p>Explore our engaging video content covering success stories, free educational resources, and business knowledge. Immerse yourself in a variety of topics aimed at enhancing your skills, knowledge, and understanding of the business world.
       </p>
-      <a href="#" className="Service-btn">Watch Video</a>
+      <a href="/media" className="Service-btn">Watch Video</a>
     </div>
   </div>
 </section>
